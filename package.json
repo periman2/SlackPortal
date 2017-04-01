@@ -2,10 +2,23 @@
   "name": "slackportal",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Pericles Arnaoutis",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.2.0",
+    "body-parser": "^1.17.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "flash": "^1.1.0",
+    "mongodb": "^2.2.25",
+    "mongoose": "^4.9.2",
+    "request": "^2.81.0"
+  }
 }

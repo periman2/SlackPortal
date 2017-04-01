@@ -27,9 +27,9 @@ var URL = process.env.DATABASEURL || "mongodb://localhost/slackportal"
 mongoose.connect(URL);
 var PORT = process.env.PORT || 3000;
 
-app.get("*", function(req, res){
-    res.sendStatus(204);
-})
+// app.get("*", function(req, res){
+//     res.sendStatus(204);
+// });
 
 app.listen(PORT, function() {
     console.log("The Slack Portal server has started");
