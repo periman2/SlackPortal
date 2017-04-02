@@ -59,7 +59,7 @@ app.get("/slack/botauth", function(req, res){
 });
 
 app.post("/openportal", function(req, res){
-    // res.json({text: "okay found ya"});
+    res.json({text: "okay found ya"});
     
 });
 

@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var PortalShema = new mongoose.Schema({
+var PortalSchema = new mongoose.Schema({
     url: String,
     teamid: String,
     teamname: String
