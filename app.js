@@ -21,7 +21,7 @@ var URL = process.env.DATABASEURL || "mongodb://localhost/slackportal"
 mongoose.connect(URL);
 var PORT = process.env.PORT || 3000;
 
-router.get('/favicon.ico', function(req, res) {
+app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
 });
 
