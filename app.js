@@ -47,7 +47,7 @@ app.get("/slack/botauth", function(req, res){
                         });
                     })
                 } else {
-                    return send("error happend with the server")
+                    return send("I have no idea what I'm")
                 }
             });
         }
@@ -58,6 +58,10 @@ app.post("/openportal", function(req, res){
     // res.json({text: "okay found ya"});
     
 });
+
+app.get("/", function(req, res){
+    res.render("home");
+})
 
 app.get("/:portalid", function(req, res){
     res.render("home");
