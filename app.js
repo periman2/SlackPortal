@@ -21,6 +21,10 @@ var URL = process.env.DATABASEURL || "mongodb://localhost/slackportal"
 mongoose.connect(URL);
 var PORT = process.env.PORT || 3000;
 
+router.get('/favicon.ico', function(req, res) {
+    res.sendStatus(204);
+});
+
 app.get("/slack/botauth", function(req, res){
     var data = {form: {
         client_id: process.env.PORTAL_CLIENT_ID_OFBOT,
