@@ -136,11 +136,12 @@ app.post("/openportal", function(req, res){
 });
 
 app.post("/closeportal", function(req, res){
+    console.log(req.body);
     Portal.find({teamid: req.body.team_id, channelid : req.body.channel_id}).exec()
     .then(function(foundportal){
         if(foundportal.length > 0){
-            // console.log(foundportal + "this is the found portal");
-            Portal.remove(foundportal[0]._id, {new: true}).exec()
+            console.log(foundportal + "this is the found portal");
+            Portal.remove({_id: foundportal[0]._id}).exec()
             .then(function(){
                 // console.log(newportal);
                 res.json({text: "The portal for this channel has closed."});
