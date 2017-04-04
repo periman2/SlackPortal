@@ -5,7 +5,12 @@ var PortalSchema = new mongoose.Schema({
     teamid: String,
     teamname: String,
     channelid: String,
-    history: [{type: String}]
+    history: [
+        {
+            message: String,
+            senderid: String
+        }
+    ]
 })
 
 module.exports = mongoose.model("Portal", PortalSchema);
