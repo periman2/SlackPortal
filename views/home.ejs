@@ -14,15 +14,23 @@
         <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/webhook.js"></script>
+        <script type="text/javascript" src="/ajax.js"></script>
     </head>
     <body>
         <section class="container">
+            <div class="username">
+                <form class="userinput">
+                    <input type="text" name="username" id="username"  placeholder="Your username" maxlength="20" required>
+                    </input>
+                </form>
+            </div>
             <div class="chatbody">
             </div>
             <div class="chatinput">
-                <input id="userinput" type="text">
-                </input>
+                <form class="inputform">
+                    <input type="text" name="message" id="message" placeholder="Your message here." maxlength="1000" required>
+                    </input>
+                </form>
             </div>
         </section>
     </body>

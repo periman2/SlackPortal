@@ -8,7 +8,10 @@ var PortalSchema = new mongoose.Schema({
     history: [
         {
             message: String,
-            senderid: String
+            sender: String,
+            senderid: String,
+            senderavatar: String,
+            isfromslack: Boolean
         }
     ]
 })
