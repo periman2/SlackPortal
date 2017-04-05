@@ -3,11 +3,13 @@ var express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
-    flash        = require("connect-flash");
-    Portal = require("./models/portals");
-    Team = require("./models/teams");
+    flash       = require("connect-flash"),
+    Portal = require("./models/portals"),
+    Team = require("./models/teams"),
     request = require("request");
-;
+
+var commandRoutes = require("./routes/commands");
+
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
@@ -27,7 +29,7 @@ app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
 });
 
-
+app.use(commandRoutes);
 
 //TEAM AUTHENTICATION AND SAVEING THE TEAM'S INFO IN THE DDATABASE
 app.get("/slack/botauth", function(req, res){
@@ -64,7 +66,6 @@ app.get("/slack/botauth", function(req, res){
 
 var website = "https://a3c39f4f.ngrok.io/";
 
-
 //THIS IS GOING TO REDIRECT TO A HOME PAGE
 app.get("/", function(req, res){
     res.render("home");
@@ -72,7 +73,19 @@ app.get("/", function(req, res){
 
 //THIS IS FOR WHEN A USER NAVIGATES TO THE URL OF A PORTAL
 app.get("/:portalid", function(req, res){
-    res.render("home");
+    console.log(req.params.portalid);
+    Portal.findById(req.params.portalid, function(error, portal){
+        if(error){
+            console.log(error);
+            return res.send("That's not a valid portal address.");
+        }
+        if(portal !== undefined && portal !== null){
+            res.render("home");
+        } else {
+            res.send("That's not a valid portal address.");
+        }
+    });
+    
 });
 
 //THIS IS FIRED WHEN THE USER INPUTS A MESSAGE
@@ -82,11 +95,72 @@ app.post("/postinput", function(req, res){
     newlog.message = req.body.message;
     newlog.sender = req.body.username;
     newlog.isfromslack = false;
-    
     //Find the portal with the id of the url parameter. Locates a certain portal within the database and updates it to have that message in its history;
     Portal.findByIdAndUpdate(req.body.portalid, {$push: {history: newlog}}, {new: true}, function(error, portal){
-        console.log(portal);
-        res.send(portal);
+        console.log((portal.teamid) + "this is the portal");
+        
+        Team.find({id: portal.teamid}).exec()
+        .then(function(team){
+            console.log(team, team[0].token);
+            var data = {form: {
+                token: team[0].token,
+                channel: portal.channelid,
+                text: req.body.message,
+                username: req.body.username
+            }};
+            request.post("https://slack.com/api/chat.postMessage", data, function(error, response, body){
+                console.log(body);
+                res.send(portal);
+            })
+            
+        });
+    });
+});
+
+// EVENT API COMMAND THAT GETS EVERY MESSAGE TYPED IN ALL TEAMS
+app.post("/incoming", function(req, res){
+    // console.log("that's the body of the incoming " , req.body);
+    //FIND THE PORTAL INSIDE THE DATABASE TAHT CORRESPONDS TO THAT EVENT'S CHANNEL AND TEAM IF IT EXISTS.
+    Portal.find({channelid: req.body.event.channel, teamid: req.body.team_id}).exec()
+    .then(function(portal){
+        // console.log("the found portal" , portal);
+        //CHECK IF IT EXISTS
+        if(portal.length > 0){
+            //FIND THE TEAM WITH THE SAME TEAMID INSIDE THE DATABASE IN ORDER TO USE THE TEAMS OAUTH TOKEN
+            Team.find({id: portal[0].teamid}).exec()
+            .then(function(foundteam){
+                var teamstoken = foundteam[0].token;
+                // console.log(token);
+                var data = {form: {
+                    user: req.body.event.user,
+                    token: teamstoken
+                }};
+                //USE THE TOKEN TO GET INFORMATION ABOUT THE USER SENDING THE MESSAGE
+                request.post("https://slack.com/api/users.info", data, function(error, response, body) {
+                    console.log(body);
+                    var info = JSON.parse(body);
+                    if(info.user !== undefined){
+                        var newlog = {};
+                        newlog.message = req.body.event.text;
+                        newlog.senderid = req.body.event.user;
+                        newlog.sender = info.user.name;
+                        newlog.senderavatar = info.user.profile.image_72;
+                        newlog.isfromslack = true;
+                        //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
+                        Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
+                        .then(function(newportal){
+                            console.log("updated portal: " + newportal);
+                            io.emit('new message', newportal);
+                            res.send("ok");
+                        });
+                    } else {
+                        res.send("ok");
+                    }
+                });
+            });            
+        } else {
+            res.send("ok");
+        }
     });
 });
 
@@ -97,8 +171,5 @@ var server = app.listen(PORT, function() {
 var io = require('socket.io')(server);
 
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log("helloooo");
-  });
+  console.log("connected");
 });

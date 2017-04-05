@@ -1,60 +1,18 @@
 var bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
     flash        = require("connect-flash");
-    Portal = require("./models/portals");
-    Team = require("./models/teams");
-    request = require("request");
-    router = require("router");
+    Portal = require("../models/portals");
+    Team = require("../models/teams");
+    request = require("request"),
+    express     = require("express");
+
+var router = express.Router();
 
 var website = "https://a3c39f4f.ngrok.io/";
-
-// EVENT API COMMAND THAT GETS EVERY MESSAGE TYPED IN A TEAM
-router.post("/incoming", function(req, res){
-    console.log("that's the body of the incoming " , req.body);
-    //FIND THE PORTAL INSIDE THE DATABASE TAHT CORRESPONDS TO THAT EVENT'S CHANNEL AND TEAM IF IT EXISTS.
-    Portal.find({channelid: req.body.event.channel, teamid: req.body.team_id}).exec()
-    .then(function(portal){
-        console.log("the found portal" , portal);
-        //CHECK IF IT EXISTS
-        if(portal.length > 0){
-            //FIND THE TEAM WITH THE SAME TEAMID INSIDE THE DATABASE IN ORDER TO USE THE TEAMS OAUTH TOKEN
-            Team.find({id: portal[0].teamid}).exec()
-            .then(function(foundteam){
-                var teamstoken = foundteam[0].token;
-                // console.log(token);
-                var data = {form: {
-                    user: req.body.event.user,
-                    token: teamstoken
-                }};
-                //USE THE TOKEN TO GET INFORMATION ABOUT THE USER SENDING THE MESSAGE
-                request.post("https://slack.com/api/users.info", data, function(error, response, body) {
-                    console.log(body);
-                    var info = JSON.parse(body);
-                    var newlog = {};
-                    newlog.message = req.body.event.text;
-                    newlog.senderid = req.body.event.user;
-                    newlog.sender = info.user.name;
-                    newlog.senderavatar = info.user.profile.image_72;
-                    newlog.isfromslack = true;
-                    //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
-                    Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
-                    .then(function(newportal){
-                        console.log("updated portaL: " + newportal);
-                        res.send("ok");
-                    });
-                });
-            })
-            
-        } else {
-            res.send("ok");
-        }
-    });
-});
 
 //===================
 //SLASH COMMANDS START
 //===================
-
 
 //SLASH COMMAND FOR OPENING A PORTAL
 router.post("/openportal", function(req, res){

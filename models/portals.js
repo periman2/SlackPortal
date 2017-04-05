@@ -14,6 +14,6 @@ var PortalSchema = new mongoose.Schema({
             isfromslack: Boolean
         }
     ]
-})
+});
 
 module.exports = mongoose.model("Portal", PortalSchema);
