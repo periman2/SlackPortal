@@ -8,7 +8,7 @@ var bodyParser  = require("body-parser"),
 
 var router = express.Router();
 
-var website = "https://708ac1a4.ngrok.io/";
+var website = "https://a3c39f4f.ngrok.io/";
 
 //===================
 //SLASH COMMANDS START
