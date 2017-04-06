@@ -31,19 +31,20 @@ app.get('/favicon.ico', function(req, res) {
 
 app.use(commandRoutes);
 
-//TEAM AUTHENTICATION AND SAVEING THE TEAM'S INFO IN THE DDATABASE
+//TEAM AUTHENTICATION AND SAVING THE TEAM'S INFO IN THE DATABASE
 app.get("/slack/botauth", function(req, res){
     var data = {form: {
         client_id: process.env.PORTAL_CLIENT_ID,
         client_secret: process.env.PORTAL_CLIENT_SECRET,
         code: req.query.code
     }};
+    console.log(data);
     request.post('https://slack.com/api/oauth.access', data, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var token = JSON.parse(body).access_token;
             // console.log("that's the token   " + token);
             request.post('https://slack.com/api/team.info', {form: {token: token}}, function (error, response, body) {
-                // console.log(JSON.parse(body));
+                 console.log(JSON.parse(body));
                 if (!error && response.statusCode == 200) {
                     var teamid = JSON.parse(body).team.id;
                     var teamname = JSON.parse(body).team.name;
@@ -88,6 +89,26 @@ app.get("/:portalid", function(req, res){
     
 });
 
+//THIS IS FIRED WHEN THE USER FIRST OPENS PORTAL
+app.post("/getportal", function(req, res){
+    Portal.findById(req.body.portalid, function(error, portal){
+        Team.find({id: portal.teamid}).exec()
+        .then(function(team){
+            var data = {form: {
+                token: team[0].token,
+                channel: portal.channelid
+            }};
+            request.post("https://slack.com/api/channels.info", data, function(error, response, body){
+                var info = JSON.parse(body);
+                var channelname = info.channel.name;
+                portal.channelname = channelname;
+                res.send(portal);
+            })
+        });
+    });
+
+});
+
 //THIS IS FIRED WHEN THE USER INPUTS A MESSAGE
 app.post("/postinput", function(req, res){
     console.log(req.body);
@@ -119,6 +140,7 @@ app.post("/postinput", function(req, res){
 
 // EVENT API COMMAND THAT GETS EVERY MESSAGE TYPED IN ALL TEAMS
 app.post("/incoming", function(req, res){
+    
     // console.log("that's the body of the incoming " , req.body);
     //FIND THE PORTAL INSIDE THE DATABASE TAHT CORRESPONDS TO THAT EVENT'S CHANNEL AND TEAM IF IT EXISTS.
     Portal.find({channelid: req.body.event.channel, teamid: req.body.team_id}).exec()
