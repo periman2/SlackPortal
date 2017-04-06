@@ -65,7 +65,7 @@ app.get("/slack/botauth", function(req, res){
     });
 });
 
-var website = "https://708ac1a4.ngrok.io";
+var website = "https://a3c39f4f.ngrok.io/";
 
 //THIS IS GOING TO REDIRECT TO A HOME PAGE
 app.get("/", function(req, res){
