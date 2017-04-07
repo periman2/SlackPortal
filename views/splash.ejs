@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Slack Portal</title>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet"> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/stylesheets/splash.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="icon-bar">
+          <a class="social" href="https://www.facebook.com/sharer/sharer.php?u=https://oursite" target="_blank"><i class="fa fa-facebook-official"></i></a> 
+          <a class="social" href="https://twitter.com/intent/tweet?url=https://oursite" target="_blank"><i class="fa fa-twitter-square"></i></a>
+          <a class="active" id="shareit" href="#">Share it</a>
+        </div>
+        <section class="container">
+            <h1 class="title">SlackPortal</h1>
+            <p class="pitch">Have you ever wanted to bring someone from the outside into a Slack conversation--someone outside the company, perhaps a client--without having to set up a separate team, which allows that person to see every channel, including <strong>#general</strong> and <strong>#random</strong>?</p>
+            <p class="solution"><span class="white">Our solution:</span> a web service that creates a temporary chat window to allow users outside <b>any</b> Slack channel to communicate within that channel only.</p>
+            <h2>Add it to your team</h2>
+            <p class="instruc">Setting up SlackPortal is simple. Just click the button to log in to your Slack account and choose a team.</p>
+            <div class="center">
+                <a class="slack" href="https://slack.com/oauth/authorize?&client_id=164516530864.165905530982&scope=commands,channels:history,channels:read,channels:write,chat:write:bot,chat:write:user,files:read,files:write:user,groups:history,groups:read,groups:write,im:history,im:write,links:read,links:write,team:read,users:read"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+            </div>
+            <p class="instruc">Once you install it, you will be able to open a portal in your channel with the command <code>/openportal</code>.</p>
+            <p class="instruc">A link will then be generated, which you can share with whoever you'd like to invite to your channel.</p>
+            <p class="instruc">To close the portal, use command <code>/closeportal</code>. Once a portal is closed, it cannot be reopened with the same URL.</p>
+            <h2>What does a portal look like?</h2>
+            <!-- Fast Screenshot -->
+            <h2>Developers</h2>
+                <div class="devinfo">
+                    <div class="periklis">
+                        <img src="https://avatars1.githubusercontent.com/u/20288716?v=3&s=400" alt="developerleft" height="86" width="86" class="devimg">
+                        <p class="name">Periklis Panagiotis Arnaoutis</p>
+                        <p class="place">Athens, Greece</p>
+                        <a href="https://github.com/periman2" target="_blank"><i class="fa fa-github" id="github"></i></a> 
+                    </div>
+                    <div class="traci">
+                        <img src="https://avatars1.githubusercontent.com/u/15716130?v=3&s=460" alt="developerright" height="86" width="86" class=devimg>
+                        <p class="name">T. Lauren Cremeans</p>
+                        <p class="place">Connecticut, USA</p>
+                        <a href="https://github.com/icartusacrimea" target="_blank"><i class="fa fa-github" id="github"></i></a>
+                    </div>
+                </div>
+        </section>
+    </body>
+</html>

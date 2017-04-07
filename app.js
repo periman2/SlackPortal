@@ -67,9 +67,14 @@ app.get("/slack/botauth", function(req, res){
 
 var website = "https://a3c39f4f.ngrok.io/";
 
-//THIS IS GOING TO REDIRECT TO A HOME PAGE
+//THIS IS GOING TO REDIRECT TO A SPLASH PAGE
 app.get("/", function(req, res){
-    res.render("home");
+    res.render("splash");
+});
+
+//OUR APP'S SPLASH PAGE
+app.get("/slackportal", function(req, res) {
+    res.render("splash");
 });
 
 //THIS IS FOR WHEN A USER NAVIGATES TO THE URL OF A PORTAL

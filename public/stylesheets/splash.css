@@ -1,0 +1,192 @@
+body, html {
+	margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+body {
+	background: #2f2627;
+	font-family: 'Space Mono', monospace;
+}
+.icon-bar {
+    width: 100%;
+    background-color: #222125;
+    overflow: auto;
+    display: block;
+    border: none;
+    -webkit-box-shadow: 7px 6px 5px 0px rgba(31,25,24,0.32);
+	-moz-box-shadow: 7px 6px 5px 0px rgba(31,25,24,0.32);
+	box-shadow: 7px 6px 5px 0px rgba(31,25,24,0.32);
+}
+
+.icon-bar a {
+    width: 13%%;
+    float: right;
+    margin: 0;
+    padding-top: 5px;
+    padding-right: 8px;
+    padding-left: 5px;
+    color: #faa415;
+    transition: all 0.3s ease; 
+    font-size: 1.2em;
+    text-decoration: none;
+    opacity: .8;
+}
+.fa-facebook-official, .fa-twitter-square {
+	font-size: 1.7em;
+}
+.icon-bar a:hover {
+    color: #4fafd8;
+}
+
+#shareit {
+	font-size: 1em;
+	font-weight: 200;
+	opacity: .7;
+	padding-top: 5px;
+	padding-right: 14px;
+}
+
+.container {
+	background: #19181b;
+	width: 90%;
+	margin-top: 40px;
+	margin-left: auto;
+    margin-right: auto;
+    border-radius: 15px;
+    border: 3px solid #1d6789;
+    opacity: .9;
+    overflow: auto;
+    -webkit-box-shadow: -5px -6px 12px 0px rgba(31,25,24,0.62);
+	-moz-box-shadow: -5px -6px 12px 0px rgba(31,25,24,0.62);
+	box-shadow: -5px -6px 12px 0px rgba(31,25,24,0.62);
+}
+
+.title {
+	color: #9a3d2e;
+	font-size: 3.2em;
+	text-align: center;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	padding-left: 5px;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	transition: all 0.5s;
+	-webkit-animation: neon 1.5s ease-in-out infinite alternate;
+	-moz-animation: neon 1.5s ease-in-out infinite alternate;
+	animation: neon 1.5s ease-in-out infinite alternate;
+}
+.pitch {
+	color: #faa415;
+	font-size: 1em;
+	text-align: center;
+	width: 94%;
+	margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+}
+.solution {
+	color: #4fafd8;
+	font-size: 1.1em;
+	text-align: center;
+	width: 94%;
+	margin-left: auto;
+    margin-right: auto;
+    padding: 6px;
+}
+.white {
+	color: white;
+	font-size: 1.2em;
+}
+h2 {
+	color: #ba4735;
+	font-size: 1.6em;
+	text-align: center;
+	font-weight: 500;
+}
+.center {
+	display:block;
+    width:100%;
+}
+.slack {
+	text-align: center;
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+}
+.instruc {
+	color: #aac1be;
+	font-size: .9em;
+	text-align: left;
+	width: 97%;
+	margin-left: auto;
+    margin-right: auto;
+    padding-left: 7px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
+code {
+	font-size: 1.2em;
+	background: black;
+	color: #9a3d2e;
+}
+.devinfo {
+	text-align: center;
+}
+.name {
+	color: #4fafd8;
+	font-size: .95em;
+}
+.place {
+	color: #1d6789;
+	font-size: .8em;
+}
+.periklis {
+	width: 50%;
+	display:inline;
+	float: left;
+}
+.traci {
+	width: 50%;
+	display:inline;
+	float: right;
+}
+.devimg {
+	border-radius: 50%;
+	border: 2px solid #ba4735;
+}
+#github {
+	font-size: 1.9em;
+	padding-bottom: 40px;
+	color: #ba4735;
+}
+#github:hover {
+	color: #faa415;
+}
+
+@-webkit-keyframes neon {
+  from {
+    text-shadow: 0 0 10px #d40018, 0 0 10px #d40018, 0 0 20px #d40018, 0 0 30px rgb(201, 60, 37), 0 0 30px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 50px rgb(201, 60, 37);
+  }
+  to {
+    text-shadow: 0 0 5px #6a0f19, 0 0 10px #6a0f19, 0 0 15px #6a0f19, 0 0 20px rgb(201, 60, 37), 0 0 25px rgb(201, 60, 37), 0 0 30px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 45px rgb(201, 60, 37);
+  }
+}
+/* neon glow for Mozilla */
+@-moz-keyframes neon {
+   from {
+    text-shadow: 0 0 10px #d40018, 0 0 10px #d40018, 0 0 20px #d40018, 0 0 30px rgb(201, 60, 37), 0 0 30px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 50px rgb(201, 60, 37);
+  }
+  to {
+    text-shadow: 0 0 5px #6a0f19, 0 0 10px #6a0f19, 0 0 15px #6a0f19, 0 0 20px rgb(201, 60, 37), 0 0 25px rgb(201, 60, 37), 0 0 30px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 45px rgb(201, 60, 37);
+  }
+}
+/* neon glow for modern browsers */
+@keyframes neon {
+   from {
+    text-shadow: 0 0 10px #d40018, 0 0 10px #d40018, 0 0 20px #d40018, 0 0 30px rgb(201, 60, 37), 0 0 30px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 50px rgb(201, 60, 37);
+  }
+  to {
+    text-shadow: 0 0 5px #6a0f19, 0 0 10px #6a0f19, 0 0 15px #6a0f19, 0 0 20px rgb(201, 60, 37), 0 0 25px rgb(201, 60, 37), 0 0 30px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 45px rgb(201, 60, 37);
+  }
+}

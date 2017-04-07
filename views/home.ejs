@@ -6,33 +6,33 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+        <link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
         <link rel="stylesheet" href="/stylesheets/main.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script type="text/javascript" src="/ajax.js"></script>
     </head>
     <body>
         <section class="container">
-            <div class="username">
+
+            <div class="portaltitle"></div>
+
                 <form class="userinput">
-                    <input type="text" name="username" id="username"  placeholder="Your username" maxlength="20" required>
+                    <input type="text" name="username" id="username"  placeholder="Choose a username." maxlength="20" required>
                     </input>
+                    <input type="submit" id="save" value="Save">
                 </form>
-            </div>
+
             <div class="chatbody">
             </div>
-            <div class="chatinput">
+
                 <form class="inputform">
                     <input type="text" name="message" id="message" placeholder="Your message here." maxlength="1000" required>
+                    <input type="submit" id="send" value="Send">
                     </input>
                 </form>
-            </div>
+
         </section>
     </body>
 </html>
