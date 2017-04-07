@@ -24,7 +24,8 @@ $(document).ready(function(){
             url: "/getportal",
             data: {portalid: portalid},
             success: function(portal){
-                console.log(portal);
+                globalportal = portal;
+                showchatroom(portal);
             }
         });
     }
@@ -72,5 +73,7 @@ $(document).ready(function(){
             $(".text").scrollTop($(".text").get(0).scrollHeight);
         });
     }
+
+    getportal();
 
 });
