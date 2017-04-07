@@ -31,6 +31,9 @@ $(document).ready(function(){
 
     $(".userinput").submit(function(){
         username = $("#username").val();
+        if (username) {
+            $('.userinput').css("display", "none");
+        }
         $("#username").val("");
         return false;
     });
@@ -59,10 +62,12 @@ $(document).ready(function(){
         console.log(portal.history);
         var history = portal.history;
         $(".chatbody").html("");
-        $(".chatbody").append("<div class='title'></div><div class='text'></div>");
+        $(".portaltitle").html("");
+        $(".portaltitle").append("<div class='title'></div>");
+        $('.chatbody').append("<div class='text'></div>");
         $(".text").css({
             "overflow-y": "auto",
-            "height" : "80%",
+            "height" : "100%",
             "position" : "relative"
         });
         $(".title").append("This is a portal made by the team: " + portal.teamname)
