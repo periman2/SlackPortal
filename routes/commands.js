@@ -1,8 +1,8 @@
 var bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
-    flash        = require("connect-flash");
-    Portal = require("../models/portals");
-    Team = require("../models/teams");
+    flash        = require("connect-flash"),
+    Portal = require("../models/portals"),
+    Team = require("../models/teams"),
     request = require("request"),
     express     = require("express");
 

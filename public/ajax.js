@@ -9,14 +9,15 @@ $(document).ready(function(){
         console.log(portal);
         if(portalid === portal._id){
             globalportal = portal;
+            // this is now the portal
             showchatroom(portal);
-            //PRINT PORTAL AFTERWARDS
         }
     });
 
     var username = "portaluser";
 
     function getportal(){
+        //this variable is the id of the portal in the database.
         var portalid = window.location.pathname.split("/")[1];
         $.ajax({
             type: "POST",
@@ -47,13 +48,12 @@ $(document).ready(function(){
                 // console.log(portal);
                 globalportal = portal;
                 showchatroom(portal);
-                //PRINT PORTAL
             }
         });
         return false;
     });
 
-    //it shows the chatroom
+    //It shows the chatroom.
     function showchatroom(portal){
         console.log(portal.history);
         var history = portal.history;
@@ -71,7 +71,6 @@ $(document).ready(function(){
             $(".text").append("<h3>" + sender + "</h3><p>" + message + "</p>");
             $(".text").scrollTop($(".text").get(0).scrollHeight);
         });
-        
     }
 
 });
