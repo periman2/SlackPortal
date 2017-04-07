@@ -33,7 +33,7 @@ router.post("/openportal", function(req, res){
                 Portal.findByIdAndUpdate(portal._id, {url: newurl}, {new: true}).exec()
                 .then(function(newportal){
                     // console.log(newportal);
-                    res.json({text: "The url for your new portal is: " + newportal.url});
+                    res.json({text: "The URL for your new portal is: " + newportal.url + "\nShare it with whoever you wish to invite to this channel.\nTo close the portal, use command */closeportal*.\nRemember that once a portal for this channel is closed, it cannot be reopened with this URL."});
                 });
             });
         }
@@ -53,7 +53,7 @@ router.post("/closeportal", function(req, res){
                 res.json({text: "The portal for this channel has closed."});
             });
         } else {
-            res.json({text: "You haven't opened a portal for this channel yet. To create one make the /openportal command."})
+            res.json({text: "You haven't opened a portal for this channel yet. To create one, try the */openportal* command."})
         }
     });
 });
