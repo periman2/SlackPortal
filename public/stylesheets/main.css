@@ -8,6 +8,12 @@ body {
     font-size: 1.4em;
     font-family: 'Space Mono', monospace;
 }
+.checkpoint {
+    width: 100%;
+    height: 100%;
+    background: rgb(79, 39, 28, .8);
+    display: none;
+}
 .title {
     color: white;
     text-align: center;
@@ -19,11 +25,10 @@ body {
     height: 3.4em;
     background: #222125;
     color: #faa415;
-    margin-top: 8px;
     margin-left: auto;
     margin-right: auto;
     border-radius: .3em;
-    font-size: .9em;
+    font-size: 1em;
 }
 input#username {
     background: #222125;
@@ -34,24 +39,59 @@ input#username {
 }
 #save {
     float: right;
-    width: 7%;
-    height: 100%;
+    padding: 2px;
+    position: absolute;
+    width: 8%;
     border-radius: .3em;
     background: #1d6789;
     color: #faa415;
     border: none;
 }
 .chatbody {
-    /*display: block;*/
     position: relative;
-    background: #2f2627;
-    height: 33em;
+    background: #3E3D48;
+    height: 37em;
     margin-top: 20px;
     border-radius: 1em;
-    /*overflow-y: auto;*/
     padding: 5px 20px;
     border: 3px solid #9a3d2e;
 }
+
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #d17734;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 36px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 h3 {
     font-size: 1.2em;
     color: #faa415;
@@ -70,22 +110,27 @@ p {
     margin-left: auto;
     margin-right: auto;
     border-radius: .3em;
-    font-size: 17px;
+    font-size: 1em;
     border: 3px solid #4fafd8;
 }
 input#message{
     border: none;
     height: 100%;
     width: 90%;
-    color: #faa415;
+    color: white;
     background: #2f2627;
 }
 #send {
     float: right;
+    padding: 2px;
+    position: absolute;
     width: 8%;
-    height: 100%;
     border-radius: .3em;
     background: #9a3d2e;
     color: #faa415;
     border: none;
+}
+#send:active {
+    color: #faa415;
+    padding: 4px;
 }
