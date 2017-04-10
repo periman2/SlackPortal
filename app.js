@@ -122,7 +122,7 @@ app.post("/postinput", function(req, res){
     newlog.sender = req.body.username;
     newlog.isfromslack = false;
     //Find the portal with the id of the url parameter. Locates a certain portal within the database and updates it to have that message in its history;
-    Portal.findByIdAndUpdate(req.body.portalid, {$push: {history: newlog}}, {new: true}, function(error, portal){
+    Portal.findByIdAndUpdate(req.body.portalid, {$push: {history: newlog}, expire: new Date()}, {new: true}, function(error, portal){
         // console.log((portal.teamid) + "this is the portal");
         
         Team.find({id: portal.teamid}).exec()
@@ -153,38 +153,47 @@ app.post("/incoming", function(req, res){
         // console.log("the found portal" , portal);
         //CHECK IF IT EXISTS
         if(portal.length > 0){
-            //FIND THE TEAM WITH THE SAME TEAMID INSIDE THE DATABASE IN ORDER TO USE THE TEAMS OAUTH TOKEN
-            Team.find({id: portal[0].teamid}).exec()
-            .then(function(foundteam){
-                var teamstoken = foundteam[0].token;
-                // console.log(token);
-                var data = {form: {
-                    user: req.body.event.user,
-                    token: teamstoken
-                }};
-                //USE THE TOKEN TO GET INFORMATION ABOUT THE USER SENDING THE MESSAGE
-                request.post("https://slack.com/api/users.info", data, function(error, response, body) {
-                    console.log(body);
-                    var info = JSON.parse(body);
-                    if(info.user !== undefined){
-                        var newlog = {};
-                        newlog.message = req.body.event.text;
-                        newlog.senderid = req.body.event.user;
-                        newlog.sender = info.user.name;
-                        newlog.senderavatar = info.user.profile.image_72;
-                        newlog.isfromslack = true;
-                        //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
-                        Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
-                        .then(function(newportal){
-                            console.log("updated portal: " + newportal);
-                            io.emit('new message', newportal);
+            //CHECK IF IS MUTED
+            if(portal[0].muted !== true) {
+                //FIND THE TEAM WITH THE SAME TEAMID INSIDE THE DATABASE IN ORDER TO USE THE TEAMS OAUTH TOKEN
+                Team.find({id: portal[0].teamid}).exec()
+                .then(function(foundteam){
+                    var teamstoken = foundteam[0].token;
+                    // console.log(token);
+                    var data = {form: {
+                        user: req.body.event.user,
+                        token: teamstoken
+                    }};
+                    //USE THE TOKEN TO GET INFORMATION ABOUT THE USER SENDING THE MESSAGE
+                    request.post("https://slack.com/api/users.info", data, function(error, response, body) {
+                        console.log(body);
+                        var info = JSON.parse(body);
+                        if(info.user !== undefined){
+                            var newlog = {};
+                            newlog.message = req.body.event.text;
+                            newlog.senderid = req.body.event.user;
+                            newlog.sender = info.user.name;
+                            newlog.senderavatar = info.user.profile.image_72;
+                            newlog.isfromslack = true;
+                            //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
+                            Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
+                            .then(function(newportal){
+                                console.log("updated portal: " + newportal);
+                                io.emit('new message', newportal);
+                                res.send("ok");
+                            }).catch(function(err){
+                                throw err;
+                            })
+                        } else {
                             res.send("ok");
-                        });
-                    } else {
-                        res.send("ok");
-                    }
-                });
-            });            
+                        }
+                    });
+                }).catch(function(err){
+                    throw err;
+                }); 
+            } else {
+                res.send("ok");
+            }    
         } else {
             res.send("ok");
         }
@@ -241,9 +250,6 @@ io.on('connection', function (socket) {
     console.log("connected");
     socket.on('disconnect', function () {
         console.log('Got disconnect!');
-        // console.log(socket);-
-        // var i = allClients.indexOf(socket);
-        // allClients.splice(i, 1);
     });
 });
 
