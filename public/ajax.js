@@ -1,9 +1,15 @@
 $(document).ready(function(){
 
     var socket = io.connect();
+    
+    var username;
 
     var globalportal = {};
 
+    socket.on("disconnect", function(){
+        socket.emit("deluser", {users: username});
+    });
+    
     socket.on("new message", function(portal){
         var portalid = window.location.pathname.split("/")[1];
         console.log(portal);
@@ -14,7 +20,6 @@ $(document).ready(function(){
         }
     });
 
-    var username = "portaluser";
 
     function getportal(){
         //this variable is the id of the portal in the database.
@@ -32,12 +37,42 @@ $(document).ready(function(){
 
     $(".userinput").submit(function(){
         username = $("#username").val();
+        var portalid = window.location.pathname.split("/")[1];
         if (username) {
             $('.userinput').css("display", "none");
         }
         $("#username").val("");
+        $.ajax({
+            type: "POST",
+            url: "/username",
+            data: {username: username, portalid: portalid},
+            success: function(isuser) {
+                //IF ISUSER IS TRUE THE USER IS ABLE TO USE THE PORTAL IF ITS FALSE THE USER NEEDS TO CHOOSE ANOTHER NAME.
+                console.log(isuser);
+            }
+        });
         return false;
     });
+
+    window.onbeforeunload = function(e) {
+        var portalid = window.location.pathname.split("/")[1];
+        // if(username !== undefined){
+            console.log("oh");
+            $.ajax({
+                type: "POST",
+                url: "/deleteusers",
+                asynch: false,
+                data: {username: username, portalid: portalid},
+                success: function() {
+
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            });
+        // }
+    };
+    
 
     $(".inputform").submit(function(){
         var message = $("#message").val();

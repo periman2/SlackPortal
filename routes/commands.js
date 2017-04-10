@@ -8,11 +8,20 @@ var bodyParser  = require("body-parser"),
 
 var router = express.Router();
 
-var website = "https://a3c39f4f.ngrok.io/";
+var website = "https://a5342780.ngrok.io/";
 
 //===================
 //SLASH COMMANDS START
 //===================
+
+//COMMAND FOR HELPING PEOPLE
+router.post("/portalhelp", function(req, res ){
+    // console.log(req.body);
+    res.json({
+        "text": "*The available commands are:*\n*/openportal - Opens a portal.* \n*/closeportal - Closes a portal that you've already created.* \n*/portalhelp - Shows this information message.*",
+        "username": "Portal"
+    });
+});
 
 //SLASH COMMAND FOR OPENING A PORTAL
 router.post("/openportal", function(req, res){

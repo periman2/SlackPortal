@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 app.use(flash());
 
-var URL = process.env.DATABASEURL || "mongodb://localhost/slackportal2"
+var URL = process.env.DATABASEURL || "mongodb://localhost/slackportal2";
 mongoose.connect(URL);
 var PORT = process.env.PORT || 3000;
 
@@ -38,22 +38,22 @@ app.get("/slack/botauth", function(req, res){
         client_secret: process.env.PORTAL_CLIENT_SECRET,
         code: req.query.code
     }};
-    console.log(data);
+    // console.log(data);
     request.post('https://slack.com/api/oauth.access', data, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var token = JSON.parse(body).access_token;
             // console.log("that's the token   " + token);
             request.post('https://slack.com/api/team.info', {form: {token: token}}, function (error, response, body) {
-                 console.log(JSON.parse(body));
+                //  console.log(JSON.parse(body));
                 if (!error && response.statusCode == 200) {
                     var teamid = JSON.parse(body).team.id;
                     var teamname = JSON.parse(body).team.name;
                     Team.find({name: teamname, id: teamid}, function(err, foundteam){
-                        if(foundteam.length > 0 && foundtam){
-                            return send("Another person from the team already added the app.");
+                        if(foundteam.length > 0 && foundteam){
+                            return res.send("<h1>Another person from the team already added the app.</h1>");
                         }
                         Team.create({name: teamname, id: teamid, token: token}, function(err, newteam){
-                            console.log("this is a new team " + newteam);
+                            // console.log("this is a new team " + newteam);
                             res.redirect("/");
                         });
                     });
@@ -65,7 +65,7 @@ app.get("/slack/botauth", function(req, res){
     });
 });
 
-var website = "https://a3c39f4f.ngrok.io/";
+var website = "https://a5342780.ngrok.io/";
 
 //THIS IS GOING TO REDIRECT TO A SPLASH PAGE
 app.get("/", function(req, res){
@@ -79,7 +79,7 @@ app.get("/slackportal", function(req, res) {
 
 //THIS IS FOR WHEN A USER NAVIGATES TO THE URL OF A PORTAL
 app.get("/:portalid", function(req, res){
-    console.log(req.params.portalid);
+    // console.log(req.params.portalid);
     Portal.findById(req.params.portalid, function(error, portal){
         if(error){
             console.log(error);
@@ -116,18 +116,18 @@ app.post("/getportal", function(req, res){
 
 //THIS IS FIRED WHEN THE USER INPUTS A MESSAGE
 app.post("/postinput", function(req, res){
-    console.log(req.body);
+    // console.log(req.body);
     var newlog = {}
     newlog.message = req.body.message;
     newlog.sender = req.body.username;
     newlog.isfromslack = false;
     //Find the portal with the id of the url parameter. Locates a certain portal within the database and updates it to have that message in its history;
     Portal.findByIdAndUpdate(req.body.portalid, {$push: {history: newlog}}, {new: true}, function(error, portal){
-        console.log((portal.teamid) + "this is the portal");
+        // console.log((portal.teamid) + "this is the portal");
         
         Team.find({id: portal.teamid}).exec()
         .then(function(team){
-            console.log(team, team[0].token);
+            // console.log(team, team[0].token);
             var data = {form: {
                 token: team[0].token,
                 channel: portal.channelid,
@@ -135,7 +135,7 @@ app.post("/postinput", function(req, res){
                 username: req.body.username
             }};
             request.post("https://slack.com/api/chat.postMessage", data, function(error, response, body){
-                console.log(body);
+                // console.log(body);
                 res.send(portal);
             })
             
@@ -145,9 +145,9 @@ app.post("/postinput", function(req, res){
 
 // EVENT API COMMAND THAT GETS EVERY MESSAGE TYPED IN ALL TEAMS
 app.post("/incoming", function(req, res){
-    
-    // console.log("that's the body of the incoming " , req.body);
-    //FIND THE PORTAL INSIDE THE DATABASE TAHT CORRESPONDS TO THAT EVENT'S CHANNEL AND TEAM IF IT EXISTS.
+    // FOR RESTARTING NGROK AND RECONFIGURING THE URL 
+    // res.send(req.body.challenge);
+    // FIND THE PORTAL INSIDE THE DATABASE TAHT CORRESPONDS TO THAT EVENT'S CHANNEL AND TEAM IF IT EXISTS.
     Portal.find({channelid: req.body.event.channel, teamid: req.body.team_id}).exec()
     .then(function(portal){
         // console.log("the found portal" , portal);
@@ -191,12 +191,60 @@ app.post("/incoming", function(req, res){
     });
 });
 
+//ADDS USERNAME TO THE DATABASE
+app.post("/username", function(req, res){
+    Portal.findById(req.body.portalid).exec()
+    .then(function(foundportal){
+        var users = foundportal.users;
+        var isuser = users.indexOf(req.body.username);
+        if(isuser === -1){
+            Portal.findByIdAndUpdate(req.body.portalid, {$push: {users: req.body.username}}, {new: true}).exec()
+            .then(function(portal){
+                // console.log(portal);
+                res.send(true);
+            }).catch(function(error){
+                throw error;
+            }); 
+        } else {
+            res.send(false);
+        }
+    }).catch(function(err){
+        throw err;
+    });
+    
+});
+
+//DELETS USER FROM DB
+app.post("/deleteusers", function(req, res){
+    // console.log("this is the request body of the deleteusers" + req.body.username);
+    if(req.body.username !== undefined){
+        Portal.findByIdAndUpdate(req.body.portalid, {$pull: {users: req.body.username}}, {new: true}).exec()
+        .then(function(portal){
+            console.log(portal.users);
+            res.send("something");
+        }).catch(function(err){
+            throw err;
+        })
+    } else {
+        res.send("ok");
+    }
+});
+
 var server = app.listen(PORT, function() {
     console.log("The Slack Portal server has started");
 });
 
 var io = require('socket.io')(server);
 
+
 io.on('connection', function (socket) {
-  console.log("connected");
+    console.log("connected");
+    socket.on('disconnect', function () {
+        console.log('Got disconnect!');
+        // console.log(socket);-
+        // var i = allClients.indexOf(socket);
+        // allClients.splice(i, 1);
+    });
 });
+
+
