@@ -66,7 +66,7 @@ $(document).ready(function(){
         $(".portaltitle").append("<div class='title'></div>");
         $('.chatbody').append("<div class='text'></div>");
         $(".text").css({
-            "overflow-y": "auto",
+            "overflow-y": "scroll",
             "height" : "100%",
             "position" : "relative"
         });

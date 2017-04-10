@@ -6,6 +6,7 @@ body, html {
 body {
 	background: #2f2627;
 	font-family: 'Space Mono', monospace;
+	text-shadow: 3px 3px 2px rgba(15, 15, 15, 1);
 }
 .icon-bar {
     width: 100%;
@@ -42,6 +43,7 @@ body {
 	font-size: 1em;
 	font-weight: 200;
 	opacity: .7;
+	color: #4fafd8;
 	padding-top: 5px;
 	padding-right: 14px;
 }
@@ -52,18 +54,19 @@ body {
 	margin-top: 40px;
 	margin-left: auto;
     margin-right: auto;
+    margin-bottom: 30px;
     border-radius: 15px;
     border: 3px solid #1d6789;
     opacity: .9;
     overflow: auto;
-    -webkit-box-shadow: -5px -6px 12px 0px rgba(31,25,24,0.62);
-	-moz-box-shadow: -5px -6px 12px 0px rgba(31,25,24,0.62);
-	box-shadow: -5px -6px 12px 0px rgba(31,25,24,0.62);
+    -webkit-box-shadow:  0px 1px 17px 0px rgba(18, 86, 133, 1);
+	-moz-box-shadow:     0px 1px 17px rgba(18, 86, 133, 1);
+	box-shadow:          0px 1px 17px 0px rgba(18, 86, 133, 1);
 }
 
 .title {
 	color: #9a3d2e;
-	font-size: 3.2em;
+	font-size: 3.3em;
 	text-align: center;
 	padding-bottom: 5px;
 	padding-right: 5px;
@@ -77,7 +80,7 @@ body {
 }
 .pitch {
 	color: #faa415;
-	font-size: 1em;
+	font-size: 1.2em;
 	text-align: center;
 	width: 94%;
 	margin-left: auto;
@@ -91,7 +94,8 @@ body {
 	width: 94%;
 	margin-left: auto;
     margin-right: auto;
-    padding: 6px;
+    padding-bottom: 22px;
+    
 }
 .white {
 	color: white;
@@ -99,9 +103,9 @@ body {
 }
 h2 {
 	color: #ba4735;
-	font-size: 1.6em;
+	font-size: 1.74em;
 	text-align: center;
-	font-weight: 500;
+	font-weight: 600;
 }
 .center {
 	display:block;
@@ -154,6 +158,9 @@ code {
 .devimg {
 	border-radius: 50%;
 	border: 2px solid #ba4735;
+	-webkit-box-shadow: 3px 2px 9px 0px rgba(0, 0, 16, 0.8);
+	-moz-box-shadow:    3px 2px 9px 0px rgba(0, 0, 16, 0.8);
+	box-shadow:         3px 2px 9px 0px rgba(0, 0, 16, 0.8);
 }
 #github {
 	font-size: 1.9em;
@@ -166,27 +173,27 @@ code {
 
 @-webkit-keyframes neon {
   from {
-    text-shadow: 0 0 10px #d40018, 0 0 10px #d40018, 0 0 20px #d40018, 0 0 30px rgb(201, 60, 37), 0 0 30px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 50px rgb(201, 60, 37);
+    text-shadow: 0 0 4px #000, 0 0 5px #000, 0 0 5px #000, 0 0 5px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 4px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37);
   }
   to {
-    text-shadow: 0 0 5px #6a0f19, 0 0 10px #6a0f19, 0 0 15px #6a0f19, 0 0 20px rgb(201, 60, 37), 0 0 25px rgb(201, 60, 37), 0 0 30px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 45px rgb(201, 60, 37);
+    text-shadow: 0 0 5px #6a0f19, 0 0 6px #F01A1A, 0 0 6px #F01A1A, 0 0 6px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37);
   }
 }
-/* neon glow for Mozilla */
+/* neon for Mozilla */
 @-moz-keyframes neon {
    from {
-    text-shadow: 0 0 10px #d40018, 0 0 10px #d40018, 0 0 20px #d40018, 0 0 30px rgb(201, 60, 37), 0 0 30px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 50px rgb(201, 60, 37);
+    text-shadow: 0 0 4px #000, 0 0 5px #000, 0 0 5px #000, 0 0 5px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 4px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37);
   }
   to {
-    text-shadow: 0 0 5px #6a0f19, 0 0 10px #6a0f19, 0 0 15px #6a0f19, 0 0 20px rgb(201, 60, 37), 0 0 25px rgb(201, 60, 37), 0 0 30px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 45px rgb(201, 60, 37);
+    text-shadow: 0 0 5px #6a0f19, 0 0 6px #F01A1A, 0 0 6px #F01A1A, 0 0 6px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37);
   }
 }
-/* neon glow for modern browsers */
+/* neon for modern browsers */
 @keyframes neon {
    from {
-    text-shadow: 0 0 10px #d40018, 0 0 10px #d40018, 0 0 20px #d40018, 0 0 30px rgb(201, 60, 37), 0 0 30px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 50px rgb(201, 60, 37);
+    text-shadow: 0 0 4px #000, 0 0 5px #000, 0 0 5px #000, 0 0 5px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 4px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37);
   }
   to {
-    text-shadow: 0 0 5px #6a0f19, 0 0 10px #6a0f19, 0 0 15px #6a0f19, 0 0 20px rgb(201, 60, 37), 0 0 25px rgb(201, 60, 37), 0 0 30px rgb(201, 60, 37), 0 0 40px rgb(201, 60, 37), 0 0 45px rgb(201, 60, 37);
+    text-shadow: 0 0 5px #6a0f19, 0 0 6px #F01A1A, 0 0 6px #F01A1A, 0 0 6px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37);
   }
 }
