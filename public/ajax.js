@@ -39,7 +39,9 @@ $(document).ready(function(){
         username = $("#username").val();
         var portalid = window.location.pathname.split("/")[1];
         if (username) {
-            $('.userinput').css("display", "none");
+            $('.userinput').hide();
+            $(".chatbody").show();
+            $(".inputform").show();
         }
         $("#username").val("");
         $.ajax({
@@ -64,7 +66,6 @@ $(document).ready(function(){
                 asynch: false,
                 data: {username: username, portalid: portalid},
                 success: function() {
-
                 },
                 error: function(err){
                     console.log(err);
@@ -85,8 +86,8 @@ $(document).ready(function(){
             data: {message: message, username: username, portalid: portalid},
             success: function(portal) {
                 // console.log(portal);
-                globalportal = portal;
-                showchatroom(portal);
+                // globalportal = portal;
+                // showchatroom(portal);
             }
         });
         return false;

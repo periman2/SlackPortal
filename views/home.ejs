@@ -19,7 +19,7 @@
             <div class="portaltitle"></div>
 
             <form class="userinput">
-                <input type="text" name="username" id="username"  placeholder="Choose a username." maxlength="20" required>
+                <input type="text" name="username" id="username"  onfocus="this.placeholder = ''" onblur="this.placeholder='Type a username here'"placeholder="Type a username here" maxlength="20" autocomplete="off" required>
                 </input>
                 <button type="submit" id="save" value="Save">Save</button>
             </form>
@@ -28,7 +28,7 @@
             </div>
 
                 <form class="inputform">
-                    <input type="text" name="message" id="message" placeholder="Your message here." maxlength="1000" required>
+                    <input type="text" name="message" id="message" placeholder="Your message here" maxlength="1000" onfocus="this.placeholder = ''" onblur="this.placeholder='Your message here" required>
                     <button type="submit" id="send" value="Send">Send</button>
                     </input>
                 </form>

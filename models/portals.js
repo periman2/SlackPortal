@@ -16,7 +16,7 @@ var PortalSchema = new mongoose.Schema({
     ],
     users: [],
     muted: Boolean,
-    expire: { type: Date, expires: 172800, default: new Date() }
+    expire: { type: Date, expire: 172800, default: new Date() }
 });
 
 module.exports = mongoose.model("Portal", PortalSchema);
