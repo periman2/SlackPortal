@@ -8,7 +8,7 @@ var bodyParser  = require("body-parser"),
 
 var router = express.Router();
 
-var website = "https://a5342780.ngrok.io/";
+var website = "https://86985004.ngrok.io/";
 
 //===================
 //SLASH COMMANDS START
@@ -24,6 +24,9 @@ router.post("/portalhelp", function(req, res ){
 
 //SLASH COMMAND FOR OPENING A PORTAL
 router.post("/openportal", function(req, res){
+    if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
+        return res.send("You're not authorized to do that!");
+    }
     // console.log(req.body);
     Portal.find({teamid: req.body.team_id, channelid : req.body.channel_id}).exec()
     .then(function(foundportal){
@@ -51,6 +54,9 @@ router.post("/openportal", function(req, res){
 
 //SLASH COMMAND FOR CLOSING A PORTAL
 router.post("/closeportal", function(req, res){
+    if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
+        return res.send("You're not authorized to do that!");
+    }
     console.log(req.body);
     Portal.find({teamid: req.body.team_id, channelid : req.body.channel_id}).exec()
     .then(function(foundportal){
@@ -69,6 +75,9 @@ router.post("/closeportal", function(req, res){
 
 //COMMAND TO MUTE A PORTAL
 router.post("/muteportal", function(req, res){
+    if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
+        return res.send("You're not authorized to do that!");
+    }
     // console.log(req.body);
     Portal.find({teamid: req.body.team_id, channelid: req.body.channel_id}).exec()
     .then(function(portal){
@@ -96,6 +105,9 @@ router.post("/muteportal", function(req, res){
 
 //COMMAND TO UNMUTE A PORTAL
 router.post("/unmuteportal", function(req, res){
+    if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
+        return res.send("You're not authorized to do that!");
+    }
     Portal.find({teamid: req.body.team_id, channelid: req.body.channel_id}).exec()
     .then(function(portal){
         if(portal.length > 0){

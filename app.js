@@ -65,8 +65,6 @@ app.get("/slack/botauth", function(req, res){
     });
 });
 
-var website = "https://a5342780.ngrok.io/";
-
 //THIS IS GOING TO REDIRECT TO A SPLASH PAGE
 app.get("/", function(req, res){
     res.render("splash");
@@ -146,6 +144,9 @@ app.post("/postinput", function(req, res){
 // EVENT API COMMAND THAT GETS EVERY MESSAGE TYPED IN ALL TEAMS
 app.post("/incoming", function(req, res){
     console.log(req.body);
+    if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
+        return res.send("You're not authorized to do that!");
+    }
     // FOR RESTARTING NGROK AND RECONFIGURING THE URL 
     // res.send(req.body.challenge);
     // FIND THE PORTAL INSIDE THE DATABASE TAHT CORRESPONDS TO THAT EVENT'S CHANNEL AND TEAM IF IT EXISTS.
