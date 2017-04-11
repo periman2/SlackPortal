@@ -4,8 +4,6 @@ $(document).ready(function(){
     
     var username;
 
-    var globalportal = {};
-
     socket.on("disconnect", function(){
         socket.emit("deluser", {users: username});
     });
@@ -14,8 +12,6 @@ $(document).ready(function(){
         var portalid = window.location.pathname.split("/")[1];
         console.log(portal);
         if(portalid === portal._id){
-            globalportal = portal;
-            // this is now the portal
             showchatroom(portal);
         }
     });
@@ -29,7 +25,6 @@ $(document).ready(function(){
             url: "/getportal",
             data: {portalid: portalid},
             success: function(portal){
-                globalportal = portal;
                 showchatroom(portal);
             }
         });
@@ -38,12 +33,7 @@ $(document).ready(function(){
     $(".userinput").submit(function(){
         username = $("#username").val();
         var portalid = window.location.pathname.split("/")[1];
-        if (username) {
-            $('.userinput').hide();
-            $(".chatbody").show();
-            $(".inputform").show();
-        }
-        $("#username").val("");
+        
         $.ajax({
             type: "POST",
             url: "/username",
@@ -51,6 +41,16 @@ $(document).ready(function(){
             success: function(isuser) {
                 //IF ISUSER IS TRUE THE USER IS ABLE TO USE THE PORTAL IF ITS FALSE THE USER NEEDS TO CHOOSE ANOTHER NAME.
                 console.log(isuser);
+                if(isuser){
+                    if (username) {
+                        $('.userinput').hide();
+                        $(".chatbody").show();
+                        $(".inputform").show();
+                    }
+                    $("#username").val("");
+                } else {
+                    alert("This username is already take for this session. Please choose another one.");
+                }
             }
         });
         return false;
@@ -85,9 +85,6 @@ $(document).ready(function(){
             url: "/postinput",
             data: {message: message, username: username, portalid: portalid},
             success: function(portal) {
-                // console.log(portal);
-                // globalportal = portal;
-                // showchatroom(portal);
             }
         });
         return false;
@@ -111,8 +108,8 @@ $(document).ready(function(){
             var sender = message.sender;
             var message = message.message;
             $(".text").append("<h3>" + sender + "</h3><p>" + message + "</p>");
-            $(".text").scrollTop($(".text").get(0).scrollHeight);
         });
+        $(".text").scrollTop($(".text").get(0).scrollHeight);
     }
 
     getportal();

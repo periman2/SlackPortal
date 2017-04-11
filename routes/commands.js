@@ -29,7 +29,7 @@ router.post("/openportal", function(req, res){
     .then(function(foundportal){
         if(foundportal.length > 0){
             // console.log(foundportal + "this is the found portal");
-            res.json({text: "You've already created a portal using this channel. Your portal's url is: " + foundportal[0].url, response_type: "in_channel"});
+            res.json({text: "You've already created a portal using this channel. Your portal's url is: " + foundportal[0].url});
         } else {
             var newportal = {};
             newportal.teamid = req.body.team_id;

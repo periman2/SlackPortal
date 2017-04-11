@@ -136,7 +136,7 @@ app.post("/postinput", function(req, res){
             }};
             request.post("https://slack.com/api/chat.postMessage", data, function(error, response, body){
                 // console.log(body);
-                res.send(portal);
+                res.send("done");
             })
             
         });
