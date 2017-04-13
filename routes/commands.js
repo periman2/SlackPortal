@@ -8,7 +8,7 @@ var bodyParser  = require("body-parser"),
 
 var router = express.Router();
 
-var website = "https://eebb5e4c.ngrok.io/";
+var website = "https://slackteamportal.herokuapp.com/";
 
 //=====================
 //RESPONSE CONSTRUCTORS
