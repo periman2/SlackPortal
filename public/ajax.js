@@ -105,7 +105,7 @@ $(document).ready(function(){
         history.forEach(function(message){
             // console.log(message);
             var sender = message.sender;
-            var text = message.message;
+            var text = $(message.message).text();
             // var avatar = message.senderavatar;
             // console.log("this is the messge" , message);
             if (message.isfromslack) {
