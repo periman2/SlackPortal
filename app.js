@@ -232,11 +232,11 @@ app.post("/username", function(req, res){
 
 //DELETS USER FROM DB
 app.post("/deleteusers", function(req, res){
-    // console.log("this is the request body of the deleteusers" + req.body.username);
+    console.log("this is the request body of the deleteusers" + req.body.username);
     if(req.body.username !== undefined){
         Portal.findByIdAndUpdate(req.body.portalid, {$pull: {users: req.body.username}}, {new: true}).exec()
         .then(function(portal){
-            console.log(portal.users);
+            console.log("those are the new users!" + portal.users);
             res.send("something");
         }).catch(function(err){
             throw err;

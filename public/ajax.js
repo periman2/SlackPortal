@@ -56,22 +56,19 @@ $(document).ready(function(){
         return false;
     });
 
-    window.onbeforeunload = function(e) {
+    window.onbeforeunload = function() {
         var portalid = window.location.pathname.split("/")[1];
-        // if(username !== undefined){
-            console.log("oh");
-            $.ajax({
-                type: "POST",
-                url: "/deleteusers",
-                asynch: false,
-                data: {username: username, portalid: portalid},
-                success: function() {
-                },
-                error: function(err){
-                    console.log(err);
-                }
-            });
-        // }
+        $.ajax({
+            type: "POST",
+            url: "/deleteusers",
+            asynch: false,
+            data: {username: username, portalid: portalid},
+            success: function() {
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
     };
     
 

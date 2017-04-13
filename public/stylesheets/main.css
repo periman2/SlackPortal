@@ -11,7 +11,7 @@ body {
 .checkpoint {
     width: 100%;
     height: 100%;
-    background: rgb(79, 39, 28, .8);
+    background: rgba(79, 39, 28, .8);
     display: none;
 }
 .title {

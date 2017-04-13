@@ -8,18 +8,104 @@ var bodyParser  = require("body-parser"),
 
 var router = express.Router();
 
-var website = "https://86985004.ngrok.io/";
+var website = "https://eebb5e4c.ngrok.io/";
+
+//=====================
+//RESPONSE CONSTRUCTORS
+//=====================
+
+function makebody(title, titlelink, fallback, color){
+    var milliseconds = (new Date()).getTime() / 1000;
+    if(!color){
+        color = "black";
+    }
+    var body = {
+        "attachments": [
+            {
+                "fallback": fallback,
+                "color": color,
+                "title": title,
+                "title_link": titlelink,
+                "footer": "Portal API",
+                "ts": milliseconds
+            }
+        ]
+    }
+    return body;
+}
+
+function makefield(body, title, value) {
+    var fields = body.attachments[0].fields;
+    if(!body.attachments[0].fields){
+        body.attachments[0].fields = [];
+    }
+    if(value.constructor === Array){
+        value = value.join();
+    }
+    var obj = {
+        "title": title,
+        "value": value,
+        "short": false
+    }
+    body.attachments[0].fields.push(obj);
+    return body;
+}
+//=========================
+//RESPONSE CONSTRUCTORS END
+//=========================
+
 
 //===================
 //SLASH COMMANDS START
 //===================
 
-//COMMAND FOR HELPING PEOPLE
-router.post("/portalhelp", function(req, res ){
-    // console.log(req.body);
-    res.json({
-        "text": "*The available commands are:*\n*/openportal* - Opens a portal. \n*/closeportal* - Closes a portal that you've already created. \n*/muteportal* - Stops messages from slack from reaching the portal. \n*/unmuteportal* - Lets messages from slack go through the portal. (Works only if the portal was muted) \n*/portalhelp* - Shows this information message.",
+
+router.post("/portalinfo", function(req, res){
+    if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
+        return res.send("You're not authorized to do that!");
+    }
+    Portal.find({teamid: req.body.team_id, channelid : req.body.channel_id}).exec()
+    .then(function(foundportal){
+        if(foundportal.length > 0){
+            // console.log(foundportal + "this is the found portal");
+            var users = foundportal[0].users;
+            var url = foundportal[0].url;
+            var state;
+            if(users.length === 0){
+                users = "This portal has no live users right now."
+            }
+            if(foundportal[0].muted){
+                state = "Muted (To change state use the /portalunmute command)";
+            } else {
+                state = "Live (To change state use the /portalmute command)";
+            }
+            var title = "This is your portal's information"
+            var titlelink = foundportal[0].url
+            var fallback = "Your portal's information is: \n" + "Url: " + foundportal[0].url + "\nState: " + state + "\nUsers: " + users;
+            var portalinfo = makebody(title, titlelink, fallback);
+            portalinfo = makefield(portalinfo, "State", state);
+            portalinfo = makefield(portalinfo, "Users", users);
+            portalinfo = makefield(portalinfo, "URL", url);
+            res.json(portalinfo);
+        } else {
+            res.json({text: "There is no open portal for this channel right now."});
+        }
     });
+});
+
+//COMMAND FOR HELPING PEOPLE
+router.post("/portalhelp", function(req, res){
+    // console.log(req.body);
+    var fallback = "*The available commands are:*\n*/portalopen* - Opens a portal. \n*/portalclose* - Closes a portal that you've already created. \n*/portalmute* - Stops messages from slack from reaching the portal. \n*/portalunmute* - Lets messages from slack go through the portal. (Works only if the portal was muted) \n*/portalhelp* - Shows this information message.n*/portalinfo* - Shows information about the live portal."
+    var title = "Available commands: ";
+    var portal = makebody(title, "", fallback,"#9a3d2e");
+    portal = makefield(portal, "/portalopen", "Opens a portal.");
+    portal = makefield(portal, "/portalclose", "Closes a portal that you've already created.");
+    portal = makefield(portal, "/muteportal", "Stops messages from slack from reaching the portal.");
+    portal = makefield(portal, "/portalunmute", "Lets messages from slack go through the portal. (Works only if the portal was muted)");
+    portal = makefield(portal, "/portalinfo", "Shows the information of the open portal");
+    portal = makefield(portal, "/portalhelp", "Shows this response.");
+    res.json(portal);
 });
 
 //SLASH COMMAND FOR OPENING A PORTAL
@@ -32,7 +118,7 @@ router.post("/openportal", function(req, res){
     .then(function(foundportal){
         if(foundportal.length > 0){
             // console.log(foundportal + "this is the found portal");
-            res.json({text: "You've already created a portal using this channel. Your portal's url is: " + foundportal[0].url});
+            res.json({text: "There already is an open portal on this channel.\nThe portal's URL is: " + foundportal[0].url});
         } else {
             var newportal = {};
             newportal.teamid = req.body.team_id;
