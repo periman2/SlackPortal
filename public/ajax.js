@@ -59,7 +59,6 @@ $(document).ready(function(){
 
     window.onbeforeunload = function() {
         var portalid = window.location.pathname.split("/")[1];
-<<<<<<< HEAD
         $.ajax({
             type: "POST",
             url: "/deleteusers",
@@ -71,22 +70,6 @@ $(document).ready(function(){
                 console.log(err);
             }
         });
-=======
-        // if(username !== undefined){
-            //console.log("oh");
-            $.ajax({
-                type: "POST",
-                url: "/deleteusers",
-                asynch: false,
-                data: {username: username, portalid: portalid},
-                success: function() {
-                },
-                error: function(err){
-                    console.log(err);
-                }
-            });
-        // }
->>>>>>> 041930869aeedbaf27749bde9acf94eb92bd22a6
     };
     
 
