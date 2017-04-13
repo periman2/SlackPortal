@@ -8,7 +8,7 @@ var bodyParser  = require("body-parser"),
 
 var router = express.Router();
 
-var website = "https://86985004.ngrok.io/";
+var website = "https://708ac1a4.ngrok.io/";
 
 //===================
 //SLASH COMMANDS START
@@ -18,12 +18,12 @@ var website = "https://86985004.ngrok.io/";
 router.post("/portalhelp", function(req, res ){
     // console.log(req.body);
     res.json({
-        "text": "*The available commands are:*\n*/openportal* - Opens a portal. \n*/closeportal* - Closes a portal that you've already created. \n*/muteportal* - Stops messages from slack from reaching the portal. \n*/unmuteportal* - Lets messages from slack go through the portal. (Works only if the portal was muted) \n*/portalhelp* - Shows this information message.",
+        "text": "*Available commands are:*\n*/portalopen* - Open a portal. \n*/portalclose* - Close the portal that you've opened within your channel. \n*/portalmute* - Block messages in Slack from reaching the portal. \n*/portalunmute* - Allow messages in Slack to resume going to the portal. (Works only if the portal was muted.) \n*/portalhelp* - Show this list again.",
     });
 });
 
 //SLASH COMMAND FOR OPENING A PORTAL
-router.post("/openportal", function(req, res){
+router.post("/portalopen", function(req, res){
     if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
         return res.send("You're not authorized to do that!");
     }
@@ -32,7 +32,7 @@ router.post("/openportal", function(req, res){
     .then(function(foundportal){
         if(foundportal.length > 0){
             // console.log(foundportal + "this is the found portal");
-            res.json({text: "You've already created a portal using this channel. Your portal's url is: " + foundportal[0].url});
+            res.json({text: "You've already created a portal from this channel. Your portal's URL is: " + foundportal[0].url});
         } else {
             var newportal = {};
             newportal.teamid = req.body.team_id;
@@ -45,7 +45,7 @@ router.post("/openportal", function(req, res){
                 Portal.findByIdAndUpdate(portal._id, {url: newurl}, {new: true}).exec()
                 .then(function(newportal){
                     // console.log(newportal);
-                    res.json({text: "The URL for your new portal is: " + newportal.url + "\nShare it with whoever you wish to invite to this channel.\nTo close the portal, use command */closeportal*.\nRemember that once a portal for this channel is closed, it cannot be reopened with this URL.\nThe portal will automatically close in 48 hours if it remains inactive."});
+                    res.json({text: "The URL for your new portal is: " + newportal.url + "\nShare it with whoever you wish to invite to this channel.\nTo close the portal, use command */portalclose*.\nRemember that once a portal for this channel is closed, it cannot be reopened with this URL.\nThe portal will automatically close in 48 hours if it remains inactive.\nFor a list of available commands, try */portalhelp*."});
                 });
             });
         }
@@ -53,7 +53,7 @@ router.post("/openportal", function(req, res){
 });
 
 //SLASH COMMAND FOR CLOSING A PORTAL
-router.post("/closeportal", function(req, res){
+router.post("/portalclose", function(req, res){
     if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
         return res.send("You're not authorized to do that!");
     }
@@ -74,7 +74,7 @@ router.post("/closeportal", function(req, res){
 });
 
 //COMMAND TO MUTE A PORTAL
-router.post("/muteportal", function(req, res){
+router.post("/portalmute", function(req, res){
     if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
         return res.send("You're not authorized to do that!");
     }
@@ -87,7 +87,7 @@ router.post("/muteportal", function(req, res){
                 Portal.findByIdAndUpdate(portal[0]._id, {$set: {muted: true}}, {new: true}).exec()
                 .then(function(updatedportal){
                     console.log(updatedportal.muted, updatedportal.history);
-                    res.json({text: "The portal of this channel is now muted."});
+                    res.json({text: "This channel's portal is now muted."});
                 }).catch(function(err){
                     throw err;
                 })
@@ -95,7 +95,7 @@ router.post("/muteportal", function(req, res){
                 res.json({text:"The portal of this channel is already muted."});
             }
         } else {
-            res.json({text:"This channel doesn't have an open portal yet. To create one use the */openportal* command"});
+            res.json({text:"This channel doesn't have an open portal yet. To create one, use the */portalopen* command"});
         }
         
     }).catch(function(err){
@@ -104,7 +104,7 @@ router.post("/muteportal", function(req, res){
 });
 
 //COMMAND TO UNMUTE A PORTAL
-router.post("/unmuteportal", function(req, res){
+router.post("/portalunmute", function(req, res){
     if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
         return res.send("You're not authorized to do that!");
     }
@@ -124,7 +124,7 @@ router.post("/unmuteportal", function(req, res){
                 res.json({text:"The portal of this channel is already live."});
             }
         } else {
-            res.json({text:"This channel doesn't have an open portal yet. To create one use the */openportal* command"});
+            res.json({text:"This channel doesn't have an open portal yet. To create one use the */portalopen* command"});
         }
     }).catch(function(err){
         throw err;
