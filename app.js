@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 app.use(flash());
 
-var URL = process.env.DATABASEURL || "mongodb://localhost/slackportal3";
+var URL = process.env.DATABASEURL || "mongodb://localhost/slackportal4";
 mongoose.connect(URL);
 var PORT = process.env.PORT || 3000;
 
@@ -103,8 +103,11 @@ app.post("/getportal", function(req, res){
             }};
             request.post("https://slack.com/api/channels.info", data, function(error, response, body){
                 var info = JSON.parse(body);
-                var channelname = info.channel.name;
-                portal.channelname = channelname;
+                if(info.channel !== undefined){
+                    var channelname = info.channel.name;
+                    portal.channelname = channelname;
+                }
+                
                 res.send(portal);
             })
         });
