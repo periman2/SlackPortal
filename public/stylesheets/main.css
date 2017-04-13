@@ -44,8 +44,7 @@ input#username {
 }
 #save {
     display: block;
-    padding: 2px;
-    width: 8%;
+    padding: 6px;
     border-radius: .3em;
     background: #1d6789;
     color: #faa415;
@@ -53,20 +52,23 @@ input#username {
     margin-left: auto;
     margin-right: auto;
     margin-top: 4%;
+    box-shadow: 2px 1px 6px #000;
 }
-
+#save:hover {
+    color: #1d6789;
+    background: #faa415;
+}
 .chatbody {
     display: none;
     position: relative;
     background: #3E3D48;
-    height: 37em;
+    height: 80vh;
     margin-top: 20px;
     border-radius: 1em;
     padding: 5px 20px;
-    border: 3px solid #9a3d2e;
+    border: 4px solid #9a3d2e;
+    box-shadow: 2px 1px 6px #000;
 }
-
-
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
@@ -100,38 +102,54 @@ input#username {
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
-
+.avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 15%;
+    padding-right: 3px;
+    padding-top: 0
+    padding-left: 0;
+    padding-bottom: 4px;
+    float: left;
+}
 h3 {
-    font-size: 1.2em;
+    font-size: 1.25em;
     color: #faa415;
+    padding: 0;
+    margin-top: 0;
 }
 p {
-    font-size: 1em;
+    font-size: 1.1em;
     color: white;
+    font-family: Arial;
+    font-size: 1.1em;
+    padding: 0;
+    padding-bottom: 0;
 }
 .inputform {
     display: none;
     padding: 10px;
     width: 100%;
-    height: 3.5em;
+    height: 8.5vh;
     color: #faa415;
     background: #2f2627;
     margin-top: 15px;
     margin-left: auto;
     margin-right: auto;
     border-radius: .3em;
-    font-size: 1em;
+    font-size: 1.1em;
     border: 3px solid #4fafd8;
+    font-family: Arial;
+    box-shadow: 2px 1px 6px #000;
 }
 input#message{
     border: none;
     height: 100%;
-    width: 90%;
+    width: 100%;
     color: white;
     background: #2f2627;
-    outline: none;
 }
-#send {
+/*#send {
     display: none;
     float: right;
     padding: 2px;
@@ -145,4 +163,4 @@ input#message{
 #send:active {
     color: #faa415;
     padding: 4px;
-}
+}*/

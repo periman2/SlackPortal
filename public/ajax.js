@@ -10,7 +10,7 @@ $(document).ready(function(){
     
     socket.on("new message", function(portal){
         var portalid = window.location.pathname.split("/")[1];
-        console.log(portal);
+        // console.log(portal);
         if(portalid === portal._id){
             showchatroom(portal);
         }
@@ -46,6 +46,7 @@ $(document).ready(function(){
                         $('.userinput').hide();
                         $(".chatbody").show();
                         $(".inputform").show();
+                        getportal();
                     }
                     $("#username").val("");
                 } else {
@@ -58,6 +59,7 @@ $(document).ready(function(){
 
     window.onbeforeunload = function() {
         var portalid = window.location.pathname.split("/")[1];
+<<<<<<< HEAD
         $.ajax({
             type: "POST",
             url: "/deleteusers",
@@ -69,6 +71,22 @@ $(document).ready(function(){
                 console.log(err);
             }
         });
+=======
+        // if(username !== undefined){
+            //console.log("oh");
+            $.ajax({
+                type: "POST",
+                url: "/deleteusers",
+                asynch: false,
+                data: {username: username, portalid: portalid},
+                success: function() {
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            });
+        // }
+>>>>>>> 041930869aeedbaf27749bde9acf94eb92bd22a6
     };
     
 
@@ -102,13 +120,19 @@ $(document).ready(function(){
         });
         $(".title").append("This is a portal made by the team: " + portal.teamname)
         history.forEach(function(message){
+            // console.log(message);
             var sender = message.sender;
-            var message = message.message;
-            $(".text").append("<h3>" + sender + "</h3><p>" + message + "</p>");
+            var text = message.message;
+            // var avatar = message.senderavatar;
+            // console.log("this is the messge" , message);
+            if (message.isfromslack) {
+                var avatar = message.senderavatar;
+            } else {
+                var avatar = "./portaluser.png";
+            }
+            $(".text").append("<img src=" + avatar + " alt='avatar' class='avatar'>" + "<h3>" + sender + "</h3><p>" + text + "</p>");
         });
         $(".text").scrollTop($(".text").get(0).scrollHeight);
     }
-
-    getportal();
 
 });
