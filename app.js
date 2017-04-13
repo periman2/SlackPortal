@@ -148,7 +148,7 @@ app.post("/postinput", function(req, res){
 
 // EVENT API COMMAND THAT GETS EVERY MESSAGE TYPED IN ALL TEAMS
 app.post("/incoming", function(req, res){
-    // console.log(req.body);
+    console.log(req.body);
     if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
         return res.send("You're not authorized to do that!");
     }
