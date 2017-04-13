@@ -244,7 +244,7 @@ app.post("/deleteusers", function(req, res){
 });
 
 var server = app.listen(PORT, function() {
-    console.log("The Slack Portal server has started");
+    console.log("The Slack Portal server has started.");
 });
 
 var io = require('socket.io')(server);
@@ -253,7 +253,7 @@ var io = require('socket.io')(server);
 io.on('connection', function (socket) {
     console.log("connected");
     socket.on('disconnect', function () {
-        console.log('Got disconnect!');
+        console.log('You were disconnected!');
     });
 });
 

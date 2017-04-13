@@ -18,7 +18,7 @@ var website = "https://708ac1a4.ngrok.io/";
 router.post("/portalhelp", function(req, res ){
     // console.log(req.body);
     res.json({
-        "text": "*The available commands are:*\n*/openportal* - Opens a portal. \n*/closeportal* - Closes a portal that you've already created. \n*/muteportal* - Stops messages from slack from reaching the portal. \n*/unmuteportal* - Lets messages from slack go through the portal. (Works only if the portal was muted) \n*/portalhelp* - Shows this information message.",
+        "text": "*Available commands are:*\n*/portalopen* - Open a portal. \n*/portalclose* - Close the portal that you've opened within your channel. \n*/portalmute* - Block messages in Slack from reaching the portal. \n*/portalunmute* - Allow messages in Slack to resume going to the portal. (Works only if the portal was muted.) \n*/portalhelp* - Show this list again.",
     });
 });
 
@@ -32,7 +32,7 @@ router.post("/portalopen", function(req, res){
     .then(function(foundportal){
         if(foundportal.length > 0){
             // console.log(foundportal + "this is the found portal");
-            res.json({text: "You've already created a portal using this channel. Your portal's url is: " + foundportal[0].url});
+            res.json({text: "You've already created a portal from this channel. Your portal's URL is: " + foundportal[0].url});
         } else {
             var newportal = {};
             newportal.teamid = req.body.team_id;
@@ -45,7 +45,7 @@ router.post("/portalopen", function(req, res){
                 Portal.findByIdAndUpdate(portal._id, {url: newurl}, {new: true}).exec()
                 .then(function(newportal){
                     // console.log(newportal);
-                    res.json({text: "The URL for your new portal is: " + newportal.url + "\nShare it with whoever you wish to invite to this channel.\nTo close the portal, use command */closeportal*.\nRemember that once a portal for this channel is closed, it cannot be reopened with this URL.\nThe portal will automatically close in 48 hours if it remains inactive."});
+                    res.json({text: "The URL for your new portal is: " + newportal.url + "\nShare it with whoever you wish to invite to this channel.\nTo close the portal, use command */portalclose*.\nRemember that once a portal for this channel is closed, it cannot be reopened with this URL.\nThe portal will automatically close in 48 hours if it remains inactive.\nFor a list of available commands, try */portalhelp*."});
                 });
             });
         }
