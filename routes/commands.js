@@ -95,7 +95,6 @@ router.post("/portalinfo", function(req, res){
 //COMMAND FOR HELPING PEOPLE
 router.post("/portalhelp", function(req, res){
     // console.log(req.body);
-<<<<<<< HEAD
     var fallback = "*The available commands are:*\n*/portalopen* - Opens a portal. \n*/portalclose* - Closes a portal that you've already created. \n*/portalmute* - Stops messages from slack from reaching the portal. \n*/portalunmute* - Lets messages from slack go through the portal. (Works only if the portal was muted) \n*/portalhelp* - Shows this information message.n*/portalinfo* - Shows information about the live portal."
     var title = "Available commands: ";
     var portal = makebody(title, "", fallback,"#9a3d2e");
