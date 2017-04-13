@@ -133,7 +133,9 @@ app.post("/postinput", function(req, res){
                 token: team[0].token,
                 channel: portal.channelid,
                 text: req.body.message,
-                username: req.body.username
+                username: req.body.username,
+                unfurl_links: true,
+                unfurl_media: true
             }};
             request.post("https://slack.com/api/chat.postMessage", data, function(error, response, body){
                 // console.log(body);
@@ -146,65 +148,65 @@ app.post("/postinput", function(req, res){
 
 // EVENT API COMMAND THAT GETS EVERY MESSAGE TYPED IN ALL TEAMS
 app.post("/incoming", function(req, res){
-    console.log(req.body);
+    // console.log(req.body);
     if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
         return res.send("You're not authorized to do that!");
     }
     // FOR RESTARTING NGROK AND RECONFIGURING THE URL 
-    // res.send(req.body.challenge);
+    res.send(req.body.challenge);
     // FIND THE PORTAL INSIDE THE DATABASE TAHT CORRESPONDS TO THAT EVENT'S CHANNEL AND TEAM IF IT EXISTS.
-    Portal.find({channelid: req.body.event.channel, teamid: req.body.team_id}).exec()
-    .then(function(portal){
-        // console.log("the found portal" , portal);
-        //CHECK IF IT EXISTS
-        if(portal.length > 0){
-            //CHECK IF IS MUTED
-            if(portal[0].muted !== true || req.body.event.username !== undefined) {
-                //FIND THE TEAM WITH THE SAME TEAMID INSIDE THE DATABASE IN ORDER TO USE THE TEAMS OAUTH TOKEN
-                Team.find({id: portal[0].teamid}).exec()
-                .then(function(foundteam){
-                    var teamstoken = foundteam[0].token;
-                    // console.log(token);
-                    var data = {form: {
-                        user: req.body.event.user,
-                        token: teamstoken
-                    }};
-                    //USE THE TOKEN TO GET INFORMATION ABOUT THE USER SENDING THE MESSAGE
-                    request.post("https://slack.com/api/users.info", data, function(error, response, body) {
-                        console.log(body);
-                        var newlog = {};
-                        newlog.message = req.body.event.text;
-                        newlog.senderid = req.body.event.user;
-                        var info = JSON.parse(body);
-                        if(info.user !== undefined){
-                            newlog.sender = info.user.name;
-                            newlog.senderavatar = info.user.profile.image_72;
-                            newlog.isfromslack = true;
-                        } else {
-                            newlog.sender = req.body.event.username;
-                            newlog.isfromslack = false;
-                        }
-                        //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
-                        Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
-                        .then(function(newportal){
-                            console.log("updated portal: " + newportal);
-                            io.emit('new message', newportal);
-                            res.send("ok");
-                        }).catch(function(err){
-                            throw err;
-                        })
+    // Portal.find({channelid: req.body.event.channel, teamid: req.body.team_id}).exec()
+    // .then(function(portal){
+    //     // console.log("the found portal" , portal);
+    //     //CHECK IF IT EXISTS
+    //     if(portal.length > 0){
+    //         //CHECK IF IS MUTED
+    //         if(portal[0].muted !== true || req.body.event.username !== undefined) {
+    //             //FIND THE TEAM WITH THE SAME TEAMID INSIDE THE DATABASE IN ORDER TO USE THE TEAMS OAUTH TOKEN
+    //             Team.find({id: portal[0].teamid}).exec()
+    //             .then(function(foundteam){
+    //                 var teamstoken = foundteam[0].token;
+    //                 // console.log(token);
+    //                 var data = {form: {
+    //                     user: req.body.event.user,
+    //                     token: teamstoken
+    //                 }};
+    //                 //USE THE TOKEN TO GET INFORMATION ABOUT THE USER SENDING THE MESSAGE
+    //                 request.post("https://slack.com/api/users.info", data, function(error, response, body) {
+    //                     console.log(body);
+    //                     var newlog = {};
+    //                     newlog.message = req.body.event.text;
+    //                     newlog.senderid = req.body.event.user;
+    //                     var info = JSON.parse(body);
+    //                     if(info.user !== undefined){
+    //                         newlog.sender = info.user.name;
+    //                         newlog.senderavatar = info.user.profile.image_72;
+    //                         newlog.isfromslack = true;
+    //                     } else {
+    //                         newlog.sender = req.body.event.username;
+    //                         newlog.isfromslack = false;
+    //                     }
+    //                     //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
+    //                     Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
+    //                     .then(function(newportal){
+    //                         console.log("updated portal: " + newportal);
+    //                         io.emit('new message', newportal);
+    //                         res.send("ok");
+    //                     }).catch(function(err){
+    //                         throw err;
+    //                     })
                         
-                    });
-                }).catch(function(err){
-                    throw err;
-                }); 
-            } else {
-                res.send("ok");
-            }    
-        } else {
-            res.send("ok");
-        }
-    });
+    //                 });
+    //             }).catch(function(err){
+    //                 throw err;
+    //             }); 
+    //         } else {
+    //             res.send("ok");
+    //         }    
+    //     } else {
+    //         res.send("ok");
+    //     }
+    // });
 });
 
 //ADDS USERNAME TO THE DATABASE
