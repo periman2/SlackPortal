@@ -165,7 +165,7 @@ router.post("/portalopen", function(req, res){
                         var newurl = website + portal._id;
                         Portal.findByIdAndUpdate(portal._id, {url: newurl}, {new: true}).exec()
                         .then(function(newportal){
-                            // console.log(newportal);
+                            console.log("this is the new portal"  + newportal);
                             var fallback = "The URL for your new portal is: " + newportal.url + "\nShare it with whoever you wish to invite to this channel.\nTo close the portal, use command */portalclose*.\nRemember that once a portal for this channel is closed, it cannot be reopened with this URL.\nThe portal will automatically close in 48 hours if it remains inactive.\nFor a list of available commands, try */portalhelp*."
                             var title = "This is your new Portal: "
                             var portal = makebody(title, newportal.url, fallback,"#9a3d2e");
