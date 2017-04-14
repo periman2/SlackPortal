@@ -112,7 +112,7 @@ router.post("/portalopen", function(req, res){
     if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
         return res.send("You're not authorized to do that!");
     }
-    // console.log(req.body);
+    console.log(req.body);
     Portal.find({teamid: req.body.team_id, channelid : req.body.channel_id}).exec()
     .then(function(foundportal){
         if(foundportal.length > 0){
