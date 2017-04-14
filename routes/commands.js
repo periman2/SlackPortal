@@ -132,8 +132,10 @@ router.post("/portalopen", function(req, res){
             } else {
                 return res.send("Something went wrong!")
             }
+            console.log("this is the channel and token: " + channel + team.token);
+            var url = "https://slack.com/api/" + channel;
             
-            request.post("https://slack.com/api/" + channel, data, function(error, response, body){
+            request.post(url, data, function(error, response, body){
                 var info = JSON.parse(body);
                 console.log(info);
                 if (info.channel){
