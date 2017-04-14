@@ -120,7 +120,7 @@ router.post("/portalopen", function(req, res){
             console.log("this is the team" + team);
             var channel = req.body.channel_id[0];
             var data = {form: {
-                token: team.token,
+                token: team[0].token,
                 channel: req.body.channel_id
             }};
             if(channel === "C"){ 
@@ -132,7 +132,7 @@ router.post("/portalopen", function(req, res){
             } else {
                 return res.send("Something went wrong!")
             }
-            console.log("this is the channel and token: " + channel + team.token);
+            console.log("this is the channel and token: " + channel + team[0].token);
             var url = "https://slack.com/api/" + channel;
             
             request.post(url, data, function(error, response, body){
