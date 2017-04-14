@@ -18,6 +18,25 @@ body {
     color: white;
     text-align: center;
     margin: 8px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.68);
+}
+.titleline1 {
+    font-size: .9em;
+    padding: 0;
+    color: white;
+}
+.titleline2 {
+    font-size: .9em;
+    padding: 0;
+    color: white;
+}
+.titleline3 {
+    font-size: .9em;
+    padding: 0;
+    color: white;
+}
+.colortitle {
+    color: #9a3d2e;
 }
 .userinput {
     display: block;
@@ -102,15 +121,21 @@ input#username {
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
+.avattext {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+}
 .avatar {
     width: 54px;
     height: 54px;
     border-radius: 15%;
     padding-right: 3px;
-    padding-top: 0;
+    padding-top: 0
     padding-left: 0;
     padding-bottom: 4px;
-    float: left;
+}
+.flexnone {
+    width: 80%;
 }
 h3 {
     font-size: 1.25em;
@@ -149,18 +174,3 @@ input#message{
     color: white;
     background: #2f2627;
 }
-/*#send {
-    display: none;
-    float: right;
-    padding: 2px;
-    position: absolute;
-    width: 8%;
-    border-radius: .3em;
-    background: #9a3d2e;
-    color: #faa415;
-    border: none;
-}
-#send:active {
-    color: #faa415;
-    padding: 4px;
-}*/
