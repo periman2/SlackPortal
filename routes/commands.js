@@ -115,35 +115,69 @@ router.post("/portalopen", function(req, res){
     console.log(req.body);
     Portal.find({teamid: req.body.team_id, channelid : req.body.channel_id}).exec()
     .then(function(foundportal){
-        if(foundportal.length > 0){
-            // console.log(foundportal + "this is the found portal");
-            res.json({text: "There already is an open portal on this channel.\nThe portal's URL is: " + foundportal[0].url});
+        Team.find({id: foundportal[0].teamid}).exec()
+        .then(function(team){
+            console.log("this is the team" + team);
+            var channel = req.body.channel_id[0];
+            var data = {form: {
+                token: team.token,
+                channel: req.body.channel_id
+            }};
+            if(channel === "C"){ 
+                channel = "channels.info";
+            } else if(channel === "G") {
+                channel = "groups.info";
+            } else if(channel === "D"){
+                channel = "im.history";
+            } else {
+                return res.send("Something went wrong!")
+            }
+            
+            request.post("https://slack.com/api/" + channel, data, function(error, response, body){
+                var info = JSON.parse(body);
+                console.log(info);
+                if (info.channel){
+                    info = info.channel;
+                } else if(info.group){
+                    info = info.group;
+                } else if(info.messages){
+                    info = "Direct Message channel";
+                } else {
+                    return res.send("Seomthing went wrong with the slack response.");
+                }
+                if(foundportal.length > 0){
+                    // console.log(foundportal + "this is the found portal");
+                    res.json({text: "There already is an open portal on this channel.\nThe portal's URL is: " + foundportal[0].url});
 
-        } else {
-            var newportal = {};
-            newportal.teamid = req.body.team_id;
-            newportal.teamname = req.body.team_domain;
-            newportal.channelid = req.body.channel_id;
-            newportal.muted = false;
-            Portal.create(newportal, function(error, portal){
-                // console.log("this is a new portal" + portal);
-                var newurl = website + portal._id;
-                Portal.findByIdAndUpdate(portal._id, {url: newurl}, {new: true}).exec()
-                .then(function(newportal){
-                    // console.log(newportal);
-                    var fallback = "The URL for your new portal is: " + newportal.url + "\nShare it with whoever you wish to invite to this channel.\nTo close the portal, use command */portalclose*.\nRemember that once a portal for this channel is closed, it cannot be reopened with this URL.\nThe portal will automatically close in 48 hours if it remains inactive.\nFor a list of available commands, try */portalhelp*."
-                    var title = "This is your new Portal: "
-                    var portal = makebody(title, newportal.url, fallback,"#9a3d2e");
-                    portal = makefield(portal, "URL", newportal.url);
-                    portal = makefield(portal, "State", "Live (To change state use the /portalmute command)");
-                    portal = makefield(portal, "Open", "To close the portal use the /portalclose command.\n");
-                    portal = makefield(portal, "Reminder", "Once a portal for this channel is closed, it cannot be reopened with this URL.\nThe portal will automatically close in 48 hours if it remains inactive.\nFor a list of available commands, try /portalhelp");
-                    res.json(portal);
-                });
+                } else {
+                    var newportal = {};
+                    newportal.cretor = {name: req.body.user_name, id:req.body.user_id}
+                    newportal.teamid = req.body.team_id;
+                    newportal.teamname = team.name;
+                    newportal.channelid = req.body.channel_id;
+                    newportal.muted = false;
+                    Portal.create(newportal, function(error, portal){
+                        // console.log("this is a new portal" + portal);
+                        var newurl = website + portal._id;
+                        Portal.findByIdAndUpdate(portal._id, {url: newurl}, {new: true}).exec()
+                        .then(function(newportal){
+                            // console.log(newportal);
+                            var fallback = "The URL for your new portal is: " + newportal.url + "\nShare it with whoever you wish to invite to this channel.\nTo close the portal, use command */portalclose*.\nRemember that once a portal for this channel is closed, it cannot be reopened with this URL.\nThe portal will automatically close in 48 hours if it remains inactive.\nFor a list of available commands, try */portalhelp*."
+                            var title = "This is your new Portal: "
+                            var portal = makebody(title, newportal.url, fallback,"#9a3d2e");
+                            portal = makefield(portal, "URL", newportal.url);
+                            portal = makefield(portal, "State", "Live (To change state use the /portalmute command)");
+                            portal = makefield(portal, "Open", "To close the portal use the /portalclose command.\n");
+                            portal = makefield(portal, "Reminder", "Once a portal for this channel is closed, it cannot be reopened with this URL.\nThe portal will automatically close in 48 hours if it remains inactive.\nFor a list of available commands, try /portalhelp");
+                            res.json(portal);
+                        });
+                    });
+                }
             });
-        }
+        });
     });
 });
+
 
 //SLASH COMMAND FOR CLOSING A PORTAL
 router.post("/portalclose", function(req, res){
