@@ -185,8 +185,7 @@ app.post("/incoming", function(req, res){
                             res.send("ok");
                         }).catch(function(err){
                             throw err;
-                        })
-                        
+                        });                        
                     });
                 }).catch(function(err){
                     throw err;
