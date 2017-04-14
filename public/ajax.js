@@ -96,12 +96,12 @@ $(document).ready(function(){
         $(".portaltitle").html("");
         $(".portaltitle").append("<div class='title'></div>");
         $('.chatbody').append("<div class='text'></div>");
+        $(".title").append("<h2>This is a portal made by the team: " + portal.teamname  + "</h3><h3>within the channel: " + portal.channelname + "</h3><h3><em>Creator: </em>" + portal.creator.name  + "</h3>")
         $(".text").css({
             "overflow-y": "scroll",
             "height" : "100%",
             "position" : "relative"
         });
-        $(".title").append("<h2>This is a portal made by the team: " + portal.teamname  + "</h3><h3>within the channel: " + portal.channelname + "</h3><h3><em>Creator: </em>" + portal.creator.name  + "</h3>")
         history.forEach(function(message){
             // console.log(message);
             var sender = message.sender;
