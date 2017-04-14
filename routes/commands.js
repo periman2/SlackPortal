@@ -117,7 +117,7 @@ router.post("/portalopen", function(req, res){
     .then(function(foundportal){
         Team.find({id: req.body.team_id}).exec()
         .then(function(team){
-            console.log("this is the team" + team);
+            // console.log("this is the team" + team);
             var channel = req.body.channel_id[0];
             var data = {form: {
                 token: team[0].token,
@@ -128,21 +128,22 @@ router.post("/portalopen", function(req, res){
             } else if(channel === "G") {
                 channel = "groups.info";
             } else if(channel === "D"){
-                channel = "im.history";
+                channel = "team.info";
+                data = {form: {token: team[0].token}};
             } else {
                 return res.send("Something went wrong!")
             }
-            console.log("this is the channel and token: " + channel + team[0].token);
+            // console.log("this is the channel and token: " + channel + team[0].token);
             var url = "https://slack.com/api/" + channel;
             
             request.post(url, data, function(error, response, body){
                 var info = JSON.parse(body);
                 console.log(info);
                 if (info.channel){
-                    info = info.channel;
+                    info = info.channel.name;
                 } else if(info.group){
-                    info = info.group;
-                } else if(info.messages){
+                    info = info.group.name;
+                } else if(info.team){
                     info = "Direct Message channel";
                 } else {
                     return res.send("Seomthing went wrong with the slack response.");
@@ -153,10 +154,11 @@ router.post("/portalopen", function(req, res){
 
                 } else {
                     var newportal = {};
-                    newportal.cretor = {name: req.body.user_name, id:req.body.user_id}
+                    newportal.creator = {name: req.body.user_name, id: req.body.user_id};
                     newportal.teamid = req.body.team_id;
-                    newportal.teamname = team.name;
+                    newportal.teamname = team[0].name;
                     newportal.channelid = req.body.channel_id;
+                    newportal.channelname = info;
                     newportal.muted = false;
                     Portal.create(newportal, function(error, portal){
                         // console.log("this is a new portal" + portal);

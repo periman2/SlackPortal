@@ -5,6 +5,7 @@ var PortalSchema = new mongoose.Schema({
     teamid: String,
     teamname: String,
     channelid: String,
+    channelname: String,
     creator: {name: String, id: String},
     history: [
         {

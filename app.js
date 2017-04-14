@@ -95,24 +95,12 @@ app.get("/:portalid", function(req, res){
 //THIS IS FIRED WHEN THE USER FIRST OPENS PORTAL
 app.post("/getportal", function(req, res){
     Portal.findById(req.body.portalid, function(error, portal){
-        Team.find({id: portal.teamid}).exec()
-        .then(function(team){
-            var data = {form: {
-                token: team[0].token,
-                channel: portal.channelid
-            }};
-            request.post("https://slack.com/api/channels.info", data, function(error, response, body){
-                var info = JSON.parse(body);
-                if(info.channel !== undefined){
-                    var channelname = info.channel.name;
-                    portal.channelname = channelname;
-                }
-                
-                res.send(portal);
-            })
-        });
+        if(error){
+            console.log(error);
+            return res.send("error happened");
+        }
+        res.send(portal);
     });
-
 });
 
 //THIS IS FIRED WHEN THE USER INPUTS A MESSAGE
