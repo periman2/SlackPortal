@@ -115,7 +115,7 @@ router.post("/portalopen", function(req, res){
     console.log(req.body);
     Portal.find({teamid: req.body.team_id, channelid : req.body.channel_id}).exec()
     .then(function(foundportal){
-        Team.find({id: foundportal[0].teamid}).exec()
+        Team.find({id: req.body.team_id}).exec()
         .then(function(team){
             console.log("this is the team" + team);
             var channel = req.body.channel_id[0];
