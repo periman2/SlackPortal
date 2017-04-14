@@ -66,10 +66,12 @@ body {
 .title {
 	color: #9a3d2e;
 	font-size: 3.3em;
+	margin-bottom: 0;
 	text-align: center;
-	padding-bottom: 5px;
+	padding-bottom: 0;
 	padding-right: 5px;
 	padding-left: 5px;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.68);
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
 	transition: all 0.5s;
@@ -84,7 +86,8 @@ body {
 	width: 94%;
 	margin-left: auto;
   margin-right: auto;
-  padding: 5px;
+  margin-top: 0;
+  padding: 2px;
 }
 .solution {
 	color: #4fafd8;
@@ -93,7 +96,7 @@ body {
 	width: 94%;
 	margin-left: auto;
   margin-right: auto;
-  padding-bottom: 22px;
+  padding-bottom: 35px;
     
 }
 .white {
@@ -119,23 +122,24 @@ h2 {
 }
 .instruc {
 	color: #aac1be;
-	font-size: .9em;
+	font-size: 1em;
 	text-align: left;
 	width: 97%;
 	margin-left: auto;
   margin-right: auto;
   padding-left: 7px;
-  padding-bottom: 3px;
+  padding-bottom: 35px;
   padding-top: 3px;
 }
 code {
-	font-size: 1.2em;
+	font-size: 1.3em;
 	background: black;
 	color: #9a3d2e;
+	text-shadow: none;
 }
 .casts {
 	width: 100%;
-	margin: 0;
+	margin-bottom: 35px;
 	padding: 0;
 	text-align: center;
 }
@@ -180,30 +184,112 @@ code {
 #github:hover {
 	color: #faa415;
 }
-
+/* Neon Title Animation */
 @-webkit-keyframes neon {
   from {
-    text-shadow: 0 0 4px #000, 0 0 5px #000, 0 0 5px #000, 0 0 5px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 4px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37);
+    text-shadow: 0 0 2px #000, 0 0 2px #000, 0 0 2px #000, 0 0 2px rgb(201, 60, 37), 0 0 2px rgb(201, 60, 37), 0 0 2px rgb(201, 60, 37), 0 0 3px rgb(201, 60, 37), 0 0 2px rgb(201, 60, 37);
   }
   to {
-    text-shadow: 0 0 5px #6a0f19, 0 0 6px #F01A1A, 0 0 6px #F01A1A, 0 0 6px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37);
+    text-shadow: 0 1px 1px #6a0f19, 0 1px 1px #F01A1A, 0 1px 2px #F01A1A, 0 1px 1px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37), 0 1px 2px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37);
   }
 }
-/* neon for Mozilla */
+/* Neon for Mozilla */
 @-moz-keyframes neon {
    from {
-    text-shadow: 0 0 4px #000, 0 0 5px #000, 0 0 5px #000, 0 0 5px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 4px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37);
+    text-shadow: 0 0 2px #000, 0 0 2px #000, 0 0 2px #000, 0 0 2px rgb(201, 60, 37), 0 0 2px rgb(201, 60, 37), 0 0 2px rgb(201, 60, 37), 0 0 3px rgb(201, 60, 37), 0 0 2px rgb(201, 60, 37);
   }
   to {
-    text-shadow: 0 0 5px #6a0f19, 0 0 6px #F01A1A, 0 0 6px #F01A1A, 0 0 6px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37);
+    text-shadow: 0 0 1px #6a0f19, 0 0 1px #F01A1A, 0 0 2px #F01A1A, 0 0 1px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37), 0 0 2px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37);
   }
 }
-/* neon for modern browsers */
+/* Neon for modern browsers */
 @keyframes neon {
    from {
-    text-shadow: 0 0 4px #000, 0 0 5px #000, 0 0 5px #000, 0 0 5px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 4px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37);
+    text-shadow: 0 0 2px #000, 0 0 2px #000, 0 0 2px #000, 0 0 2px rgb(201, 60, 37), 0 0 2px rgb(201, 60, 37), 0 0 2px rgb(201, 60, 37), 0 0 3px rgb(201, 60, 37), 0 0 2px rgb(201, 60, 37);
   }
   to {
-    text-shadow: 0 0 5px #6a0f19, 0 0 6px #F01A1A, 0 0 6px #F01A1A, 0 0 6px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37), 0 0 5px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37), 0 0 6px rgb(201, 60, 37);
+    text-shadow: 0 0 1px #6a0f19, 0 0 1px #F01A1A, 0 0 2px #F01A1A, 0 0 1px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37), 0 0 2px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37);
+  }
+}
+
+/* Portal Animation by @peris */
+.portal {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 0;
+  margin-right: auto;
+  margin-left: auto;
+  background: transparent;
+  text-align: center;
+}
+.mysvg {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background: transparent;
+  padding-bottom: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  background: transparent;
+  text-align: center;
+}
+
+#light {
+  stroke-dasharray: 25686.380859375px;
+  stroke-dashoffset: -25686.380859375px;
+  fill: none;
+  stroke-width: 0.9px;
+  stroke: #f0a770;
+  opacity: 0.9;
+  translateZ(0);
+}
+
+.first {
+  webkit-animation: dash 12s ease-in;
+  animation: dash 12s ease-in;
+  translateZ(0)
+}
+
+.bigagain {
+  webkit-animation: bigagain 3s linear;
+  animation: bigagain 3s linear;
+  translateZ(0)
+}
+
+.backfromzero {
+  webkit-animation: backfromzero 3s linear;
+  animation: backfromzero 3s linear;
+  translateZ(0)
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 16000;
+  }
+}
+
+@keyframes bigagain {
+  from {
+    stroke-dashoffset: 16000;
+    stroke: #f0a770;
+    translateZ(0);
+  }
+  to  {
+    stroke-dashoffset: 0;
+    stroke: #458cd9;
+    translateZ(0);
+  }
+}
+
+@keyframes backfromzero {
+  from {
+    stroke-dashoffset: 0;
+    stroke: #458cd9;
+    translateZ(0);
+  }
+  to {
+    stroke-dashoffset: 16000;
+    stroke: #f0a770;
+    translateZ(0);
   }
 }

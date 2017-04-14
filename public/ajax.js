@@ -96,7 +96,7 @@ $(document).ready(function(){
         $(".portaltitle").html("");
         $(".portaltitle").append("<div class='title'></div>");
         $('.chatbody').append("<div class='text'></div>");
-        $(".title").append("<h2>This is a portal made by the team: " + portal.teamname  + "</h3><h3>within the channel: " + portal.channelname + "</h3><h3><em>Creator: </em>" + portal.creator.name  + "</h3>")
+        $(".title").append("<h2 class='titleline1'>This is a portal made by the team: <span class='colortitle'> " + portal.teamname  + "</span></h2><h3 class='titleline2'>within the channel: <spanclass='colortitle'> " + portal.channelname + "</span></h3><h3 class='titleline3'><em>Creator: </em><span class='colortitle'> " + portal.creator.name  + "</span></h3>")
         $(".text").css({
             "overflow-y": "scroll",
             "height" : "100%",
@@ -114,7 +114,8 @@ $(document).ready(function(){
             } else {
                 var avatar = "./portaluser.png";
             }
-            $(".text").append("<img src=" + avatar + " alt='avatar' class='avatar'>" + "<h3>" + sender + "</h3><p>" + text + "</p>");
+            $(".text").append(
+                "<div class='avattext'><img src=" + avatar + " alt='avatar' class='avatar'>" + "<div class='flexnone'><h3>" + sender + "</h3><p>" + text + "</p></div></div>");
         });
         $(".text").scrollTop($(".text").get(0).scrollHeight);
     }
