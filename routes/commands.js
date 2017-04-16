@@ -74,13 +74,13 @@ router.post("/portalinfo", function(req, res){
                 users = "This portal has no live users right now."
             }
             if(foundportal[0].muted){
-                state = "Muted (To change state use the /portalunmute command)";
+                state = "Muted (To change state, use the /portalunmute command)";
             } else {
-                state = "Live (To change state use the /portalmute command)";
+                state = "Live (To change state, use the /portalmute command)";
             }
             var title = "This is your portal's information"
             var titlelink = foundportal[0].url
-            var fallback = "Your portal's information is: \n" + "Url: " + foundportal[0].url + "\nState: " + state + "\nUsers: " + users;
+            var fallback = "Your portal's information is: \n" + "URL: " + foundportal[0].url + "\nState: " + state + "\nUsers: " + users;
             var portalinfo = makebody(title, titlelink, fallback);
             portalinfo = makefield(portalinfo, "State", state);
             portalinfo = makefield(portalinfo, "Users", users);
@@ -100,10 +100,10 @@ router.post("/portalhelp", function(req, res){
     var portal = makebody(title, "", fallback,"#9a3d2e");
     portal = makefield(portal, "/portalopen", "Opens a portal.");
     portal = makefield(portal, "/portalclose", "Closes a portal that you've already created.");
-    portal = makefield(portal, "/muteportal", "Stops messages from slack from reaching the portal.");
-    portal = makefield(portal, "/portalunmute", "Lets messages from slack go through the portal. (Works only if the portal was muted)");
-    portal = makefield(portal, "/portalinfo", "Shows the information of the open portal");
-    portal = makefield(portal, "/portalhelp", "Shows this response.");
+    portal = makefield(portal, "/muteportal", "Stops messages in Slack from reaching the portal.");
+    portal = makefield(portal, "/portalunmute", "Allows messages from Slack to reach the portal. (Works only if the portal was muted)");
+    portal = makefield(portal, "/portalinfo", "Show info on a portal, including its current state, users and URL.");
+    portal = makefield(portal, "/portalhelp", "Shows all available commands.");
     res.json(portal);
 });
 
@@ -146,7 +146,7 @@ router.post("/portalopen", function(req, res){
                 } else if(info.team){
                     info = "Direct Message channel";
                 } else {
-                    return res.send("Seomthing went wrong with the slack response.");
+                    return res.send("Something went wrong with the Slack response.");
                 }
                 if(foundportal.length > 0){
                     // console.log(foundportal + "this is the found portal");
@@ -167,11 +167,11 @@ router.post("/portalopen", function(req, res){
                         .then(function(newportal){
                             console.log("this is the new portal"  + newportal);
                             var fallback = "The URL for your new portal is: " + newportal.url + "\nShare it with whoever you wish to invite to this channel.\nTo close the portal, use command */portalclose*.\nRemember that once a portal for this channel is closed, it cannot be reopened with this URL.\nThe portal will automatically close in 48 hours if it remains inactive.\nFor a list of available commands, try */portalhelp*."
-                            var title = "This is your new Portal: "
+                            var title = "This is your new portal: "
                             var portal = makebody(title, newportal.url, fallback,"#9a3d2e");
                             portal = makefield(portal, "URL", newportal.url);
-                            portal = makefield(portal, "State", "Live (To change state use the /portalmute command)");
-                            portal = makefield(portal, "Open", "To close the portal use the /portalclose command.\n");
+                            portal = makefield(portal, "State", "Live (To change state, use the /portalmute command)");
+                            portal = makefield(portal, "Open", "To close the portal, use the /portalclose command.\n");
                             portal = makefield(portal, "Reminder", "Once a portal for this channel is closed, it cannot be reopened with this URL.\nThe portal will automatically close in 48 hours if it remains inactive.\nFor a list of available commands, try /portalhelp");
                             res.json(portal);
                         });
@@ -223,7 +223,7 @@ router.post("/portalmute", function(req, res){
                     throw err;
                 })
             } else {
-                res.json({text:"The portal of this channel is already muted."});
+                res.json({text:"This channel's portal is already muted."});
             }
         } else {
             res.json({text:"This channel doesn't have an open portal yet. To create one, use the */portalopen* command"});
@@ -247,12 +247,12 @@ router.post("/portalunmute", function(req, res){
                 Portal.findByIdAndUpdate(portal[0]._id, {$set: {muted: false}}, {new: true}).exec()
                 .then(function(updatedportal){
                     console.log(updatedportal.muted, updatedportal.history);
-                    res.json({text: "*The portal of this channel is now live.*"});
+                    res.json({text: "*This channel's portal is now live.*"});
                 }).catch(function(err){
                     throw err;
                 })
             } else {
-                res.json({text:"The portal of this channel is already live."});
+                res.json({text:"This channel's portal is already live."});
             }
         } else {
             res.json({text:"This channel doesn't have an open portal yet. To create one use the */portalopen* command"});

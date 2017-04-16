@@ -96,7 +96,7 @@ $(document).ready(function(){
         $(".portaltitle").html("");
         $(".portaltitle").append("<div class='title'></div>");
         $('.chatbody').append("<div class='text'></div>");
-        $(".title").append("<h2 class='titleline1'>This is a portal made by the team: <span class='colortitle'> " + portal.teamname  + "</span></h2><h3 class='titleline2'>within the channel: <spanclass='colortitle'> " + portal.channelname + "</span></h3><h3 class='titleline3'><em>Creator: </em><span class='colortitle'> " + portal.creator.name  + "</span></h3>")
+        $(".title").append("<h2 class='titleline1'>This is a portal made by the team: <span class='colortitle'> " + portal.teamname  + "</span></h2><h3 class='titleline2'>within the channel: <span class='colortitle'> " + portal.channelname + "</span></h3><h3 class='titleline3'>Its creator: <span class='colortitle'> " + portal.creator.name  + "</span></h3>")
         $(".text").css({
             "overflow-y": "scroll",
             "height" : "100%",
