@@ -143,6 +143,10 @@ app.post("/incoming", function(req, res){
     if(req.body.event.message){
         return res.send("ok");
     }
+    if(req.body.event.subtype === "message_deleted")  {
+        console.log("a message was just deleted");
+        return res.send("ok");
+    }
     // FOR RESTARTING NGROK AND RECONFIGURING THE URL 
     // res.send(req.body.challenge);
     // FIND THE PORTAL INSIDE THE DATABASE TAHT CORRESPONDS TO THAT EVENT'S CHANNEL AND TEAM IF IT EXISTS.
