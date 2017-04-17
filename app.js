@@ -164,7 +164,7 @@ app.post("/incoming", function(req, res){
                     }};
                     //USE THE TOKEN TO GET INFORMATION ABOUT THE USER SENDING THE MESSAGE
                     request.post("https://slack.com/api/users.info", data, function(error, response, body) {
-                        console.log(body);
+                        console.log("this is the user's info: " + body);
                         var newlog = {};
                         newlog.message = req.body.event.text;
                         newlog.senderid = req.body.event.user;

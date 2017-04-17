@@ -112,7 +112,7 @@ router.post("/portalopen", function(req, res){
     if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
         return res.send("You're not authorized to do that!");
     }
-    console.log(req.body);
+    // console.log(req.body);
     Portal.find({teamid: req.body.team_id, channelid : req.body.channel_id}).exec()
     .then(function(foundportal){
         Team.find({id: req.body.team_id}).exec()
@@ -138,7 +138,7 @@ router.post("/portalopen", function(req, res){
             
             request.post(url, data, function(error, response, body){
                 var info = JSON.parse(body);
-                console.log(info);
+                // console.log(info);
                 if (info.channel){
                     info = info.channel.name;
                 } else if(info.group){
@@ -165,7 +165,7 @@ router.post("/portalopen", function(req, res){
                         var newurl = website + portal._id;
                         Portal.findByIdAndUpdate(portal._id, {url: newurl}, {new: true}).exec()
                         .then(function(newportal){
-                            console.log("this is the new portal"  + newportal);
+                            // console.log("this is the new portal"  + newportal);
                             var fallback = "The URL for your new portal is: " + newportal.url + "\nShare it with whoever you wish to invite to this channel.\nTo close the portal, use command */portalclose*.\nRemember that once a portal for this channel is closed, it cannot be reopened with this URL.\nThe portal will automatically close in 48 hours if it remains inactive.\nFor a list of available commands, try */portalhelp*."
                             var title = "This is your new portal: "
                             var portal = makebody(title, newportal.url, fallback,"#9a3d2e");
@@ -188,11 +188,11 @@ router.post("/portalclose", function(req, res){
     if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
         return res.send("You're not authorized to do that!");
     }
-    console.log(req.body);
+    // console.log(req.body);
     Portal.find({teamid: req.body.team_id, channelid : req.body.channel_id}).exec()
     .then(function(foundportal){
         if(foundportal.length > 0){
-            console.log(foundportal + "this is the found portal");
+            // console.log(foundportal + "this is the found portal");
             Portal.remove({_id: foundportal[0]._id}).exec()
             .then(function(){
                 // console.log(newportal);
@@ -217,7 +217,7 @@ router.post("/portalmute", function(req, res){
                 // console.log(portal);
                 Portal.findByIdAndUpdate(portal[0]._id, {$set: {muted: true}}, {new: true}).exec()
                 .then(function(updatedportal){
-                    console.log(updatedportal.muted, updatedportal.history);
+                    // console.log(updatedportal.muted, updatedportal.history);
                     res.json({text: "This channel's portal is now muted."});
                 }).catch(function(err){
                     throw err;
@@ -246,7 +246,7 @@ router.post("/portalunmute", function(req, res){
                 // console.log(portal);
                 Portal.findByIdAndUpdate(portal[0]._id, {$set: {muted: false}}, {new: true}).exec()
                 .then(function(updatedportal){
-                    console.log(updatedportal.muted, updatedportal.history);
+                    // console.log(updatedportal.muted, updatedportal.history);
                     res.json({text: "*This channel's portal is now live.*"});
                 }).catch(function(err){
                     throw err;
