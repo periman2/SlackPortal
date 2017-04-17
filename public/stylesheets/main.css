@@ -17,26 +17,20 @@ body {
 .title {
     color: white;
     text-align: center;
-    margin: 8px;
+    margin-top: 5px;
+    margin-right: auto;
+    margin-left: auto;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.68);
 }
-.titleline1 {
+.titleline1, .titleline2, .titleline3 {
     font-size: .9em;
-    padding: 0;
+    margin: 0;
+    padding: 1px;
     color: white;
-}
-.titleline2 {
-    font-size: .9em;
-    padding: 0;
-    color: white;
-}
-.titleline3 {
-    font-size: .9em;
-    padding: 0;
-    color: white;
+    letter-spacing: -1px;
 }
 .colortitle {
-    color: #9a3d2e;
+    color: #4fafd8;
 }
 .userinput {
     display: block;
@@ -81,7 +75,7 @@ input#username {
     display: none;
     position: relative;
     background: #3E3D48;
-    height: 80vh;
+    height: 77vh;
     margin-top: 20px;
     border-radius: 1em;
     padding: 5px 20px;
@@ -142,6 +136,7 @@ h3 {
     color: #faa415;
     padding: 0;
     margin-top: 0;
+    letter-spacing: -1.5px;
 }
 p {
     font-size: 1.1em;
@@ -155,7 +150,7 @@ p {
     display: none;
     padding: 10px;
     width: 100%;
-    height: 8.5vh;
+    height: 8.4vh;
     color: #faa415;
     background: #2f2627;
     margin-top: 15px;
