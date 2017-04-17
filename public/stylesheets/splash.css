@@ -1,12 +1,12 @@
 body, html {
-	margin:0;
+  margin:0;
   padding:0;
   box-sizing: border-box;
 }
 body {
-	background: #2f2627;
-	font-family: 'Space Mono', monospace;
-	text-shadow: 3px 3px 2px rgba(15, 15, 15, 1);
+  background: #2f2627;
+  font-family: 'Space Mono', monospace;
+  text-shadow: 3px 3px 2px rgba(15, 15, 15, 1);
 }
 .icon-bar {
   width: 100%;
@@ -15,8 +15,8 @@ body {
   display: block;
   border: none;
   -webkit-box-shadow: 7px 6px 5px 0px rgba(31,25,24,0.32);
-	-moz-box-shadow: 7px 6px 5px 0px rgba(31,25,24,0.32);
-	box-shadow: 7px 6px 5px 0px rgba(31,25,24,0.32);
+  -moz-box-shadow: 7px 6px 5px 0px rgba(31,25,24,0.32);
+  box-shadow: 7px 6px 5px 0px rgba(31,25,24,0.32);
 }
 
 .icon-bar a {
@@ -32,26 +32,24 @@ body {
   opacity: .8;
 }
 .fa-facebook-official, .fa-twitter-square {
-	font-size: 1.7em;
+  font-size: 1.7em;
 }
 .icon-bar a:hover {
   color: #4fafd8;
 }
-
 #shareit {
-	font-size: 1em;
-	font-weight: 200;
-	opacity: .7;
-	color: #4fafd8;
-	padding-top: 5px;
-	padding-right: 14px;
+  font-size: 1em;
+  font-weight: 200;
+  opacity: .7;
+  color: #4fafd8;
+  padding-top: 9px;
+  padding-right: 14px;
 }
-
 .container {
-	background: #19181b;
-	width: 90%;
-	margin-top: 40px;
-	margin-left: auto;
+  background: #19181b;
+  width: 90%;
+  margin-top: 40px;
+  margin-left: auto;
   margin-right: auto;
   margin-bottom: 30px;
   border-radius: 15px;
@@ -59,131 +57,159 @@ body {
   opacity: .9;
   overflow: auto;
   -webkit-box-shadow:  0px 1px 17px 0px rgba(18, 86, 133, 1);
-	-moz-box-shadow:     0px 1px 17px rgba(18, 86, 133, 1);
-	box-shadow:          0px 1px 17px 0px rgba(18, 86, 133, 1);
+  -moz-box-shadow:     0px 1px 17px rgba(18, 86, 133, 1);
+  box-shadow:          0px 1px 17px 0px rgba(18, 86, 133, 1);
 }
-
 .title {
-	color: #9a3d2e;
-	font-size: 3.3em;
-	margin-bottom: 0;
-	text-align: center;
-	padding-bottom: 0;
-	padding-right: 5px;
-	padding-left: 5px;
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.68);
-	-webkit-transition: all 0.5s;
-	-moz-transition: all 0.5s;
-	transition: all 0.5s;
-	-webkit-animation: neon 1.5s ease-in-out infinite alternate;
-	-moz-animation: neon 1.5s ease-in-out infinite alternate;
-	animation: neon 1.5s ease-in-out infinite alternate;
+  color: #9a3d2e;
+  font-size: 3.3em;
+  margin-bottom: 0;
+  text-align: center;
+  padding-bottom: 0;
+  padding-right: 5px;
+  padding-left: 5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.68);
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+  -webkit-animation: neon 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon 1.5s ease-in-out infinite alternate;
+  animation: neon 1.5s ease-in-out infinite alternate;
 }
 .pitch {
-	color: #faa415;
-	font-size: 1.2em;
-	text-align: center;
-	width: 94%;
-	margin-left: auto;
+  color: #faa415;
+  font-size: 1.2em;
+  text-align: center;
+  width: 94%;
+  margin-left: auto;
   margin-right: auto;
   margin-top: 0;
   padding: 2px;
 }
 .solution {
-	color: #4fafd8;
-	font-size: 1.1em;
-	text-align: center;
-	width: 94%;
-	margin-left: auto;
+  color: #4fafd8;
+  font-size: 1.1em;
+  text-align: center;
+  width: 94%;
+  margin-left: auto;
   margin-right: auto;
   padding-bottom: 35px;
     
 }
 .white {
-	color: white;
-	font-size: 1.2em;
+  color: white;
+  font-size: 1.2em;
 }
 h2 {
-	color: #ba4735;
-	font-size: 1.74em;
-	text-align: center;
-	font-weight: 600;
+  color: #ba4735;
+  font-size: 1.78em;
+  text-align: center;
+  font-weight: 600;
 }
 .center {
-	display:block;
-   width:100%;
+  display:block;
+  width:100%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 0;
 }
 .slack {
-	text-align: center;
-	margin-left: auto;
+  text-align: center;
+  margin-left: auto;
   margin-right: auto;
   display: block;
-
+  padding-bottom: 15px;
+}
+.slackimg {
+  border: 4px solid #4fafd8;
+  border-radius: 15px;
+  padding: 4px;
+}
+.slackimg:hover {
+  border: 4px solid #faa415;
 }
 .instruc {
-	color: #aac1be;
-	font-size: 1em;
-	text-align: left;
-	width: 97%;
-	margin-left: auto;
+  color: #aac1be;
+  font-size: 1em;
+  text-align: left;
+  width: 97%;
+  margin-left: auto;
   margin-right: auto;
   padding-left: 7px;
   padding-bottom: 35px;
   padding-top: 3px;
 }
 code {
-	font-size: 1.3em;
-	background: black;
-	color: #9a3d2e;
-	text-shadow: none;
+  font-size: 1.3em;
+  background: black;
+  color: #9a3d2e;
+  text-shadow: none;
 }
 .casts {
-	width: 100%;
-	margin-bottom: 35px;
-	padding: 0;
-	text-align: center;
+  width: 100%;
+  margin-bottom: 35px;
+  padding: 0;
+  text-align: center;
 }
 .cast {
-	width: 50%;
-	padding: 10px;
-	border-radius: ;
+  width: 50%;
+  padding: 10px;
+  border-radius: ;
 }
 .devinfo {
-	text-align: center;
+  text-align: center;
 }
 .name {
-	color: #4fafd8;
-	font-size: .95em;
+  color: #4fafd8;
+  font-size: .95em;
 }
 .place {
-	color: #1d6789;
-	font-size: .8em;
+  color: #1d6789;
+  font-size: .8em;
 }
 .periklis {
-	width: 50%;
-	display:inline;
-	float: left;
+  width: 50%;
+  display:inline;
+  float: left;
 }
 .traci {
-	width: 50%;
-	display:inline;
-	float: right;
+  width: 50%;
+  display:inline;
+  float: right;
 }
 .devimg {
-	border-radius: 50%;
-	border: 2px solid #ba4735;
-	-webkit-box-shadow: 3px 2px 9px 0px rgba(0, 0, 16, 0.8);
-	-moz-box-shadow:    3px 2px 9px 0px rgba(0, 0, 16, 0.8);
-	box-shadow:         3px 2px 9px 0px rgba(0, 0, 16, 0.8);
+  border-radius: 50%;
+  border: 2px solid #ba4735;
+  -webkit-box-shadow: 3px 2px 9px 0px rgba(0, 0, 16, 0.8);
+  -moz-box-shadow:    3px 2px 9px 0px rgba(0, 0, 16, 0.8);
+  box-shadow:         3px 2px 9px 0px rgba(0, 0, 16, 0.8);
 }
 #github {
-	font-size: 1.9em;
-	padding-bottom: 40px;
-	color: #ba4735;
+  font-size: 1.9em;
+  padding-bottom: 40px;
+  color: #ba4735;
 }
 #github:hover {
-	color: #faa415;
+  color: #faa415;
 }
+.bottom {
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  padding-bottom: 25px;
+  display: block;
+}
+.email {
+  font-size: 1.3em;
+  transition: .3s;
+  color: white;
+  width: 100%;
+}
+.email:hover {
+  color: #00ECFF;
+  transition: .3s;
+}
+
 /* Neon Title Animation */
 @-webkit-keyframes neon {
   from {
@@ -211,11 +237,10 @@ code {
     text-shadow: 0 0 1px #6a0f19, 0 0 1px #F01A1A, 0 0 2px #F01A1A, 0 0 1px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37), 0 0 2px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37);
   }
 }
-
 /* Portal Animation by @peris */
 .portal {
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 7px;
   padding: 0;
   margin-right: auto;
   margin-left: auto;

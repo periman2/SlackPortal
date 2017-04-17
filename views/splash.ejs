@@ -11,17 +11,16 @@
         <link rel="stylesheet" href="/stylesheets/splash.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-        <link rel="shortcut icon" type="image/png" href="/portaluser.png">
     </head>
     <body>
         <div class="icon-bar">
-          <a class="social" href="https://www.facebook.com/sharer/sharer.php?u=https://slackteamportal.herokuapp.com/" target="_blank"><i class="fa fa-facebook-official"></i></a> 
-          <a class="social" href="https://twitter.com/intent/tweet?url=https://slackteamportal.herokuapp.com/" target="_blank"><i class="fa fa-twitter-square"></i></a>
+          <a class="social" href="https://www.facebook.com/sharer/sharer.php?u=https://oursite" target="_blank"><i class="fa fa-facebook-official"></i></a> 
+          <a class="social" href="https://twitter.com/intent/tweet?url=https://oursite" target="_blank"><i class="fa fa-twitter-square"></i></a>
           <a class="active" id="shareit" href="#">Share it</a>
         </div>
         <section class="container">
             <h1 class="title">SlackPortal</h1>
-            <!-- Portal Animation by @peris -->
+
             <div class="mysvg">
               <svg class="portal" width="100%" height="auto" version="1.1" viewBox="0 0 319.66034 331.53455" xmlns="http://www.w3.org/2000/svg">
               <filter id="demo5">
@@ -94,14 +93,14 @@
             <p class="pitch">Have you ever wanted to bring someone from <i>the outside</i> into a Slack conversation <b>without</b> having to set up a separate team, which would allow that person to see <b>every</b> channel?</p>
             <p class="solution"><span class="white">Our solution:</span> a web service that creates a temporary chat window to allow users outside <b>any</b> Slack channel to communicate within that channel only.</p>
             <h2>Add it to your team</h2>
-            <p class="instruc">Setting up SlackPortal is simple. Just click the button to log in to your Slack account and choose a team.</p>
             <div class="center">
-                <a class="slack" href="https://slack.com/oauth/authorize?&client_id=162439617488.163840164215&scope=commands,channels:history,channels:read,channels:write,chat:write:bot,chat:write:user,files:read,files:write:user,groups:history,groups:read,groups:write,im:history,im:write,links:read,links:write,team:read,users:read"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+                <a class="slack" href="https://slack.com/oauth/authorize?&client_id=162439617488.163840164215&scope=commands,channels:history,channels:read,channels:write,chat:write:bot,chat:write:user,files:read,files:write:user,groups:history,groups:read,groups:write,im:history,im:write,links:read,links:write,team:read,users:read"><img alt="Add to Slack" height="40" width="139" class="slackimg" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
             </div>
+            <p class="instruc">Setting up SlackPortal is simple. Just click the button to log in to your Slack account and choose a team.</p>
             <p class="instruc">Once you install it, you will be able to open a portal in your channel with the command <code>/portalopen</code>.</p>
-            <p class="instruc">A URL will be generated that you can share with whoever you'd like to invite to participate in your channel.</p>
+            <p class="instruc">A link will then be generated, which you can share with whoever you'd like to invite to your channel.</p>
             <p class="instruc">To close the portal, use command <code>/portalclose</code>. Once a portal is closed, it cannot be reopened with the same URL.</p>
-            <p class="instruc">Other commands include <code>/portalmute</code>, which temporarily blocks the portal from receiving messages from Slack,</p> <p class="instruc"><code>/portalunmute</code>, which allows message flow between Slack and the portal to resume, <p class="instruc"><code>/portalinfo</code>, which provides info' about a portal's current status, users and URL, and of course</p> <p class="instruc"><code>/portalhelp</code>, which lists all available commands.</p>
+            <p class="instruc">Other commands include <code>/portalmute</code>, which temporarily blocks the portal from receiving messages from Slack,</p> <p class="instruc"><code>/portalunmute</code>, which resumes message flow between Slack and the portal, and of course</p> <p class="instruc"><code>/portalhelp</code>, which lists all available commands.</p>
             <h2>What does a portal look like?</h2>
             <!-- Screencasts -->
             <div class="casts">
@@ -124,28 +123,31 @@
                         <a href="https://github.com/icartusacrimea" target="_blank"><i class="fa fa-github" id="github"></i></a>
                     </div>
                 </div>
+            <h2>Contact</h2>
+              <div class="bottom">
+                <a class="email" href="mailto:slackportalteam@gmail.com?Subject=Hello,%20SlackPortal!" target="_top"><i class="fa fa-envelope fa-2x"></i></a>
+              </div>
         </section>
         <script>
-        /* For Portal Animation */
         $(document).ready(function(){
-          setTimeout(function(){
-            $(".first").removeClass("first");
-            $("#light").addClass("bigagain");
-            console.log("something");
-            var isin = true;
-            setInterval(function(){
-               if(isin){
-                 $("#light").removeClass("bigagain");
-                 $("#light").addClass("backfromzero");
-                 isin = false;
-               } else {
-                 $("#light").removeClass("backfromzero");
-                 $("#light").addClass("bigagain");
-                 isin = true;
-               }
-            }, 3000);
-          }, 12000);
-        })
+  setTimeout(function(){
+    $(".first").removeClass("first");
+    $("#light").addClass("bigagain");
+    console.log("something");
+    var isin = true;
+    setInterval(function(){
+       if(isin){
+         $("#light").removeClass("bigagain");
+         $("#light").addClass("backfromzero");
+         isin = false;
+       } else {
+         $("#light").removeClass("backfromzero");
+         $("#light").addClass("bigagain");
+         isin = true;
+       }
+    }, 3000);
+  }, 12000);
+})
         </script>
     </body>
 </html>
