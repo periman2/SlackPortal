@@ -177,15 +177,15 @@ app.post("/incoming", function(req, res){
                         if(matched){
                             request.post("https://slack.com/api/users.list", {form: {token: teamstoken}}, function(error, response, body) {
                                 var allusers = JSON.parse(body);
-                                console.log("these should be all the users:" + allusers.members[0]);
-                                // matched.forEach(function(userid){
-                                //     body.members.forEach(function(member){
-                                //         //IF THE MEMBER ID OF THE TEAM IS FOUND WITHIN ALL THE USERS OF THE TEAM THEN IT WILL REPLACED WITH THE MEMBER'S NAME
-                                //         if(member.id === userid){
-                                //             messsage = message.replace(userid, member.name);
-                                //         }
-                                //     });
-                                // })
+                                // console.log("these should be all the users:" + allusers.members[0]);
+                                matched.forEach(function(userid){
+                                    allusers.members.forEach(function(member){
+                                        //IF THE MEMBER ID OF THE TEAM IS FOUND WITHIN ALL THE USERS OF THE TEAM THEN IT WILL REPLACED WITH THE MEMBER'S NAME
+                                        if(member.id === userid){
+                                            messsage = message.replace(userid, member.name);
+                                        }
+                                    });
+                                })
                                 newlog.message = message;
                                 share(req, res, body, newlog, portal);
                             });
