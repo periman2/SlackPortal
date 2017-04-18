@@ -174,12 +174,13 @@ app.post("/incoming", function(req, res){
                         var regex = /U([A-Z0-9]){8}/g;
                         var matched = message.match(regex);
                         var info = JSON.parse(body);
-                        // console.log("this is the matched items: " + matched);
+                        console.log("this is the matched items: " + matched);
                         if(matched){
                             request.post("https://slack.com/api/users.list", {form: {token: teamstoken}}, function(error, response, body) {
                                 if (!error && response.statusCode == 200) {
                                     var allusers = JSON.parse(body);
-                                    console.log("these should be all the users:" + allusers.members[0]);
+                                    // console.log("these should be all the users:" + allusers.members[0]);
+                                    // newlog.message = message;
                                     matched.forEach(function(userid){
                                         allusers.members.forEach(function(member){
                                             // console.log("this is the comparisson " + member.id + userid);
@@ -219,7 +220,7 @@ function share(req, res, info, newlog, portal){
     
     newlog.senderid = req.body.event.user;
     
-    console.log("this is the user's info: " , info);
+    // console.log("this is the user's info: " , info);
     if(info.user !== undefined){
         newlog.sender = info.user.name;
         newlog.senderavatar = info.user.profile.image_72;
