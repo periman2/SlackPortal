@@ -176,22 +176,24 @@ app.post("/incoming", function(req, res){
                         console.log("this is the matched items: " + matched);
                         if(matched){
                             request.post("https://slack.com/api/users.list", {form: {token: teamstoken}}, function(error, response, body) {
-                                var allusers = JSON.parse(body);
-                                // console.log("these should be all the users:" + allusers.members[0]);
-                                var final = "";
-                                matched.forEach(function(userid){
-                                    allusers.members.forEach(function(member){
-                                        console.log("this is the comparisson " + member.id + userid);
-                                        //IF THE MEMBER ID OF THE TEAM IS FOUND WITHIN ALL THE USERS OF THE TEAM THEN IT WILL REPLACED WITH THE MEMBER'S NAME
-                                        if(member.id === userid){
-                                            message = message.replace(userid, member.name);
-                                            newlog.message = message;
-                                        }
-                                    });
-                                })
-                                console.log("this is the final message" + final);
-                                // newlog.message = message;
-                                share(req, res, body, newlog, portal);
+                                if (!error && response.statusCode == 200) {
+                                    var allusers = JSON.parse(body);
+                                    // console.log("these should be all the users:" + allusers.members[0]);
+                                    matched.forEach(function(userid){
+                                        allusers.members.forEach(function(member){
+                                            // console.log("this is the comparisson " + member.id + userid);
+                                            //IF THE MEMBER ID OF THE TEAM IS FOUND WITHIN ALL THE USERS OF THE TEAM THEN IT WILL REPLACED WITH THE MEMBER'S NAME
+                                            if(member.id === userid){
+                                                newlog.message = message.replace(userid, member.name);
+                                            }
+                                        });
+                                    })
+                                    // newlog.message = message;
+                                    share(req, res, body, newlog, portal);
+                                } else {
+                                    newlog.message = message;
+                                    share(req, res, body, newlog, portal);
+                                }
                             });
                         } else {
                             newlog.message = message;
@@ -227,7 +229,7 @@ function share(req, res, body, newlog, portal){
     //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
     Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
     .then(function(newportal){
-        console.log("updated portal: " + newportal);
+        // console.log("updated portal: " + newportal);
         io.emit('new message', newportal);
         res.send("ok");
     }).catch(function(err){
