@@ -12,9 +12,11 @@
         <link rel="shortcut icon" type="image/png" href="/portaluser.png">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        
         <link rel="shortcut icon" type="image/png" href="/portaluser.png">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/css/basic/emojify.min.css" />
-        <script src="//cdnjs.cloudflare.com/ajax/libs/emojify.js/1.1.0/js/emojify.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/emojione/2.2.7/lib/js/emojione.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/emojione/2.2.7/assets/css/emojione.min.css"/>
+
     </head>
     <body>
         <div class="icon-bar">
@@ -122,7 +124,7 @@
                     </div>
                     <div class="traci">
                         <img src="https://avatars1.githubusercontent.com/u/15716130?v=3&s=460" alt="developerright" height="86" width="86" class=devimg>
-                        <p class="name">Traci Cremeans</p>
+                        <p class="name" id="tr">Traci Cremeans</p>
                         <p class="place">Connecticut, USA</p>
                         <a href="https://github.com/icartusacrimea" target="_blank"><i class="fa fa-github" id="github"></i></a>
                     </div>
@@ -152,7 +154,9 @@
                }
             }, 3000);
           }, 12000);
-        //   emojify.setConfig({tag_type : 'p'});
+          var tr = $("#tr").html();
+          var image = emojione.toImage(tr);
+          $("#tr").html(image);
           
         })
         </script>

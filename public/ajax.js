@@ -114,11 +114,11 @@ $(document).ready(function(){
             } else {
                 var avatar = "./portaluser.png";
             }
+            text = emojione.shortnameToImage(text);
             $(".text").append(
                 "<div class='avattext'><img src=" + avatar + " alt='avatar' class='avatar'>" + "<div class='flexnone'><h3>" + sender + "</h3><p>" + text + "</p></div></div>");
         });
         $(".text").scrollTop($(".text").get(0).scrollHeight);
-        emojify.run();
     }
     
     
