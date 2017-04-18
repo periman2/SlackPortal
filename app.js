@@ -147,10 +147,7 @@ app.post("/incoming", function(req, res){
         console.log("a message was just deleted");
         return res.send("ok");
     }
-    var message = req.body.event.text;
-    var regex = /U([A-Z0-9]){8}/g;
-    var matched = message.match(regex);
-    console.log("this is the matched items: " + matched);
+    
     // FOR RESTARTING NGROK AND RECONFIGURING THE URL 
     // res.send(req.body.challenge);
     // FIND THE PORTAL INSIDE THE DATABASE TAHT CORRESPONDS TO THAT EVENT'S CHANNEL AND TEAM IF IT EXISTS.
@@ -172,28 +169,20 @@ app.post("/incoming", function(req, res){
                     }};
                     //USE THE TOKEN TO GET INFORMATION ABOUT THE USER SENDING THE MESSAGE
                     request.post("https://slack.com/api/users.info", data, function(error, response, body) {
-                        console.log("this is the user's info: " + body);
-                        var newlog = {};
-                        newlog.message = req.body.event.text;
-                        newlog.senderid = req.body.event.user;
-                        var info = JSON.parse(body);
-                        if(info.user !== undefined){
-                            newlog.sender = info.user.name;
-                            newlog.senderavatar = info.user.profile.image_72;
-                            newlog.isfromslack = true;
-                        } else {
-                            newlog.sender = req.body.event.username;
-                            newlog.isfromslack = false;
+                        var message = req.body.event.text;
+                        var regex = /U([A-Z0-9]){8}/g;
+                        var matched = message.match(regex);
+                        console.log("this is the matched items: " + matched);
+                        if(matched){
+                            request.post("https://slack.com/api/users.list", {form: {token: teamstoken}}, function(error, response, body) {
+                                var allusers = JSON.parse(body);
+                                console.log("these should be all the users:" + body);
+                                res.send("anything");
+                            });
                         }
-                        //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
-                        Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
-                        .then(function(newportal){
-                            console.log("updated portal: " + newportal);
-                            io.emit('new message', newportal);
-                            res.send("ok");
-                        }).catch(function(err){
-                            throw err;
-                        });                        
+                        // var newlog = {};
+                        // newlog.message = req.body.event.text;
+                        // share(req, res, body, newlog);
                     });
                 }).catch(function(err){
                     throw err;
@@ -204,8 +193,33 @@ app.post("/incoming", function(req, res){
         } else {
             res.send("ok");
         }
-    });
+    }).catch(function(err){
+        throw err;
+    })
 });
+
+function share(req, res, body, newlog){
+    console.log("this is the user's info: " + body);
+    newlog.senderid = req.body.event.user;
+    var info = JSON.parse(body);
+    if(info.user !== undefined){
+        newlog.sender = info.user.name;
+        newlog.senderavatar = info.user.profile.image_72;
+        newlog.isfromslack = true;
+    } else {
+        newlog.sender = req.body.event.username;
+        newlog.isfromslack = false;
+    }
+    //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
+    Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
+    .then(function(newportal){
+        console.log("updated portal: " + newportal);
+        io.emit('new message', newportal);
+        res.send("ok");
+    }).catch(function(err){
+        throw err;
+    });   
+}
 
 //ADDS USERNAME TO THE DATABASE
 app.post("/username", function(req, res){
