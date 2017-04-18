@@ -178,18 +178,19 @@ app.post("/incoming", function(req, res){
                             request.post("https://slack.com/api/users.list", {form: {token: teamstoken}}, function(error, response, body) {
                                 var allusers = JSON.parse(body);
                                 // console.log("these should be all the users:" + allusers.members[0]);
+                                var final = "";
                                 matched.forEach(function(userid){
                                     allusers.members.forEach(function(member){
                                         console.log("this is the comparisson " + member.id + userid);
-                                        var final = "";
                                         //IF THE MEMBER ID OF THE TEAM IS FOUND WITHIN ALL THE USERS OF THE TEAM THEN IT WILL REPLACED WITH THE MEMBER'S NAME
                                         if(member.id === userid){
-                                            final = message.replace(userid, member.name);
+                                            message = message.replace(userid, member.name);
+                                            newlog.message = message;
                                         }
                                     });
                                 })
                                 console.log("this is the final message" + final);
-                                newlog.message = final;
+                                // newlog.message = message;
                                 share(req, res, body, newlog, portal);
                             });
                         } else {
