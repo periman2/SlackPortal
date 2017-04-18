@@ -173,6 +173,7 @@ app.post("/incoming", function(req, res){
                         var message = req.body.event.text;
                         var regex = /U([A-Z0-9]){8}/g;
                         var matched = message.match(regex);
+                        var info = JSON.parse(body);
                         // console.log("this is the matched items: " + matched);
                         if(matched){
                             request.post("https://slack.com/api/users.list", {form: {token: teamstoken}}, function(error, response, body) {
@@ -189,15 +190,15 @@ app.post("/incoming", function(req, res){
                                         });
                                     })
                                     // newlog.message = message;
-                                    share(req, res, body, newlog, portal);
+                                    share(req, res, info, newlog, portal);
                                 } else {
                                     newlog.message = message;
-                                    share(req, res, body, newlog, portal);
+                                    share(req, res, info, newlog, portal);
                                 }
                             });
                         } else {
                             newlog.message = message;
-                            share(req, res, body, newlog, portal);
+                            share(req, res, info, newlog, portal);
                         }
                     });
                 }).catch(function(err){
@@ -214,10 +215,10 @@ app.post("/incoming", function(req, res){
     })
 });
 
-function share(req, res, body, newlog, portal){
+function share(req, res, info, newlog, portal, info){
     
     newlog.senderid = req.body.event.user;
-    var info = JSON.parse(body);
+    
     console.log("this is the user's info: " , info);
     if(info.user !== undefined){
         newlog.sender = info.user.name;
