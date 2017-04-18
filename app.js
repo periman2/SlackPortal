@@ -147,6 +147,10 @@ app.post("/incoming", function(req, res){
         console.log("a message was just deleted");
         return res.send("ok");
     }
+    var message = req.body.event.message;
+    var regex = /U(U([A-Z0-9]){8})/g;
+    var matched = message.match(regex);
+    console.log(matched);
     // FOR RESTARTING NGROK AND RECONFIGURING THE URL 
     // res.send(req.body.challenge);
     // FIND THE PORTAL INSIDE THE DATABASE TAHT CORRESPONDS TO THAT EVENT'S CHANNEL AND TEAM IF IT EXISTS.
