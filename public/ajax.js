@@ -120,4 +120,6 @@ $(document).ready(function(){
         $(".text").scrollTop($(".text").get(0).scrollHeight);
     }
 
+    emojify.run(document.getElementById("forem"));
+
 });
