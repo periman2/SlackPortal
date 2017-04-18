@@ -188,11 +188,11 @@ app.post("/incoming", function(req, res){
                                     
                                 })
                                 newlog.message = message;
-                                share(req, res, body, newlog);
+                                share(req, res, body, newlog, portal);
                             });
                         } else {
                             newlog.message = message;
-                            share(req, res, body, newlog);
+                            share(req, res, body, newlog, portal);
                         }
                     });
                 }).catch(function(err){
@@ -209,7 +209,7 @@ app.post("/incoming", function(req, res){
     })
 });
 
-function share(req, res, body, newlog){
+function share(req, res, body, newlog, portal){
     console.log("this is the user's info: " + body);
     newlog.senderid = req.body.event.user;
     var info = JSON.parse(body);
