@@ -178,7 +178,7 @@ app.post("/incoming", function(req, res){
                             request.post("https://slack.com/api/users.list", {form: {token: teamstoken}}, function(error, response, body) {
                                 if (!error && response.statusCode == 200) {
                                     var allusers = JSON.parse(body);
-                                    // console.log("these should be all the users:" + allusers.members[0]);
+                                    console.log("these should be all the users:" + allusers.members[0]);
                                     matched.forEach(function(userid){
                                         allusers.members.forEach(function(member){
                                             // console.log("this is the comparisson " + member.id + userid);
@@ -218,7 +218,7 @@ function share(req, res, body, newlog, portal){
     
     newlog.senderid = req.body.event.user;
     var info = JSON.parse(body);
-    console.log("this is the user's info: " + info.user.name);
+    console.log("this is the user's info: " , info);
     if(info.user !== undefined){
         newlog.sender = info.user.name;
         newlog.senderavatar = info.user.profile.image_72;
