@@ -218,7 +218,7 @@ function share(req, res, body, newlog, portal){
     
     newlog.senderid = req.body.event.user;
     var info = JSON.parse(body);
-    console.log("this is the user's info: " + info);
+    console.log("this is the user's info: " + info.user.name);
     if(info.user !== undefined){
         newlog.sender = info.user.name;
         newlog.senderavatar = info.user.profile.image_72;
