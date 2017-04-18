@@ -147,7 +147,7 @@ app.post("/incoming", function(req, res){
         console.log("a message was just deleted");
         return res.send("ok");
     }
-    var message = req.body.event.message;
+    var message = req.body.event.text;
     var regex = /U(U([A-Z0-9]){8})/g;
     var matched = message.match(regex);
     console.log(matched);

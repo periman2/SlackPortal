@@ -199,7 +199,7 @@ router.post("/portalclose", function(req, res){
                 res.json({text: "The portal for this channel has closed."});
             });
         } else {
-            res.json({text: "There isn't an open portal for this channel yet. To create one, try the */openportal* command."})
+            res.json({text: "There isn't an open portal for this channel yet. To create one, try the */portalopen* command."})
         }
     });
 });
