@@ -136,21 +136,23 @@ app.post("/postinput", function(req, res){
 
 // EVENT API COMMAND THAT GETS EVERY MESSAGE TYPED IN ALL TEAMS
 app.post("/incoming", function(req, res){
-    console.log(req.body);
-    if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
-        return res.send("You're not authorized to do that!");
-    }
-    if(req.body.event.message){
-        return res.send("ok");
-    }
-    if(req.body.event.subtype === "message_deleted")  {
-        console.log("a message was just deleted");
-        return res.send("ok");
-    }
-    res.send("something");
+    // console.log(req.body);
+    // if(req.body.token !== process.env.PORTAL_VALIDATION_TOKEN){
+    //     console.log("sdf");
+    //     return res.send("You're not authorized to do that!");
+    // }
+    // if(req.body.event.message){
+    //     console.log("ffff");
+    //     return res.send("ok");
+    // }
+    // if(req.body.event.subtype === "message_deleted")  {
+    //     console.log("a message was just deleted");
+    //     return res.send("ok");
+    // }
+    // res.send("something");
     
     // FOR RESTARTING NGROK AND RECONFIGURING THE URL 
-    // res.send(req.body.challenge);
+    res.send(req.body.challenge);
     // FIND THE PORTAL INSIDE THE DATABASE TAHT CORRESPONDS TO THAT EVENT'S CHANNEL AND TEAM IF IT EXISTS.
     // Portal.find({channelid: req.body.event.channel, teamid: req.body.team_id}).exec()
     // .then(function(portal){
