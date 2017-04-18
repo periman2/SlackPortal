@@ -116,11 +116,11 @@ $(document).ready(function(){
             }
             $(".text").append(
                 "<div class='avattext'><img src=" + avatar + " alt='avatar' class='avatar'>" + "<div class='flexnone'><h3>" + sender + "</h3><p>" + text + "</p></div></div>");
-                emojify.run($(".avattext p")[0]);
         });
         $(".text").scrollTop($(".text").get(0).scrollHeight);
+        emojify.run($(".text")[0]);
     }
-
+    emojify.setConfig();
     
 
 });
