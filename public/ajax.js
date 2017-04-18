@@ -118,9 +118,8 @@ $(document).ready(function(){
                 "<div class='avattext'><img src=" + avatar + " alt='avatar' class='avatar'>" + "<div class='flexnone'><h3>" + sender + "</h3><p>" + text + "</p></div></div>");
         });
         $(".text").scrollTop($(".text").get(0).scrollHeight);
-        emojify.run($(".text")[0]);
     }
-    emojify.setConfig();
+    emojify.run();
     
 
 });
