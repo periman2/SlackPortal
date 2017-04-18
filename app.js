@@ -180,6 +180,7 @@ app.post("/incoming", function(req, res){
                                 // console.log("these should be all the users:" + allusers.members[0]);
                                 matched.forEach(function(userid){
                                     allusers.members.forEach(function(member){
+                                        console.log("this is the comparisson " + member.id + userid);
                                         //IF THE MEMBER ID OF THE TEAM IS FOUND WITHIN ALL THE USERS OF THE TEAM THEN IT WILL REPLACED WITH THE MEMBER'S NAME
                                         if(member.id === userid){
                                             messsage = message.replace(userid, member.name);
