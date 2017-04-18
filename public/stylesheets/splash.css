@@ -48,10 +48,10 @@ body {
 }
 
 .container {
-	background: #19181b;
-	width: 90%;
-	margin-top: 40px;
-	margin-left: auto;
+  background: #19181b;
+  width: 90%;
+  margin-top: 40px;
+  margin-left: auto;
   margin-right: auto;
   margin-bottom: 30px;
   border-radius: 15px;
@@ -59,83 +59,93 @@ body {
   opacity: .9;
   overflow: auto;
   -webkit-box-shadow:  0px 1px 17px 0px rgba(18, 86, 133, 1);
-	-moz-box-shadow:     0px 1px 17px rgba(18, 86, 133, 1);
-	box-shadow:          0px 1px 17px 0px rgba(18, 86, 133, 1);
+  -moz-box-shadow:     0px 1px 17px rgba(18, 86, 133, 1);
+  box-shadow:          0px 1px 17px 0px rgba(18, 86, 133, 1);
 }
-
 .title {
-	color: #9a3d2e;
-	font-size: 3.3em;
-	margin-bottom: 0;
-	text-align: center;
-	padding-bottom: 0;
-	padding-right: 5px;
-	padding-left: 5px;
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.68);
-	-webkit-transition: all 0.5s;
-	-moz-transition: all 0.5s;
-	transition: all 0.5s;
-	-webkit-animation: neon 1.5s ease-in-out infinite alternate;
-	-moz-animation: neon 1.5s ease-in-out infinite alternate;
-	animation: neon 1.5s ease-in-out infinite alternate;
+  color: #9a3d2e;
+  font-size: 3.3em;
+  margin-bottom: 0;
+  text-align: center;
+  padding-bottom: 0;
+  padding-right: 5px;
+  padding-left: 5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.68);
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+  -webkit-animation: neon 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon 1.5s ease-in-out infinite alternate;
+  animation: neon 1.5s ease-in-out infinite alternate;
 }
 .pitch {
-	color: #faa415;
-	font-size: 1.2em;
-	text-align: center;
-	width: 94%;
-	margin-left: auto;
+  color: #faa415;
+  font-size: 1.2em;
+  text-align: center;
+  width: 94%;
+  margin-left: auto;
   margin-right: auto;
   margin-top: 0;
   padding: 2px;
 }
 .solution {
-	color: #4fafd8;
-	font-size: 1.1em;
-	text-align: center;
-	width: 94%;
-	margin-left: auto;
+  color: #4fafd8;
+  font-size: 1.1em;
+  text-align: center;
+  width: 94%;
+  margin-left: auto;
   margin-right: auto;
   padding-bottom: 35px;
     
 }
 .white {
-	color: white;
-	font-size: 1.2em;
+  color: white;
+  font-size: 1.2em;
 }
 h2 {
-	color: #ba4735;
-	font-size: 1.74em;
-	text-align: center;
-	font-weight: 600;
+  color: #ba4735;
+  font-size: 1.78em;
+  text-align: center;
+  font-weight: 600;
 }
 .center {
-	display:block;
-   width:100%;
+  display:block;
+  width:100%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 0;
 }
 .slack {
-	text-align: center;
-	margin-left: auto;
+  text-align: center;
+  margin-left: auto;
   margin-right: auto;
   display: block;
-
+  padding-bottom: 15px;
+}
+.slackimg {
+  border: 4px solid #4fafd8;
+  border-radius: 15px;
+  padding: 4px;
+}
+.slackimg:hover {
+  border: 4px solid #faa415;
 }
 .instruc {
-	color: #aac1be;
-	font-size: 1em;
-	text-align: left;
-	width: 97%;
-	margin-left: auto;
+  color: #aac1be;
+  font-size: 1em;
+  text-align: left;
+  width: 97%;
+  margin-left: auto;
   margin-right: auto;
   padding-left: 7px;
   padding-bottom: 35px;
   padding-top: 3px;
 }
 code {
-	font-size: 1.3em;
-	background: black;
-	color: #9a3d2e;
-	text-shadow: none;
+  font-size: 1.3em;
+  background: black;
+  color: #9a3d2e;
+  text-shadow: none;
 }
 .casts {
 	width: 100%;
@@ -183,6 +193,23 @@ code {
 }
 #github:hover {
 	color: #faa415;
+}
+.bottom {
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  padding-bottom: 25px;
+  display: block;
+}
+.email {
+  font-size: 1.3em;
+  transition: .3s;
+  color: white;
+  width: 100%;
+}
+.email:hover {
+  color: #00ECFF;
+  transition: .3s;
 }
 /* Neon Title Animation */
 @-webkit-keyframes neon {
