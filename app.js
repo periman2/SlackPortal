@@ -215,7 +215,7 @@ app.post("/incoming", function(req, res){
     })
 });
 
-function share(req, res, info, newlog, portal, info){
+function share(req, res, info, newlog, portal){
     
     newlog.senderid = req.body.event.user;
     
