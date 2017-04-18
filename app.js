@@ -147,10 +147,7 @@ app.post("/incoming", function(req, res){
         console.log("a message was just deleted");
         return res.send("ok");
     }
-    var message = req.body.event.text;
-    var regex = /U([A-Z0-9]){8}/g;
-    var matched = message.match(regex);
-    console.log("this is the matched items: " + matched);
+    
     // FOR RESTARTING NGROK AND RECONFIGURING THE URL 
     // res.send(req.body.challenge);
     // FIND THE PORTAL INSIDE THE DATABASE TAHT CORRESPONDS TO THAT EVENT'S CHANNEL AND TEAM IF IT EXISTS.
@@ -172,28 +169,38 @@ app.post("/incoming", function(req, res){
                     }};
                     //USE THE TOKEN TO GET INFORMATION ABOUT THE USER SENDING THE MESSAGE
                     request.post("https://slack.com/api/users.info", data, function(error, response, body) {
-                        console.log("this is the user's info: " + body);
                         var newlog = {};
-                        newlog.message = req.body.event.text;
-                        newlog.senderid = req.body.event.user;
+                        var message = req.body.event.text;
+                        var regex = /U([A-Z0-9]){8}/g;
+                        var matched = message.match(regex);
                         var info = JSON.parse(body);
-                        if(info.user !== undefined){
-                            newlog.sender = info.user.name;
-                            newlog.senderavatar = info.user.profile.image_72;
-                            newlog.isfromslack = true;
+                        // console.log("this is the matched items: " + matched);
+                        if(matched){
+                            request.post("https://slack.com/api/users.list", {form: {token: teamstoken}}, function(error, response, body) {
+                                if (!error && response.statusCode == 200) {
+                                    var allusers = JSON.parse(body);
+                                    // console.log("these should be all the users:" + allusers.members[0]);
+                                    newlog.message = message;
+                                    matched.forEach(function(userid){
+                                        allusers.members.forEach(function(member){
+                                            // console.log("this is the comparisson " + member.id + userid);
+                                            //IF THE MEMBER ID OF THE TEAM IS FOUND WITHIN ALL THE USERS OF THE TEAM THEN IT WILL REPLACED WITH THE MEMBER'S NAME
+                                            if(member.id === userid){
+                                                newlog.message = message.replace(userid, member.name);
+                                            }
+                                        });
+                                    })
+                                    // newlog.message = message;
+                                    share(req, res, info, newlog, portal);
+                                } else {
+                                    newlog.message = message;
+                                    share(req, res, info, newlog, portal);
+                                }
+                            });
                         } else {
-                            newlog.sender = req.body.event.username;
-                            newlog.isfromslack = false;
+                            newlog.message = message;
+                            share(req, res, info, newlog, portal);
                         }
-                        //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
-                        Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
-                        .then(function(newportal){
-                            console.log("updated portal: " + newportal);
-                            io.emit('new message', newportal);
-                            res.send("ok");
-                        }).catch(function(err){
-                            throw err;
-                        });                        
                     });
                 }).catch(function(err){
                     throw err;
@@ -204,8 +211,34 @@ app.post("/incoming", function(req, res){
         } else {
             res.send("ok");
         }
-    });
+    }).catch(function(err){
+        throw err;
+    })
 });
+
+function share(req, res, info, newlog, portal){
+    
+    newlog.senderid = req.body.event.user;
+    
+    // console.log("this is the user's info: " , info);
+    if(info.user !== undefined){
+        newlog.sender = info.user.name;
+        newlog.senderavatar = info.user.profile.image_72;
+        newlog.isfromslack = true;
+    } else {
+        newlog.sender = req.body.event.username;
+        newlog.isfromslack = false;
+    }
+    //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
+    Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
+    .then(function(newportal){
+        // console.log("updated portal: " + newportal);
+        io.emit('new message', newportal);
+        res.send("ok");
+    }).catch(function(err){
+        throw err;
+    });   
+}
 
 //ADDS USERNAME TO THE DATABASE
 app.post("/username", function(req, res){
