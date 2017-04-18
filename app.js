@@ -173,6 +173,7 @@ app.post("/incoming", function(req, res){
                         var message = req.body.event.text;
                         var regex = /U([A-Z0-9]){8}/g;
                         var matched = message.match(regex);
+                        newlog.message = message;
                         var info = JSON.parse(body);
                         // console.log("this is the matched items: " + matched);
                         if(matched){
@@ -180,13 +181,14 @@ app.post("/incoming", function(req, res){
                                 if (!error && response.statusCode == 200) {
                                     var allusers = JSON.parse(body);
                                     // console.log("these should be all the users:" + allusers.members[0]);
-                                    newlog.message = message;
+                                    
                                     matched.forEach(function(userid){
                                         allusers.members.forEach(function(member){
                                             // console.log("this is the comparisson " + member.id + userid);
                                             //IF THE MEMBER ID OF THE TEAM IS FOUND WITHIN ALL THE USERS OF THE TEAM THEN IT WILL REPLACED WITH THE MEMBER'S NAME
                                             if(member.id === userid){
                                                 newlog.message = message.replace(userid, member.name);
+                                                console.log(newlog.message);
                                             }
                                         });
                                     })
