@@ -169,6 +169,7 @@ app.post("/incoming", function(req, res){
                     }};
                     //USE THE TOKEN TO GET INFORMATION ABOUT THE USER SENDING THE MESSAGE
                     request.post("https://slack.com/api/users.info", data, function(error, response, body) {
+                        var newlog = {};
                         var message = req.body.event.text;
                         var regex = /U([A-Z0-9]){8}/g;
                         var matched = message.match(regex);
@@ -176,13 +177,23 @@ app.post("/incoming", function(req, res){
                         if(matched){
                             request.post("https://slack.com/api/users.list", {form: {token: teamstoken}}, function(error, response, body) {
                                 var allusers = JSON.parse(body);
-                                console.log("these should be all the users:" + body);
-                                res.send("anything");
+                                // console.log("these should be all the users:" + body);
+                                matched.forEach(function(userid){
+                                    body.members.forEach(function(member){
+                                        //IF THE MEMBER ID OF THE TEAM IS FOUND WITHIN ALL THE USERS OF THE TEAM THEN IT WILL REPLACED WITH THE MEMBER'S NAME
+                                        if(member.id === userid){
+                                            messsage = message.replace(userid, member.name);
+                                        }
+                                    })
+                                    
+                                })
+                                newlog.message = message;
+                                share(req, res, body, newlog);
                             });
+                        } else {
+                            newlog.message = message;
+                            share(req, res, body, newlog);
                         }
-                        // var newlog = {};
-                        // newlog.message = req.body.event.text;
-                        // share(req, res, body, newlog);
                     });
                 }).catch(function(err){
                     throw err;
