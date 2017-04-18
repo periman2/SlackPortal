@@ -178,7 +178,7 @@ app.post("/incoming", function(req, res){
                             request.post("https://slack.com/api/users.list", {form: {token: teamstoken}}, function(error, response, body) {
                                 var allusers = JSON.parse(body);
                                 var allmembers = body.members;
-                                console.log("these should be all the users:" + allmembers[0]);
+                                console.log("these should be all the users:" + body);
                                 // matched.forEach(function(userid){
                                 //     body.members.forEach(function(member){
                                 //         //IF THE MEMBER ID OF THE TEAM IS FOUND WITHIN ALL THE USERS OF THE TEAM THEN IT WILL REPLACED WITH THE MEMBER'S NAME
