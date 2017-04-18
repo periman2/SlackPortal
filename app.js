@@ -174,7 +174,7 @@ app.post("/incoming", function(req, res){
                         var regex = /U([A-Z0-9]){8}/g;
                         var matched = message.match(regex);
                         var info = JSON.parse(body);
-                        console.log("this is the matched items: " + matched);
+                        // console.log("this is the matched items: " + matched);
                         if(matched){
                             request.post("https://slack.com/api/users.list", {form: {token: teamstoken}}, function(error, response, body) {
                                 if (!error && response.statusCode == 200) {
@@ -191,15 +191,69 @@ app.post("/incoming", function(req, res){
                                         });
                                     })
                                     // newlog.message = message;
-                                    share(req, res, info, newlog, portal);
+                                    newlog.senderid = req.body.event.user;
+                                    // console.log("this is the user's info: " , info);
+                                    if(info.user !== undefined){
+                                        newlog.sender = info.user.name;
+                                        newlog.senderavatar = info.user.profile.image_72;
+                                        newlog.isfromslack = true;
+                                    } else {
+                                        newlog.sender = req.body.event.username;
+                                        newlog.isfromslack = false;
+                                    }
+                                    //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
+                                    Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
+                                    .then(function(newportal){
+                                        // console.log("updated portal: " + newportal);
+                                        io.emit('new message', newportal);
+                                        res.send("ok");
+                                    }).catch(function(err){
+                                        throw err;
+                                    }); 
                                 } else {
                                     newlog.message = message;
-                                    share(req, res, info, newlog, portal);
+                                    newlog.senderid = req.body.event.user;
+                                    // console.log("this is the user's info: " , info);
+                                    if(info.user !== undefined){
+                                        newlog.sender = info.user.name;
+                                        newlog.senderavatar = info.user.profile.image_72;
+                                        newlog.isfromslack = true;
+                                    } else {
+                                        newlog.sender = req.body.event.username;
+                                        newlog.isfromslack = false;
+                                    }
+                                    //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
+                                    Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
+                                    .then(function(newportal){
+                                        // console.log("updated portal: " + newportal);
+                                        io.emit('new message', newportal);
+                                        res.send("ok");
+                                    }).catch(function(err){
+                                        throw err;
+                                    }); 
                                 }
                             });
                         } else {
                             newlog.message = message;
-                            share(req, res, info, newlog, portal);
+                            newlog.senderid = req.body.event.user;
+                            // console.log("this is the user's info: " , info);
+                            if(info.user !== undefined){
+                                newlog.sender = info.user.name;
+                                newlog.senderavatar = info.user.profile.image_72;
+                                newlog.isfromslack = true;
+                            } else {
+                                newlog.sender = req.body.event.username;
+                                newlog.isfromslack = false;
+                            }
+                            //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
+                            Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
+                            .then(function(newportal){
+                                // console.log("updated portal: " + newportal);
+                                io.emit('new message', newportal);
+                                res.send("ok");
+                            }).catch(function(err){
+                                throw err;
+                            }); 
                         }
                     });
                 }).catch(function(err){
@@ -218,26 +272,7 @@ app.post("/incoming", function(req, res){
 
 function share(req, res, info, newlog, portal){
     
-    newlog.senderid = req.body.event.user;
-    
-    // console.log("this is the user's info: " , info);
-    if(info.user !== undefined){
-        newlog.sender = info.user.name;
-        newlog.senderavatar = info.user.profile.image_72;
-        newlog.isfromslack = true;
-    } else {
-        newlog.sender = req.body.event.username;
-        newlog.isfromslack = false;
-    }
-    //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
-    Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
-    .then(function(newportal){
-        // console.log("updated portal: " + newportal);
-        io.emit('new message', newportal);
-        res.send("ok");
-    }).catch(function(err){
-        throw err;
-    });   
+      
 }
 
 //ADDS USERNAME TO THE DATABASE
