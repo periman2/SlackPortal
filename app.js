@@ -148,9 +148,9 @@ app.post("/incoming", function(req, res){
         return res.send("ok");
     }
     var message = req.body.event.text;
-    var regex = /U(U([A-Z0-9]){8})/g;
+    var regex = /U([A-Z0-9]){8}/g;
     var matched = message.match(regex);
-    console.log(matched);
+    console.log("this is the matched items: " + matched);
     // FOR RESTARTING NGROK AND RECONFIGURING THE URL 
     // res.send(req.body.challenge);
     // FIND THE PORTAL INSIDE THE DATABASE TAHT CORRESPONDS TO THAT EVENT'S CHANNEL AND TEAM IF IT EXISTS.
