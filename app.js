@@ -187,7 +187,7 @@ app.post("/incoming", function(req, res){
                                             // console.log("this is the comparisson " + member.id + userid);
                                             //IF THE MEMBER ID OF THE TEAM IS FOUND WITHIN ALL THE USERS OF THE TEAM THEN IT WILL REPLACED WITH THE MEMBER'S NAME
                                             if(member.id === userid){
-                                                newlog.message = message.replace(userid, member.name);
+                                                newlog.message = newlog.message.replace(userid, member.name);
                                                 console.log(newlog.message);
                                             }
                                         });
