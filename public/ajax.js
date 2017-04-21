@@ -33,6 +33,24 @@ $(document).ready(function(){
             checkArrs(allusers, username);
         }
         console.log("this is the all users array : ", allusers);
+        isuser = false;
+        if(allusers.length > 0){
+            isuser = checkIfItsThere(allusers, [username, portalid]);
+        } else {
+            isuser = false;
+        }
+        
+        if(isuser === false){
+            thisuser = username;
+            socket.emit("userdata", [thisuser, portalid]);
+            $('.userinput').hide();
+            $(".chatbody").show();
+            $(".inputform").show();
+            getportal();
+            $("#username").val("");
+        } else {
+            alert("This username is already take for this session. Please choose another one.");
+        }
     });
 
     function checkArrs(array, element) {
