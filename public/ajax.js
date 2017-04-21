@@ -32,7 +32,7 @@ $(document).ready(function(){
         } else if (username[0] !== false && portalid === username[1]) {
             checkArrs(allusers, username);
         }
-        console.log(username);
+        console.log("this is the all users array : ", allusers);
     });
 
     function checkArrs(array, element) {
@@ -76,16 +76,16 @@ $(document).ready(function(){
     $(".userinput").submit(function(){
         username = $("#username").val();
         var portalid = window.location.pathname.split("/")[1];
-        
+        console.log(username, isthere);
         //Comair that username with all the others.
-        isitinthere = false;
+        isthere = false;
         if(allusers.length > 0){
-            isitinthere = checkIfItsThere(allusers, [username, portalid]);
+            isthere = checkIfItsThere(allusers, [username, portalid]);
         } else {
-            isitinthere = false;
+            isthere = false;
         }
 
-        if(isitinthere === false){
+        if(isthere === false){
             thisuser = username;
             $('.userinput').hide();
             $(".chatbody").show();
@@ -116,23 +116,23 @@ $(document).ready(function(){
         //         }
         //     }
         // });
-        // return false;
+        return false;
     });
 
-    window.onbeforeunload = function() {
-        var portalid = window.location.pathname.split("/")[1];
-        $.ajax({
-            type: "POST",
-            url: "/deleteusers",
-            asynch: false,
-            data: {username: username, portalid: portalid},
-            success: function() {
-            },
-            error: function(err){
-                console.log(err);
-            }
-        });
-    };
+    // window.onbeforeunload = function() {
+    //     var portalid = window.location.pathname.split("/")[1];
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "/deleteusers",
+    //         asynch: false,
+    //         data: {username: username, portalid: portalid},
+    //         success: function() {
+    //         },
+    //         error: function(err){
+    //             console.log(err);
+    //         }
+    //     });
+    // };
     
 
     $(".inputform").submit(function(){
@@ -152,7 +152,7 @@ $(document).ready(function(){
 
     //It shows the chatroom.
     function showchatroom(portal){
-        console.log(portal.history);
+        // console.log(portal.history);
         var history = portal.history;
         $(".chatbody").html("");
         $(".portaltitle").html("");
@@ -167,7 +167,7 @@ $(document).ready(function(){
         history.forEach(function(message){
             // console.log(message);
             var sender = message.sender;
-            console.log(message.message, "this is the message");
+            // console.log(message.message, "this is the message");
             var text = message.message.replace(/(<|>)/ig,"");
             // var avatar = message.senderavatar;
             // console.log("this is the messge" , message);
