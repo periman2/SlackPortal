@@ -208,8 +208,18 @@ code {
   width: 100%;
 }
 .email:hover {
-  color: #00ECFF;
+  color: #faa415;
   transition: .3s;
+}
+footer {
+  text-align: center;
+  font-size: .7em;
+  text-shadow: none;
+  color: #1d6789;
+  margin-top: 40px;
+}
+.copy {
+  font-size: 1.6em;
 }
 /* Neon Title Animation */
 @-webkit-keyframes neon {
