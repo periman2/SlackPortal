@@ -20,7 +20,9 @@ $(document).ready(function(){
     var thisuser = false;
     var portalid = window.location.pathname.split("/")[1];
 
-    socket.emit("userdata", [thisuser, portalid]);
+    setInterval(function(){
+        socket.emit("userdata", [thisuser, portalid]);
+    }, 2000);
 
     // user openin portal > user emiting false username > back end catching that > back end giving back all usernames
 
