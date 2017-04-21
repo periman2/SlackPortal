@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     var socket = io.connect();
     
-    var username;
+    var stableusername;
 
     socket.on("disconnect", function(){
         socket.emit("deluser", {users: username});
@@ -41,12 +41,12 @@ $(document).ready(function(){
         }
         
         if(isuser === false){
-            thisuser = username;
+            thisuser = stableusername;
             socket.emit("userdata", [thisuser, portalid]);
             $('.userinput').hide();
             $(".chatbody").show();
             $(".inputform").show();
-            getportal();
+            // getportal();
             $("#username").val("");
         } else {
             alert("This username is already take for this session. Please choose another one.");
@@ -92,9 +92,9 @@ $(document).ready(function(){
     }
 
     $(".userinput").submit(function(){
-        username = $("#username").val();
+        stableusername = $("#username").val();
         var portalid = window.location.pathname.split("/")[1];
-        console.log(username, isuser);
+        console.log(stableusername, isuser);
         //Comair that username with all the others.
         isuser = false;
         if(allusers.length > 0){
@@ -104,7 +104,7 @@ $(document).ready(function(){
         }
         
         if(isuser === false){
-            thisuser = username;
+            thisuser = stableusername;
             socket.emit("userdata", [thisuser, portalid]);
             $('.userinput').hide();
             $(".chatbody").show();
