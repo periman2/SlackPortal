@@ -76,17 +76,18 @@ $(document).ready(function(){
     $(".userinput").submit(function(){
         username = $("#username").val();
         var portalid = window.location.pathname.split("/")[1];
-        console.log(username, isthere);
+        console.log(username, isuser);
         //Comair that username with all the others.
-        isthere = false;
+        isuser = false;
         if(allusers.length > 0){
-            isthere = checkIfItsThere(allusers, [username, portalid]);
+            isuser = checkIfItsThere(allusers, [username, portalid]);
         } else {
-            isthere = false;
+            isuser = false;
         }
-
-        if(isthere === false){
+        
+        if(isuser === false){
             thisuser = username;
+            socket.emit("userdata", [thisuser, portalid]);
             $('.userinput').hide();
             $(".chatbody").show();
             $(".inputform").show();
@@ -95,27 +96,6 @@ $(document).ready(function(){
         } else {
             alert("This username is already take for this session. Please choose another one.");
         }
-
-        // $.ajax({
-        //     type: "POST",
-        //     url: "/username",
-        //     data: {username: username, portalid: portalid},
-        //     success: function(isuser) {
-        //         //IF ISUSER IS TRUE THE USER IS ABLE TO USE THE PORTAL IF ITS FALSE THE USER NEEDS TO CHOOSE ANOTHER NAME.
-        //         console.log(isuser);
-        //         if(isuser){
-        //             if (username) {
-        //                 $('.userinput').hide();
-        //                 $(".chatbody").show();
-        //                 $(".inputform").show();
-        //                 getportal();
-        //             }
-        //             
-        //         } else {
-        //             alert("This username is already take for this session. Please choose another one.");
-        //         }
-        //     }
-        // });
         return false;
     });
 
