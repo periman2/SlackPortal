@@ -16,6 +16,19 @@ $(document).ready(function(){
         }
     });
 
+    var allusers = [];
+    var thisuser = false;
+    var portalid = window.location.pathname.split("/")[1];
+
+    socket.emit("userdata", [thisuser, portalid]);
+
+    // user openin portal > user emiting false username > back end catching that > back end giving back all usernames
+
+    socket.on("allusernames", function(usernames){
+        allusers = usernames;
+        console.log(usernames);
+    });
+
 
     function getportal(){
         //this variable is the id of the portal in the database.
@@ -34,26 +47,31 @@ $(document).ready(function(){
         username = $("#username").val();
         var portalid = window.location.pathname.split("/")[1];
         
-        $.ajax({
-            type: "POST",
-            url: "/username",
-            data: {username: username, portalid: portalid},
-            success: function(isuser) {
-                //IF ISUSER IS TRUE THE USER IS ABLE TO USE THE PORTAL IF ITS FALSE THE USER NEEDS TO CHOOSE ANOTHER NAME.
-                console.log(isuser);
-                if(isuser){
-                    if (username) {
-                        $('.userinput').hide();
-                        $(".chatbody").show();
-                        $(".inputform").show();
-                        getportal();
-                    }
-                    $("#username").val("");
-                } else {
-                    alert("This username is already take for this session. Please choose another one.");
-                }
-            }
+        //Comair that username with all the others.
+        allusers.forEach(function(user){
+
         });
+
+        // $.ajax({
+        //     type: "POST",
+        //     url: "/username",
+        //     data: {username: username, portalid: portalid},
+        //     success: function(isuser) {
+        //         //IF ISUSER IS TRUE THE USER IS ABLE TO USE THE PORTAL IF ITS FALSE THE USER NEEDS TO CHOOSE ANOTHER NAME.
+        //         console.log(isuser);
+        //         if(isuser){
+        //             if (username) {
+        //                 $('.userinput').hide();
+        //                 $(".chatbody").show();
+        //                 $(".inputform").show();
+        //                 getportal();
+        //             }
+        //             $("#username").val("");
+        //         } else {
+        //             alert("This username is already take for this session. Please choose another one.");
+        //         }
+        //     }
+        // });
         return false;
     });
 

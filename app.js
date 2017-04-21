@@ -20,6 +20,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 app.use(flash());
+//use cookie parser everywhere
+app.use(require('cookie-parser')());
 
 var URL = process.env.DATABASEURL || "mongodb://localhost/slackportal4";
 mongoose.connect(URL);
@@ -84,7 +86,10 @@ app.get("/:portalid", function(req, res){
             return res.send("That's not a valid portal address.");
         }
         if(portal !== undefined && portal !== null){
-            res.render("home");
+            if(req.cookies.user !== undefined){
+                return res.render("home", {user: user});
+            }
+            res.render("home", {user: false});
         } else {
             res.send("That's not a valid portal address.");
         }
@@ -252,7 +257,8 @@ app.post("/username", function(req, res){
             Portal.findByIdAndUpdate(req.body.portalid, {$push: {users: req.body.username}}, {new: true}).exec()
             .then(function(portal){
                 // console.log(portal);
-                res.send(true);
+                res.cookie("user", req.body.username);
+                res.redirect("/" + req.body.portalid);
             }).catch(function(error){
                 throw error;
             }); 
@@ -287,11 +293,14 @@ var server = app.listen(PORT, function() {
 
 var io = require('socket.io')(server);
 
-
 io.on('connection', function (socket) {
     console.log("connected");
     socket.on('disconnect', function () {
         console.log('You were disconnected!');
+    });
+    socket.on('userdata', function(userinfo) {
+        console.log("this is the user info !!!!!!" + userinfo);
+        io.emit("allusernames", userinfo);
     });
 });
 
