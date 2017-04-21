@@ -26,10 +26,38 @@ $(document).ready(function(){
 
     // user openin portal > user emiting false username > back end catching that > back end giving back all usernames
 
-    socket.on("allusernames", function(usernames){
-        allusers = usernames;
-        console.log(usernames);
+    socket.on("allusernames", function(username){
+        if(allusers.length === 0 && username[0] !== false){
+            allusers.push(username);
+        } else if (username[0] !== false && portalid === username[1]) {
+            checkArrs(allusers, username);
+        }
+        console.log(username);
     });
+
+    function checkArrs(array, element) {
+        var isitinthere = false;
+        for (var i = 0; i < array.length; i++) {
+            if (array[i][0] === element[0]) {
+                isitinthere = true;
+            }
+        }
+        if(isitinthere === false){
+            array.push(element);
+        }
+        return array;
+    }
+
+    function checkIfItsThere(array, element) {
+        var isitinthere = false;
+        for (var i = 0; i < array.length; i++) {
+            if (array[i][0] === element[0]) {
+                isitinthere = true;
+            }
+        }
+
+        return isitinthere;
+    }
 
 
     function getportal(){
@@ -50,9 +78,23 @@ $(document).ready(function(){
         var portalid = window.location.pathname.split("/")[1];
         
         //Comair that username with all the others.
-        allusers.forEach(function(user){
+        isitinthere = false;
+        if(allusers.length > 0){
+            isitinthere = checkIfItsThere(allusers, [username, portalid]);
+        } else {
+            isitinthere = false;
+        }
 
-        });
+        if(isitinthere === false){
+            thisuser = username;
+            $('.userinput').hide();
+            $(".chatbody").show();
+            $(".inputform").show();
+            getportal();
+            $("#username").val("");
+        } else {
+            alert("This username is already take for this session. Please choose another one.");
+        }
 
         // $.ajax({
         //     type: "POST",
@@ -68,13 +110,13 @@ $(document).ready(function(){
         //                 $(".inputform").show();
         //                 getportal();
         //             }
-        //             $("#username").val("");
+        //             
         //         } else {
         //             alert("This username is already take for this session. Please choose another one.");
         //         }
         //     }
         // });
-        return false;
+        // return false;
     });
 
     window.onbeforeunload = function() {
