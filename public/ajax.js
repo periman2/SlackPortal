@@ -175,6 +175,7 @@ $(document).ready(function(){
              + text + 
              "</p></div></div>"
             );
+            $(".text").scrollTop($(".text").get(0).scrollHeight);
     }
     
     
