@@ -23,7 +23,7 @@ $(document).ready(function(){
     // user openin portal > user emiting false username > back end catching that > back end giving back all usernames
 
     socket.on("allusernames", function(username){
-        if(allusers.length === 0 && username[0] !== false){
+        if(allusers.length === 0 && username[0] !== false && portalid === username[1]){
             allusers.push(username);
         } else if (username[0] !== false && portalid === username[1]) {
             allusers = checkArrs(allusers, username);
