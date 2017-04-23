@@ -102,7 +102,7 @@ router.post("/portalhelp", function(req, res){
     portal = makefield(portal, "/portalclose", "Closes a portal that you've already created.");
     portal = makefield(portal, "/muteportal", "Stops messages in Slack from reaching the portal.");
     portal = makefield(portal, "/portalunmute", "Allows messages from Slack to reach the portal. (Works only if the portal was muted)");
-    portal = makefield(portal, "/portalinfo", "Show info on a portal, including its current state, users and URL.");
+    portal = makefield(portal, "/portalinfo", "Shows info on a portal, including its current state, users and URL.");
     portal = makefield(portal, "/portalhelp", "Shows all available commands.");
     res.json(portal);
 });
