@@ -44,6 +44,10 @@ $(document).ready(function(){
         return array;
     }
 
+    setInterval(function(){
+        socket.emit("userdata", [stableusername, portalid]);
+    }, 2000);
+
     function checkIfItsThere(array, element) {
         var isitinthere = false;
         for (var i = 0; i < array.length; i++) {
