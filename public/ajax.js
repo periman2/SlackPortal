@@ -101,8 +101,11 @@ $(document).ready(function(){
         $.ajax({
             type: "POST",
             url: "/postinput",
-            data: {message: message, username: username, portalid: portalid},
+            data: {message: message, username: stableusername, portalid: portalid},
             success: function(portal) {
+            },
+            error: function(err){
+                console.log(err);
             }
         });
         return false;
@@ -110,7 +113,6 @@ $(document).ready(function(){
 
     //It shows the chatroom.
     function showchatroom(portal){
-        
         // console.log(portal.history);
 
         var history = portal.history;
