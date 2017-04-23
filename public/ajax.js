@@ -26,7 +26,7 @@ $(document).ready(function(){
         if(allusers.length === 0 && username[0] !== false){
             allusers.push(username);
         } else if (username[0] !== false && portalid === username[1]) {
-            checkArrs(allusers, username);
+            allusers = checkArrs(allusers, username);
         }
         console.log("this is the all users array : ", allusers);
     });
