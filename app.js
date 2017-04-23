@@ -157,6 +157,11 @@ app.post("/incoming", function(req, res){
         console.log("a message was just deleted");
         return res.send("ok");
     }
+
+    if(req.body.event.subtype === "bot_message")  {
+        console.log("that was a bot message");
+        return res.send("ok");
+    }
     
     // FOR RESTARTING NGROK AND RECONFIGURING THE URL 
     // res.send(req.body.challenge);
