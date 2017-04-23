@@ -73,21 +73,20 @@ $(document).ready(function(){
         var portalid = window.location.pathname.split("/")[1];
         console.log(stableusername, isuser);
         //Comair that username with all the others.
-        var isuser = false;
+        var isuser = true;
         if(allusers.length > 0){
-            isuser = checkIfItsThere(allusers, [username, portalid]);
+            isuser = checkIfItsThere(allusers, [stableusername, portalid]);
         } else {
             isuser = false;
         }
         
         if(isuser === false){
-            thisuser = stableusername;
-            socket.emit("userdata", [thisuser, portalid]);
+            socket.emit("userdata", [stableusername, portalid]);
             $('.userinput').hide();
             $(".chatbody").show();
             $(".inputform").show();
             getportal();
-            $("#username").val("");
+            // $("#username").val("");
         } else {
             alert("This username is already take for this session. Please choose another one.");
         }
