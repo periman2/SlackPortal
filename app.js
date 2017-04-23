@@ -265,7 +265,7 @@ io.on('connection', function (socket) {
         console.log('You were disconnected!');
     });
     socket.on('userdata', function(userinfo) {
-        console.log("this is the user info !!!!!!" + userinfo);
+        // console.log("this is the user info !!!!!!" + userinfo);
         io.emit("allusernames", userinfo);
     });
     //Updates db users - deletes or adds

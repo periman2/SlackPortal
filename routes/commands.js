@@ -14,10 +14,13 @@ var website = "https://slackteamportal.herokuapp.com/";
 //RESPONSE CONSTRUCTORS
 //=====================
 
-function makebody(title, titlelink, fallback, color){
+function makebody(title, titlelink, fallback, color, response_type){
     var milliseconds = (new Date()).getTime() / 1000;
+    if(response_type !== "in_channel"){
+        response_type = "ephemeral"
+    }
     if(!color){
-        color = "black";
+        color = "#aaa";
     }
     var body = {
         "attachments": [
@@ -29,7 +32,8 @@ function makebody(title, titlelink, fallback, color){
                 "footer": "Portal API",
                 "ts": milliseconds
             }
-        ]
+        ],
+        response_type: response_type
     }
     return body;
 }
@@ -146,7 +150,7 @@ router.post("/portalopen", function(req, res){
                 } else if(info.team){
                     info = "Direct Message channel";
                 } else {
-                    return res.send("Something went wrong with the Slack response.");
+                    return res.send("Something went wrong please try again. If it still doesn't work try opening a portal from a different channel.");
                 }
                 if(foundportal.length > 0){
                     // console.log(foundportal + "this is the found portal");
@@ -168,7 +172,7 @@ router.post("/portalopen", function(req, res){
                             // console.log("this is the new portal"  + newportal);
                             var fallback = "The URL for your new portal is: " + newportal.url + "\nShare it with whoever you wish to invite to this channel.\nTo close the portal, use command */portalclose*.\nRemember that once a portal for this channel is closed, it cannot be reopened with this URL.\nThe portal will automatically close in 48 hours if it remains inactive.\nFor a list of available commands, try */portalhelp*."
                             var title = "This is your new portal: "
-                            var portal = makebody(title, newportal.url, fallback,"#9a3d2e");
+                            var portal = makebody(title, newportal.url, fallback,"#9a3d2e", "in_channel");
                             portal = makefield(portal, "URL", newportal.url);
                             portal = makefield(portal, "State", "Live (To change state, use the /portalmute command)");
                             portal = makefield(portal, "Open", "To close the portal, use the /portalclose command.\n");
@@ -218,7 +222,7 @@ router.post("/portalmute", function(req, res){
                 Portal.findByIdAndUpdate(portal[0]._id, {$set: {muted: true}}, {new: true}).exec()
                 .then(function(updatedportal){
                     // console.log(updatedportal.muted, updatedportal.history);
-                    res.json({text: "This channel's portal is now muted."});
+                    res.json({text: "This channel's portal is now muted.", response_type: "in_channel"});
                 }).catch(function(err){
                     throw err;
                 })
@@ -247,7 +251,7 @@ router.post("/portalunmute", function(req, res){
                 Portal.findByIdAndUpdate(portal[0]._id, {$set: {muted: false}}, {new: true}).exec()
                 .then(function(updatedportal){
                     // console.log(updatedportal.muted, updatedportal.history);
-                    res.json({text: "*This channel's portal is now live.*"});
+                    res.json({text: "*This channel's portal is now live.*", response_type: "in_channel"});
                 }).catch(function(err){
                     throw err;
                 })
