@@ -158,10 +158,10 @@ app.post("/incoming", function(req, res){
         return res.send("ok");
     }
 
-    if(req.body.event.subtype === "bot_message")  {
-        console.log("that was a bot message");
-        return res.send("ok");
-    }
+    // if(req.body.event.subtype === "bot_message")  {
+    //     console.log("that was a bot message");
+    //     return res.send("ok");
+    // }
     var split = req.body.event.text.split("/");
     if(split.length === 2 && split[0] === ""){
         console.log("that was a slash command");
@@ -251,7 +251,11 @@ function share(req, res, info, newlog, portal){
         newlog.senderavatar = info.user.profile.image_72;
         newlog.isfromslack = true;
     } else {
-        newlog.sender = req.body.event.username;
+        if(req.body.event.username){
+            newlog.sender = req.body.event.username;
+        } else {
+            newlog.sender = "Bot Message";
+        }
         newlog.isfromslack = false;
     }
     //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
