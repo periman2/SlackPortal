@@ -1,6 +1,8 @@
 $(document).ready(function(){
 
     var socket = io.connect();
+
+    emojione.ascii = true;
     
     var stableusername;
 
@@ -25,10 +27,12 @@ $(document).ready(function(){
     socket.on("allusernames", function(username){
         if(allusers.length === 0 && username[0] !== false && portalid === username[1]){
             allusers.push(username);
+            socket.emit("allusersinfo", allusers);
         } else if (username[0] !== false && portalid === username[1]) {
             allusers = checkArrs(allusers, username);
+            socket.emit("allusersinfo", allusers);
         }
-        console.log("this is the all users array : ", allusers);
+        // console.log("this is the all users array : ", allusers);
     });
 
     function checkArrs(array, element) {

@@ -307,6 +307,15 @@ io.on('connection', function (socket) {
         console.log("this is the user info !!!!!!" + userinfo);
         io.emit("allusernames", userinfo);
     });
+    socket.on("allusersinfo", function(everyone){
+        if(everyone.length > 0){
+            var names = everyone.map(function(el){return el[0]})
+            Portal.findByIdAndUpdate(everyone[0][1], {users: names}, {new: true}).exec()
+            .then(function(portal){
+                console.log(portal);
+            });
+        }
+    })
 });
 
 
