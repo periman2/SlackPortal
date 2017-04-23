@@ -33,6 +33,11 @@ app.get('/favicon.ico', function(req, res) {
 
 app.use(commandRoutes);
 
+app.post("/test", function(req, res){
+    console.log(req.body);
+    res.send("test is working");
+})
+
 //TEAM AUTHENTICATION AND SAVING THE TEAM'S INFO IN THE DATABASE
 app.get("/slack/botauth", function(req, res){
     var data = {form: {

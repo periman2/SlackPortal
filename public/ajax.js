@@ -20,10 +20,6 @@ $(document).ready(function(){
     var thisuser = false;
     var portalid = window.location.pathname.split("/")[1];
 
-    setInterval(function(){
-        socket.emit("userdata", [thisuser, portalid]);
-    }, 2000);
-
     // user openin portal > user emiting false username > back end catching that > back end giving back all usernames
 
     socket.on("allusernames", function(username){
@@ -33,24 +29,6 @@ $(document).ready(function(){
             checkArrs(allusers, username);
         }
         console.log("this is the all users array : ", allusers);
-        isuser = false;
-        if(allusers.length > 0){
-            isuser = checkIfItsThere(allusers, [username, portalid]);
-        } else {
-            isuser = false;
-        }
-        
-        if(isuser === false){
-            thisuser = stableusername;
-            socket.emit("userdata", [thisuser, portalid]);
-            $('.userinput').hide();
-            $(".chatbody").show();
-            $(".inputform").show();
-            // getportal();
-            $("#username").val("");
-        } else {
-            alert("This username is already take for this session. Please choose another one.");
-        }
     });
 
     function checkArrs(array, element) {
@@ -77,7 +55,6 @@ $(document).ready(function(){
         return isitinthere;
     }
 
-
     function getportal(){
         //this variable is the id of the portal in the database.
         var portalid = window.location.pathname.split("/")[1];
@@ -96,7 +73,7 @@ $(document).ready(function(){
         var portalid = window.location.pathname.split("/")[1];
         console.log(stableusername, isuser);
         //Comair that username with all the others.
-        isuser = false;
+        var isuser = false;
         if(allusers.length > 0){
             isuser = checkIfItsThere(allusers, [username, portalid]);
         } else {
@@ -115,23 +92,7 @@ $(document).ready(function(){
             alert("This username is already take for this session. Please choose another one.");
         }
         return false;
-    });
-
-    // window.onbeforeunload = function() {
-    //     var portalid = window.location.pathname.split("/")[1];
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "/deleteusers",
-    //         asynch: false,
-    //         data: {username: username, portalid: portalid},
-    //         success: function() {
-    //         },
-    //         error: function(err){
-    //             console.log(err);
-    //         }
-    //     });
-    // };
-    
+    });    
 
     $(".inputform").submit(function(){
         var message = $("#message").val();
@@ -150,7 +111,9 @@ $(document).ready(function(){
 
     //It shows the chatroom.
     function showchatroom(portal){
+        
         // console.log(portal.history);
+
         var history = portal.history;
         $(".chatbody").html("");
         $(".portaltitle").html("");
@@ -162,6 +125,7 @@ $(document).ready(function(){
             "height" : "100%",
             "position" : "relative"
         });
+
         history.forEach(function(message){
             // console.log(message);
             var sender = message.sender;
