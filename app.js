@@ -158,18 +158,17 @@ app.post("/incoming", function(req, res){
         return res.send("ok");
     }
 
-    // if(req.body.event.subtype === "bot_message")  {
-    //     console.log("that was a bot message");
-    //     return res.send("ok");
-    // }
+    //CHECKING IF THE MESSAGE IS A SLASH COMMAND SO IT WONT BE DISPLAYED IN THE PORTAL
     var split = req.body.event.text.split("/");
     if(split.length === 2 && split[0] === ""){
         console.log("that was a slash command");
         return res.send("ok");
     }
-    // if(req.body.api_app_id){
-    //     return res.send("ok");
-    // }
+
+    //CHECKING IF THE MESSAGE IS A PORTAL RESPONSE FOR MUTING SO IT WON'T BE DISPLAYED INT HE PORTAL
+    if(req.body.event.text === "*This channel's portal is now live.*" || req.body.event.text === "*This channel's portal is now muted.*"){
+        return res.send("ok");
+    }
     
     // FOR RESTARTING NGROK AND RECONFIGURING THE URL 
     // res.send(req.body.challenge);

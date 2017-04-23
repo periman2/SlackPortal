@@ -222,7 +222,7 @@ router.post("/portalmute", function(req, res){
                 Portal.findByIdAndUpdate(portal[0]._id, {$set: {muted: true}}, {new: true}).exec()
                 .then(function(updatedportal){
                     // console.log(updatedportal.muted, updatedportal.history);
-                    res.json({text: "This channel's portal is now muted.", response_type: "in_channel"});
+                    res.json({text: "*This channel's portal is now muted.*", response_type: "in_channel"});
                 }).catch(function(err){
                     throw err;
                 })
