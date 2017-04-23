@@ -10,11 +10,11 @@ $(document).ready(function(){
         socket.emit("deluser", {users: username});
     });
     
-    socket.on("new message", function(portal){
+    socket.on("new message", function(info){
         var portalid = window.location.pathname.split("/")[1];
         // console.log(portal);
-        if(portalid === portal._id){
-            showchatroom(portal);
+        if(portalid === info.id){
+            showmessage(info);
         }
     });
 
@@ -156,8 +156,25 @@ $(document).ready(function(){
 
     //shows each new message
 
-    function showmessage(message){
-
+    function showmessage(info){
+            var message = info.message;
+            var sender = message.sender;
+            var text = message.message.replace(/(<|>)/ig,"");
+            if (message.isfromslack) {
+                var avatar = message.senderavatar;
+            } else {
+                var avatar = "./portaluser.png";
+            }
+            $(".text").append(
+            "<div class='avattext'><img src="
+             + avatar + 
+             " alt='avatar' class='avatar'>" 
+             + "<div class='flexnone'><h3>" 
+             + sender + 
+             "</h3><p>" 
+             + text + 
+             "</p></div></div>"
+            );
     }
     
     

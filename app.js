@@ -165,7 +165,7 @@ app.post("/incoming", function(req, res){
         return res.send("ok");
     }
 
-    //CHECKING IF THE MESSAGE IS A PORTAL RESPONSE FOR MUTING SO IT WON'T BE DISPLAYED INT HE PORTAL
+    //CHECKING IF THE MESSAGE IS A PORTAL RESPONSE FOR MUTING SO IT WON'T BE DISPLAYED IN THE PORTAL
     if(req.body.event.text === "*This channel's portal is now live.*" || req.body.event.text === "*This channel's portal is now muted.*"){
         return res.send("ok");
     }
@@ -261,7 +261,8 @@ function share(req, res, info, newlog, portal){
     Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
     .then(function(newportal){
         // console.log("updated portal: " + newportal);
-        io.emit('new message', newportal);
+
+        io.emit('new message', {message: newlog, id: portal[0]._id});
         res.send("ok");
     }).catch(function(err){
         throw err;
