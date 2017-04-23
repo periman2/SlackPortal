@@ -162,6 +162,14 @@ app.post("/incoming", function(req, res){
         console.log("that was a bot message");
         return res.send("ok");
     }
+    var split = req.body.event.text.split("/");
+    if(split.length === 2 && split[0] === ""){
+        console.log("that was a slash command");
+        return res.send("ok");
+    }
+    // if(req.body.api_app_id){
+    //     return res.send("ok");
+    // }
     
     // FOR RESTARTING NGROK AND RECONFIGURING THE URL 
     // res.send(req.body.challenge);
