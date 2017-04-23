@@ -252,45 +252,6 @@ function share(req, res, info, newlog, portal){
     });   
 }
 
-//ADDS USERNAME TO THE DATABASE
-app.post("/username", function(req, res){
-    Portal.findById(req.body.portalid).exec()
-    .then(function(foundportal){
-        var users = foundportal.users;
-        var isuser = users.indexOf(req.body.username);
-        if(isuser === -1){
-            Portal.findByIdAndUpdate(req.body.portalid, {$push: {users: req.body.username}}, {new: true}).exec()
-            .then(function(portal){
-                // console.log(portal);
-                res.cookie("user", req.body.username);
-                res.redirect("/" + req.body.portalid);
-            }).catch(function(error){
-                throw error;
-            }); 
-        } else {
-            res.send(false);
-        }
-    }).catch(function(err){
-        throw err;
-    });
-    
-});
-
-//DELETS USER FROM DB
-app.post("/deleteusers", function(req, res){
-    console.log("this is the request body of the deleteusers" + req.body.username);
-    if(req.body.username !== undefined){
-        Portal.findByIdAndUpdate(req.body.portalid, {$pull: {users: req.body.username}}, {new: true}).exec()
-        .then(function(portal){
-            console.log("those are the new users!" + portal.users);
-            res.send("something");
-        }).catch(function(err){
-            throw err;
-        })
-    } else {
-        res.send("ok");
-    }
-});
 
 var server = app.listen(PORT, function() {
     console.log("The Slack Portal server has started.");
@@ -307,12 +268,13 @@ io.on('connection', function (socket) {
         console.log("this is the user info !!!!!!" + userinfo);
         io.emit("allusernames", userinfo);
     });
+    //Updates db users - deletes or adds
     socket.on("allusersinfo", function(everyone){
         if(everyone.length > 0){
-            var names = everyone.map(function(el){return el[0]})
+            var names = everyone.map(function(el){return el[0]});
             Portal.findByIdAndUpdate(everyone[0][1], {users: names}, {new: true}).exec()
             .then(function(portal){
-                console.log(portal);
+                // console.log(portal.users);
             });
         }
     })

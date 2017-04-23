@@ -196,7 +196,7 @@ router.post("/portalclose", function(req, res){
             Portal.remove({_id: foundportal[0]._id}).exec()
             .then(function(){
                 // console.log(newportal);
-                res.json({text: "The portal for this channel has closed."});
+                res.json({text: "The portal for this channel has closed.", response_type: "in_channel"});
             });
         } else {
             res.json({text: "There isn't an open portal for this channel yet. To create one, try the */portalopen* command."})
