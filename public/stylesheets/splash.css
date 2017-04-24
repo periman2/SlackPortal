@@ -8,6 +8,39 @@ body {
   font-family: 'Space Mono', monospace;
   text-shadow: 3px 3px 2px rgba(15, 15, 15, 1);
 }
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #19181b;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #2f2627;
+  border: 0px none #ffffff;
+  border-radius: 36px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
 .icon-bar {
   width: 100%;
   background-color: #222125;
@@ -18,7 +51,6 @@ body {
   -moz-box-shadow: 7px 6px 5px 0px rgba(31,25,24,0.32);
   box-shadow: 7px 6px 5px 0px rgba(31,25,24,0.32);
 }
-
 .icon-bar a {
   float: right;
   margin: 0;
@@ -37,7 +69,6 @@ body {
 .icon-bar a:hover {
   color: #4fafd8;
 }
-
 #shareit {
   font-size: 1em;
   font-weight: 200;
@@ -80,7 +111,7 @@ body {
 }
 .pitch {
   color: #faa415;
-  font-size: 1.2em;
+  font-size: 1.1em;
   text-align: center;
   width: 94%;
   margin-left: auto;
@@ -90,16 +121,16 @@ body {
 }
 .solution {
   color: #4fafd8;
-  font-size: 1.1em;
+  font-size: 1em;
   text-align: center;
   width: 94%;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 4.5em;
+  margin-bottom: 3em;
 }
 .white {
   color: white;
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 h2 {
   color: #ba4735;
@@ -115,15 +146,41 @@ h2 {
   text-align: center;
 }
 .slack {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  padding-bottom: 15px;
+  background-color: black;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: -1px;
+  border: 2px solid #BFBEBA;
+  color: whitesmoke;
+  font-size: 1em;
+  font-weight: 400;
+  padding: 16px;
+  position: relative;
+  margin: 0 auto;
+  border-radius: 20px;
   cursor: pointer;
+  margin-bottom: 1.8em;
+}
+.slack:before {
+  background: none;
+  border: 2px solid #BFBEBA;
+  border-radius: 15px;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  pointer-events: none;
+}
+.slack:hover {
+  color: #9a3d2e;
+  border: 2px solid #9a3d2e;
 }
 .instruc {
   color: #aac1be;
-  font-size: 1em;
+  font-size: 1.1em;
+  letter-spacing: -1px;
   text-align: left;
   width: 97%;
   margin-left: auto;
@@ -354,7 +411,7 @@ footer {
   }
   .solution {
     font-size: 1.1em;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
   }
   .slack {
     padding-top: 15px;
