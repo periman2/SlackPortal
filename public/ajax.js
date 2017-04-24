@@ -160,6 +160,7 @@ $(document).ready(function(){
             var message = info.message;
             var sender = message.sender;
             var text = message.message.replace(/(<|>)/ig,"");
+            text = emojione.shortnameToImage(text);
             if (message.isfromslack) {
                 var avatar = message.senderavatar;
             } else {
@@ -177,7 +178,4 @@ $(document).ready(function(){
             );
             $(".text").scrollTop($(".text").get(0).scrollHeight);
     }
-    
-    
-
 });
