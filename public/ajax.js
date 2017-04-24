@@ -1,21 +1,67 @@
 $(document).ready(function(){
 
     var socket = io.connect();
+
+    emojione.ascii = true;
     
-    var username;
+    var stableusername;
 
     socket.on("disconnect", function(){
         socket.emit("deluser", {users: username});
     });
     
-    socket.on("new message", function(portal){
+    socket.on("new message", function(info){
         var portalid = window.location.pathname.split("/")[1];
         // console.log(portal);
-        if(portalid === portal._id){
-            showchatroom(portal);
+        if(portalid === info.id){
+            showmessage(info);
         }
     });
 
+    var allusers = [];
+    var thisuser = false;
+    var portalid = window.location.pathname.split("/")[1];
+
+    // user openin portal > user emiting false username > back end catching that > back end giving back all usernames
+
+    socket.on("allusernames", function(username){
+        if(allusers.length === 0 && username[0] !== false && portalid === username[1]){
+            allusers.push(username);
+            socket.emit("allusersinfo", allusers);
+        } else if (username[0] !== false && portalid === username[1]) {
+            allusers = checkArrs(allusers, username);
+            socket.emit("allusersinfo", allusers);
+        }
+        // console.log("this is the all users array : ", allusers);
+    });
+
+    function checkArrs(array, element) {
+        var isitinthere = false;
+        for (var i = 0; i < array.length; i++) {
+            if (array[i][0] === element[0]) {
+                isitinthere = true;
+            }
+        }
+        if(isitinthere === false){
+            array.push(element);
+        }
+        return array;
+    }
+
+    setInterval(function(){
+        socket.emit("userdata", [stableusername, portalid]);
+    }, 2000);
+
+    function checkIfItsThere(array, element) {
+        var isitinthere = false;
+        for (var i = 0; i < array.length; i++) {
+            if (array[i][0] === element[0]) {
+                isitinthere = true;
+            }
+        }
+
+        return isitinthere;
+    }
 
     function getportal(){
         //this variable is the id of the portal in the database.
@@ -31,47 +77,29 @@ $(document).ready(function(){
     }
 
     $(".userinput").submit(function(){
-        username = $("#username").val();
+        stableusername = $("#username").val();
         var portalid = window.location.pathname.split("/")[1];
+        console.log(stableusername, isuser);
+        //Comair that username with all the others.
+        var isuser = true;
+        if(allusers.length > 0){
+            isuser = checkIfItsThere(allusers, [stableusername, portalid]);
+        } else {
+            isuser = false;
+        }
         
-        $.ajax({
-            type: "POST",
-            url: "/username",
-            data: {username: username, portalid: portalid},
-            success: function(isuser) {
-                //IF ISUSER IS TRUE THE USER IS ABLE TO USE THE PORTAL IF ITS FALSE THE USER NEEDS TO CHOOSE ANOTHER NAME.
-                console.log(isuser);
-                if(isuser){
-                    if (username) {
-                        $('.userinput').hide();
-                        $(".chatbody").show();
-                        $(".inputform").show();
-                        getportal();
-                    }
-                    $("#username").val("");
-                } else {
-                    alert("This username is already take for this session. Please choose another one.");
-                }
-            }
-        });
+        if(isuser === false){
+            socket.emit("userdata", [stableusername, portalid]);
+            $('.userinput').hide();
+            $(".chatbody").show();
+            $(".inputform").show();
+            getportal();
+            // $("#username").val("");
+        } else {
+            alert("This username is already take for this session. Please choose another one.");
+        }
         return false;
-    });
-
-    window.onbeforeunload = function() {
-        var portalid = window.location.pathname.split("/")[1];
-        $.ajax({
-            type: "POST",
-            url: "/deleteusers",
-            asynch: false,
-            data: {username: username, portalid: portalid},
-            success: function() {
-            },
-            error: function(err){
-                console.log(err);
-            }
-        });
-    };
-    
+    });    
 
     $(".inputform").submit(function(){
         var message = $("#message").val();
@@ -81,16 +109,20 @@ $(document).ready(function(){
         $.ajax({
             type: "POST",
             url: "/postinput",
-            data: {message: message, username: username, portalid: portalid},
+            data: {message: message, username: stableusername, portalid: portalid},
             success: function(portal) {
+            },
+            error: function(err){
+                console.log(err);
             }
         });
         return false;
     });
 
-    //It shows the chatroom.
+    //It shows the chatroom when innitialized.
     function showchatroom(portal){
-        console.log(portal.history);
+        // console.log(portal.history);
+
         var history = portal.history;
         $(".chatbody").html("");
         $(".portaltitle").html("");
@@ -102,10 +134,11 @@ $(document).ready(function(){
             "height" : "100%",
             "position" : "relative"
         });
+
         history.forEach(function(message){
             // console.log(message);
             var sender = message.sender;
-            console.log(message.message, "this is the message");
+            // console.log(message.message, "this is the message");
             var text = message.message.replace(/(<|>)/ig,"");
             // var avatar = message.senderavatar;
             // console.log("this is the messge" , message);
@@ -120,7 +153,29 @@ $(document).ready(function(){
         });
         $(".text").scrollTop($(".text").get(0).scrollHeight);
     }
-    
-    
 
+    //shows each new message
+
+    function showmessage(info){
+            var message = info.message;
+            var sender = message.sender;
+            var text = message.message.replace(/(<|>)/ig,"");
+            text = emojione.shortnameToImage(text);
+            if (message.isfromslack) {
+                var avatar = message.senderavatar;
+            } else {
+                var avatar = "./portaluser.png";
+            }
+            $(".text").append(
+            "<div class='avattext'><img src="
+             + avatar + 
+             " alt='avatar' class='avatar'>" 
+             + "<div class='flexnone'><h3>" 
+             + sender + 
+             "</h3><p>" 
+             + text + 
+             "</p></div></div>"
+            );
+            $(".text").scrollTop($(".text").get(0).scrollHeight);
+    }
 });

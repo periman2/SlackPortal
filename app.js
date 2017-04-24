@@ -20,6 +20,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 app.use(flash());
+//use cookie parser everywhere
+app.use(require('cookie-parser')());
 
 var URL = process.env.DATABASEURL || "mongodb://localhost/slackportal4";
 mongoose.connect(URL);
@@ -30,6 +32,11 @@ app.get('/favicon.ico', function(req, res) {
 });
 
 app.use(commandRoutes);
+
+app.post("/test", function(req, res){
+    console.log(req.body);
+    res.send("test is working");
+})
 
 //TEAM AUTHENTICATION AND SAVING THE TEAM'S INFO IN THE DATABASE
 app.get("/slack/botauth", function(req, res){
@@ -84,7 +91,10 @@ app.get("/:portalid", function(req, res){
             return res.send("That's not a valid portal address.");
         }
         if(portal !== undefined && portal !== null){
-            res.render("home");
+            if(req.cookies.user !== undefined){
+                return res.render("home", {user: user});
+            }
+            res.render("home", {user: false});
         } else {
             res.send("That's not a valid portal address.");
         }
@@ -145,6 +155,18 @@ app.post("/incoming", function(req, res){
     }
     if(req.body.event.subtype === "message_deleted")  {
         console.log("a message was just deleted");
+        return res.send("ok");
+    }
+
+    //CHECKING IF THE MESSAGE IS A SLASH COMMAND SO IT WONT BE DISPLAYED IN THE PORTAL
+    var split = req.body.event.text.split("/");
+    if(split.length === 2 && split[0] === ""){
+        console.log("that was a slash command");
+        return res.send("ok");
+    }
+
+    //CHECKING IF THE MESSAGE IS A PORTAL RESPONSE FOR MUTING SO IT WON'T BE DISPLAYED IN THE PORTAL
+    if(req.body.event.text === "*This channel's portal is now live.*" || req.body.event.text === "*This channel's portal is now muted.*"){
         return res.send("ok");
     }
     
@@ -228,58 +250,25 @@ function share(req, res, info, newlog, portal){
         newlog.senderavatar = info.user.profile.image_72;
         newlog.isfromslack = true;
     } else {
-        newlog.sender = req.body.event.username;
+        if(req.body.event.username){
+            newlog.sender = req.body.event.username;
+        } else {
+            newlog.sender = "Bot Message";
+        }
         newlog.isfromslack = false;
     }
     //FIND THE PORTAL AND PUSH IN ITS HISTORY THE NEW MESSAGE WITH ALL THE USER'S NEEDED INFO;
     Portal.findByIdAndUpdate(portal[0]._id, {$push: {history: newlog}},{new: true}).exec()
     .then(function(newportal){
         // console.log("updated portal: " + newportal);
-        io.emit('new message', newportal);
+
+        io.emit('new message', {message: newlog, id: portal[0]._id});
         res.send("ok");
     }).catch(function(err){
         throw err;
     });   
 }
 
-//ADDS USERNAME TO THE DATABASE
-app.post("/username", function(req, res){
-    Portal.findById(req.body.portalid).exec()
-    .then(function(foundportal){
-        var users = foundportal.users;
-        var isuser = users.indexOf(req.body.username);
-        if(isuser === -1){
-            Portal.findByIdAndUpdate(req.body.portalid, {$push: {users: req.body.username}}, {new: true}).exec()
-            .then(function(portal){
-                // console.log(portal);
-                res.send(true);
-            }).catch(function(error){
-                throw error;
-            }); 
-        } else {
-            res.send(false);
-        }
-    }).catch(function(err){
-        throw err;
-    });
-    
-});
-
-//DELETS USER FROM DB
-app.post("/deleteusers", function(req, res){
-    console.log("this is the request body of the deleteusers" + req.body.username);
-    if(req.body.username !== undefined){
-        Portal.findByIdAndUpdate(req.body.portalid, {$pull: {users: req.body.username}}, {new: true}).exec()
-        .then(function(portal){
-            console.log("those are the new users!" + portal.users);
-            res.send("something");
-        }).catch(function(err){
-            throw err;
-        })
-    } else {
-        res.send("ok");
-    }
-});
 
 var server = app.listen(PORT, function() {
     console.log("The Slack Portal server has started.");
@@ -287,12 +276,25 @@ var server = app.listen(PORT, function() {
 
 var io = require('socket.io')(server);
 
-
 io.on('connection', function (socket) {
     console.log("connected");
     socket.on('disconnect', function () {
         console.log('You were disconnected!');
     });
+    socket.on('userdata', function(userinfo) {
+        // console.log("this is the user info !!!!!!" + userinfo);
+        io.emit("allusernames", userinfo);
+    });
+    //Updates db users - deletes or adds
+    socket.on("allusersinfo", function(everyone){
+        if(everyone.length > 0){
+            var names = everyone.map(function(el){return el[0]});
+            Portal.findByIdAndUpdate(everyone[0][1], {users: names}, {new: true}).exec()
+            .then(function(portal){
+                // console.log(portal.users);
+            });
+        }
+    })
 });
 
 
