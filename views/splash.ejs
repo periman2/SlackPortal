@@ -22,14 +22,15 @@
           <a class="active" id="shareit" href="#">Share it</a>
         </div>
         <section class="container">
+          <div class="header">
             <h1 class="title">SlackPortal</h1>
             <!-- Portal Animation by @peris -->
-            <div class="mysvg">
+            <!--<div class="mysvg">-->
               <svg class="portal" width="100%" height="auto" version="1.1" viewBox="0 0 319.66034 331.53455" xmlns="http://www.w3.org/2000/svg">
-              <filter id="demo5">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur5" />
-                <!--Composition of inputs-->
-                <feComposite in="SourceGraphic" in2="blur5" operator="arithmetic" k1="0" k2="3" k3="3" k4="0" />
+                <filter id="demo5">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur5" />
+                  <!--Composition of inputs-->
+                  <feComposite in="SourceGraphic" in2="blur5" operator="arithmetic" k1="0" k2="3" k3="3" k4="0" />
                 </filter>
                  <g id="layer1" transform="translate(347.414 46.3527)">
                   <path class="first" filter="url(#demo5)" id="light" d="m-90.3497 180.766c-22.6899 50.461-99.216 66.9754-149.603 
@@ -92,12 +93,12 @@
                   36.9339 92.2639 91.6234 55.3399 172.703"/>
                  </g>
                 </svg>
-                </div>
-            <p class="pitch">Have you ever wanted to bring someone from <i>the outside</i> into a Slack conversation <b>without</b> having to set up a separate team, which would allow that person to see <b>every</b> channel?</p>
+                <!--</div>-->
+              </div>
+            <p class="pitch">Have you ever wanted to bring someone from <i>the outside</i> into a Slack conversation <b>without</b> inviting them to join your team, where they would have access to <b>every</b> channel?</p>
             <p class="solution"><span class="white">Our solution:</span> a web service that creates a temporary chat window to allow users outside <b>any</b> Slack channel to communicate within that channel only.</p>
             <div class="center">
                 <a href="https://slack.com/oauth/authorize?&client_id=162439617488.163840164215&scope=commands,channels:history,channels:read,channels:write,chat:write:bot,chat:write:user,files:read,files:write:user,groups:history,groups:read,groups:write,im:history,im:write,links:read,links:write,team:read,users:read">
-
                   <button class="slack">Add to Slack</button>
                 </a>
             </div>
@@ -132,9 +133,8 @@
                 <div class="bottom">
                   <a class="email" href="mailto:slackportalteam@gmail.com?Subject=Hello,%20SlackPortal!" target="_top"><i class="fa fa-envelope fa-2x"></i></a>
                 </div>
+                <footer>Copyright <span class="copy">©</span> 2017 SlackPortal bot and web service. All rights reserved.</footer>
         </section>
-        <footer><span class="copy">©</span>SlackPortal bot and web service. 2017. All rights reserved.
-        </footer>
         <script>
         /* For Portal Animation */
         $(document).ready(function(){
