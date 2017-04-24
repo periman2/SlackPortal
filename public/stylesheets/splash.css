@@ -8,7 +8,6 @@ body {
   font-family: 'Space Mono', monospace;
   text-shadow: 3px 3px 2px rgba(15, 15, 15, 1);
 }
-/* Scrollbar */
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
@@ -23,10 +22,10 @@ body {
   border-radius: 50px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffffff;
+  background: #1d6789;
 }
 ::-webkit-scrollbar-thumb:active {
-  background: #000000;
+  background: #1d6789;
 }
 ::-webkit-scrollbar-track {
   background: #2f2627;
@@ -114,7 +113,7 @@ body {
   -moz-animation: neon 1.5s ease-in-out infinite alternate;
   animation: neon 1.5s ease-in-out infinite alternate;
 }
-/* Periklis' SVG animation */
+
 .portal {
   padding: 0;
   margin: 0;
@@ -187,6 +186,7 @@ body {
     translateZ(0);
   }
 }
+
 .pitch {
   color: #faa415;
   font-size: 1.1em;
@@ -194,7 +194,7 @@ body {
   width: 94%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 5px;
+  margin-top: 8px;
   padding: 2px;
 }
 .solution {
@@ -210,11 +210,11 @@ body {
   color: white;
   font-size: 1.1em;
 }
-h2 {
+.categ {
   color: #ba4735;
-  font-size: 1.78em;
+  font-size: 1.9em;
   text-align: center;
-  font-weight: 600;
+  font-weight: 650;
 }
 .center {
   width:100%;
@@ -227,7 +227,7 @@ h2 {
   background-color: black;
   font-family: 'Space Mono', monospace;
   letter-spacing: -1px;
-  border: 2px solid #BFBEBA;
+  border: 2px solid #676767;
   color: whitesmoke;
   font-size: 1em;
   font-weight: 400;
@@ -240,7 +240,7 @@ h2 {
 }
 .slack:before {
   background: none;
-  border: 2px solid #BFBEBA;
+  border: 2px solid #676767;
   border-radius: 15px;
   content: "";
   display: block;
@@ -278,23 +278,29 @@ code {
 }
 .casts {
   width: 100%;
-  margin-bottom: 35px;
+  margin-bottom: 3.4em;
   padding: 0;
   text-align: center;
 }
 .cast {
-  width: 50%;
+  width: 60%;
   margin-top: 10px;
-  margin-bottom: 10px;
   border-radius: 15px;
   border: 4px solid #4fafd8;
   -webkit-box-shadow:  0px 1px 17px 0px rgba(18, 86, 133, 1);
   -moz-box-shadow:     0px 1px 17px rgba(18, 86, 133, 1);
   box-shadow:          0px 1px 17px 0px rgba(18, 86, 133, 1);
 }
+.caption {
+  text-align: center;
+  font-size: .75em;
+  text-shadow: none;
+  color: #1d6789;
+  padding-bottom: 13px;
+}
 .devinfo {
   text-align: center;
-  margin-bottom: 4em;
+  margin-bottom: 4.3em;
 }
 .name {
   color: #4fafd8;
@@ -348,15 +354,14 @@ code {
 }
 footer {
   text-align: center;
-  font-size: .7em;
+  font-size: .6em;
   text-shadow: none;
   color: #1d6789;
   margin-top: 40px;
 }
 .copy {
-  font-size: 1.6em;
+  font-size: 1.3em;
 }
-
 /* Neon Title Animation */
 @-webkit-keyframes neon {
   from {
@@ -384,6 +389,7 @@ footer {
     text-shadow: 0 0 1px #6a0f19, 0 0 1px #F01A1A, 0 0 2px #F01A1A, 0 0 1px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37), 0 0 2px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37), 0 0 1px rgb(201, 60, 37);
   }
 }
+
 
 /* Media Queries */
 @media only screen and (max-width: 2000px) {
@@ -429,6 +435,9 @@ footer {
   }
   .title {
     margin-top: 58px;
+  }
+  .cast {
+    width: 80%;
   }
 }
 @media only screen and (max-width: 700px) {
@@ -479,8 +488,8 @@ footer {
     padding: 0;
     margin: 0;
   }
-  .copy {
-    font-size: .9em;
+  footer {
+    font-size: .5em;
   }
 }
 @media only screen and (max-width: 400px) {
@@ -489,6 +498,9 @@ footer {
   }
   .title {
     margin-top:45px;
+  }
+  footer {
+    font-size: .4em;
   }
 }
 @media only screen and (max-width: 350px) {
