@@ -178,3 +178,9 @@ input#message{
     color: white;
     background: #2f2627;
 }
+/* Media Queries */
+@media only screen and (max-width: 500px) {
+    .sp_title {
+        display: none;
+    }
+}
