@@ -8,6 +8,7 @@ body {
   font-family: 'Space Mono', monospace;
   text-shadow: 3px 3px 2px rgba(15, 15, 15, 1);
 }
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
@@ -113,7 +114,7 @@ body {
   -moz-animation: neon 1.5s ease-in-out infinite alternate;
   animation: neon 1.5s ease-in-out infinite alternate;
 }
-
+/* Periklis' SVG animation */
 .portal {
   padding: 0;
   margin: 0;
@@ -186,7 +187,6 @@ body {
     translateZ(0);
   }
 }
-
 .pitch {
   color: #faa415;
   font-size: 1.1em;
@@ -356,6 +356,7 @@ footer {
 .copy {
   font-size: 1.6em;
 }
+
 /* Neon Title Animation */
 @-webkit-keyframes neon {
   from {
@@ -384,8 +385,15 @@ footer {
   }
 }
 
-
 /* Media Queries */
+@media only screen and (max-width: 2000px) {
+  .portal {
+    transform: translateX(394%);
+  }
+  .title {
+    margin-top: 54px;
+  }
+}
 @media only screen and (max-width: 1600px) {
   .portal {
     transform: translateX(300%);
@@ -421,6 +429,11 @@ footer {
   }
   .title {
     margin-top: 58px;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .portal {
+    transform: translateX(100%);
   }
 }
 @media only screen and (max-width: 600px) {
