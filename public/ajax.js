@@ -47,7 +47,8 @@ $(document).ready(function(){
         }
         return array;
     }
-
+    
+    socket.emit("userdata", [stableusername, portalid]);
     setInterval(function(){
         socket.emit("userdata", [stableusername, portalid]);
     }, 2000);
