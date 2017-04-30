@@ -97,7 +97,7 @@ $(document).ready(function(){
             getportal();
             // $("#username").val("");
         } else {
-            alert("This username is already take for this session. Please choose another one.");
+            alert("This username is already taken for this session. Please choose another one.");
         }
         return false;
     });    
